@@ -1,0 +1,92 @@
+{namespace vh=RKW\RkwMailer\ViewHelpers}
+<f:layout name="Email/{mailType}" />
+
+
+<!-- PLAINTEXT -->
+<f:section name="Plaintext">
+=============================================================
+<vh:frontend.translate key="partials_email_details.orderDetails" languageKey="{language}" extensionName="rkwOrder"/>
+=============================================================
+<f:if condition="{order.sendSeries}"><f:then>{order.amount} x <vh:frontend.translate key="partials_email_details.completeSeries" languageKey="{language}" extensionName="rkwOrder" arguments="{0 : order.seriesTitle}" /></f:then><f:else>{order.amount} x <vh:frontend.translate key="partials_email_details.singlePublication" languageKey="{language}" extensionName="rkwOrder" arguments="{0 : order.pageTitle, 1: order.pageSubtitle}" /></f:else></f:if>
+(<vh:frontend.link absolute="TRUE" pageUid="{order.pages.uid}" noCacheHash="TRUE" />)
+<f:if condition="{order.subscribe}"><f:then><vh:frontend.translate key="partials_email_details.subscribe" languageKey="{language}" extensionName="rkwOrder" arguments="{0 : order.seriesTitle}" /></f:then><f:else><vh:frontend.translate key="partials_email_details.doNotSubscribe" languageKey="{language}" extensionName="rkwOrder" arguments="{0 : order.seriesTitle}" /></f:else></f:if>
+
+	
+=============================================================
+<vh:frontend.translate key="partials_email_details.orderPerson" languageKey="{language}" extensionName="rkwOrder" />
+=============================================================
+<f:if condition="{frontendUser.company}">{frontendUser.company}
+</f:if>{frontendUser.firstName} {frontendUser.lastName} ({frontendUser.username})
+{frontendUser.address}
+{frontendUser.zip} {frontendUser.city}
+
+	
+=============================================================
+<vh:frontend.translate key="partials_email_details.shippingAddress" languageKey="{language}" extensionName="rkwOrder" />
+=============================================================
+<f:if condition="{order.company}">{order.company}
+</f:if>{order.firstName} {order.lastName}
+{order.address}
+{order.zip} {order.city}<f:if condition="{order.remark}">
+
+
+=============================================================
+<vh:frontend.translate key="partials_email_details.remark" languageKey="{language}" extensionName="rkwOrder" />
+=============================================================
+<f:if condition="{order.remark} == '1'">
+<f:then><vh:frontend.translate key="partials_email_details.newsletter" languageKey="{language}" extensionName="rkwOrder" /></f:then><f:else>{order.remark}</f:else>
+</f:if></f:if></f:section>
+
+<!-- HTML -->
+<f:section name="Html">
+	<h2><vh:frontend.translate key="partials_email_details.orderDetails" languageKey="{language}" extensionName="rkwOrder"/></h2>
+	<p>
+		<f:if condition="{order.sendSeries}">
+			<f:then>
+				<a href="<vh:frontend.link absolute='TRUE' pageUid='{order.pages.uid}' noCacheHash='TRUE' />">{order.amount} x <vh:frontend.translate key="partials_email_details.completeSeries" languageKey="{language}" extensionName="rkwOrder" arguments="{0 : order.seriesTitle}" /></a>
+			</f:then>
+			<f:else>
+				<a href="<vh:frontend.link absolute='TRUE' pageUid='{order.pages.uid}' noCacheHash='TRUE' />">{order.amount} x <vh:frontend.translate key="partials_email_details.singlePublication" languageKey="{language}" extensionName="rkwOrder" arguments="{0 : order.pageTitle, 1: order.pageSubtitle}" /></a>
+			</f:else>
+		</f:if>
+		<br>
+		<f:if condition="{order.subscribe}">
+			<f:then>
+				<vh:frontend.translate key="partials_email_details.subscribe" languageKey="{language}" extensionName="rkwOrder" arguments="{0 : order.seriesTitle}" />
+			</f:then>
+			<f:else>
+				<vh:frontend.translate key="partials_email_details.doNotSubscribe" languageKey="{language}" extensionName="rkwOrder" arguments="{0 : order.seriesTitle}" />
+			</f:else>
+		</f:if>
+	</p>
+	
+	<h2><vh:frontend.translate key="partials_email_details.orderPerson" languageKey="{language}" extensionName="rkwOrder" /></h2>
+	<p>
+		<f:if condition="{frontendUser.company}">{frontendUser.company}<br/></f:if>
+		{frontendUser.firstName} {frontendUser.lastName} ({frontendUser.username})<br/>
+		{frontendUser.address}<br/>
+		{frontendUser.zip} {frontendUser.city}
+	</p>
+
+	<h2><vh:frontend.translate key="partials_email_details.shippingAddress" languageKey="{language}" extensionName="rkwOrder" /></h2>
+	<p>
+		<f:if condition="{order.company}">{order.company}<br/></f:if>
+		{order.firstName} {order.lastName}<br/>
+		{order.address}<br/>
+		{order.zip} {order.city}
+	</p>
+
+	<f:if condition="{order.remark}">
+		<h2><vh:frontend.translate key="partials_email_details.remark" languageKey="{language}" extensionName="rkwOrder" /></h2>
+		<p>
+			<f:if condition="{order.remark} == '1'">
+				<f:then>
+					<vh:frontend.translate key="partials_email_details.newsletter" languageKey="{language}" extensionName="rkwOrder" />
+				</f:then>
+				<f:else>
+					{order.remark}
+				</f:else>
+			</f:if>
+		</p>
+	</f:if>
+</f:section>

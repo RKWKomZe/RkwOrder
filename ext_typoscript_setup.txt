@@ -1,0 +1,75 @@
+config.tx_extbase.persistence {
+
+    classes {
+
+        RKW\RkwBasics\Domain\Model\Pages {
+            subclasses {
+                Tx_RkwOrder_Pages = RKW\RkwOrder\Domain\Model\Pages
+            }
+        }
+
+        RKW\RkwOrder\Domain\Model\Pages {
+            mapping {
+
+                # tablename
+                tableName = pages
+
+                columns {
+                    uid.mapOnProperty 		= uid
+                    pid.mapOnProperty		= pid
+                    title.mapOnProperty 	= title
+                    subtitle.mapOnProperty 	= subtitle
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwRegistration\Domain\Model\FrontendUser {
+            subclasses {
+                Tx_RkwOrder_FrontendUser = RKW\RkwOrder\Domain\Model\FrontendUser
+            }
+        }
+
+        RKW\RkwOrder\Domain\Model\FrontendUser {
+            mapping {
+                tableName = fe_users
+                recordType =
+            }
+        }
+
+
+        #===============================================
+
+
+        TYPO3\CMS\Extbase\Domain\Model\BackendUser {
+            subclasses {
+                Tx_RkwOrder_BackendUser = RKW\RkwOrder\Domain\Model\BackendUser
+            }
+        }
+
+
+        RKW\RkwOrder\Domain\Model\BackendUser {
+            mapping {
+                tableName = be_users
+                columns {
+                    usergroup.mapOnProperty = backendUserGroups
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwOrder\Domain\Model\Order {
+            mapping {
+                columns {
+                    crdate.mapOnProperty = crdate
+                    tstamp.mapOnProperty = tstamp
+                    hidden.mapOnProperty = hidden
+                    deleted.mapOnProperty = deleted
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-05-04T11:35:59Z" product-name="rkw_order">
+		<header/>
+		<body>
+			<trans-unit id="tx_rkworder_domain_model_order">
+				<source>RKW Order: Order</source>
+				<target>RKW Order: Publikationsbestellungen</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.page_title">
+				<source>Site Title</source>
+				<target>Publikationstitel</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.page_subtitle">
+				<source>Site Subtitle</source>
+				<target>Publikationsuntertitel</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.series_title">
+				<source>Series Title</source>
+				<target>Titel der Reihe/Serie</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.send_series">
+				<source>Send Series</source>
+				<target>Ganze Reihe/Serie zusenden</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.subscribe">
+				<source>Subscription</source>
+				<target>Abonnement</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.gender">
+				<source>Salutation</source>
+				<target>Anrede</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.gender.I.man">
+				<source>Mr.</source>
+				<target>Herr</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.gender.I.woman">
+				<source>Mrs.</source>
+				<target>Frau</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.gender.I.neutral">
+				<source>Not set</source>
+				<target>Nicht gesetzt</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.first_name">
+				<source>First Name</source>
+				<target>Vorname</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.last_name">
+				<source>Last Name</source>
+				<target>Nachname</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.company">
+				<source>Company</source>
+				<target>Firma</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.address">
+				<source>Address</source>
+				<target>Adresse</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.zip">
+				<source>ZIP</source>
+				<target>PLZ</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.city">
+				<source>City</source>
+				<target>Stadt</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.email">
+				<source>E-Mail</source>
+				<target>E-Mail</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.amount">
+				<source>Amount</source>
+				<target>Bestellmenge</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.frontend_user">
+				<source>Frontend User</source>
+				<target>Frontend User</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.pages">
+				<source>Pages</source>
+				<target>Seiten-ID der Publikation</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.status">
+				<source>Status</source>
+				<target>Status</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.status.I.sent">
+				<source>Sent</source>
+				<target>Versendet</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.remark" approved="yes">
+				<source>Remark</source>
+				<target>Anmerkung</target>
+			</trans-unit>
+
+
+			<!-- flexform -->
+
+			<trans-unit id="flexform.order.sheetTitle">
+				<source>BackendUser</source>
+			</trans-unit>
+			<trans-unit id="flexform.select.beuser">
+				<source>Backend User to mail (only shown if email is set)</source>
+				<target>Backend User für Bestell-Email</target>
+			</trans-unit>
+			<trans-unit id="flexform.orderMaximum">
+				<source>Maximum order size</source>
+				<target>Maximale Bestellmenge</target>
+			</trans-unit>
+			<trans-unit id="flexform.allowSeries">
+				<source>Allow ordering of series</source>
+				<target>Erlaube Bestellung von Serien/Reihen</target>
+			</trans-unit>
+			<trans-unit id="flexform.allowSubscription">
+				<source>Allow Subscription</source>
+				<target>Erlaube Abonnement</target>
+			</trans-unit>
+
+
+		</body>
+	</file>
+</xliff>

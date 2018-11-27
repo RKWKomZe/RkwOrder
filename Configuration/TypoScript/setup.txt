@@ -1,0 +1,158 @@
+
+config.tx_extbase.persistence {
+
+    classes {
+
+        RKW\RkwBasics\Domain\Model\Pages {
+            subclasses {
+                Tx_RkwOrder_Pages = RKW\RkwOrder\Domain\Model\Pages
+            }
+        }
+
+        RKW\RkwOrder\Domain\Model\Pages {
+            mapping {
+
+                # tablename
+                tableName = pages
+
+                columns {
+                    uid.mapOnProperty 		= uid
+                    pid.mapOnProperty		= pid
+                    title.mapOnProperty 	= title
+                    subtitle.mapOnProperty 	= subtitle
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwRegistration\Domain\Model\FrontendUser {
+            subclasses {
+                Tx_RkwOrder_FrontendUser = RKW\RkwOrder\Domain\Model\FrontendUser
+            }
+        }
+
+        RKW\RkwOrder\Domain\Model\FrontendUser {
+            mapping {
+                tableName = fe_users
+                recordType =
+            }
+        }
+
+
+        #===============================================
+
+
+        TYPO3\CMS\Extbase\Domain\Model\BackendUser {
+            subclasses {
+                Tx_RkwOrder_BackendUser = RKW\RkwOrder\Domain\Model\BackendUser
+            }
+        }
+
+
+        RKW\RkwOrder\Domain\Model\BackendUser {
+            mapping {
+                tableName = be_users
+                columns {
+                    usergroup.mapOnProperty = backendUserGroups
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwOrder\Domain\Model\Order {
+            mapping {
+                columns {
+                    crdate.mapOnProperty = crdate
+                    tstamp.mapOnProperty = tstamp
+                    hidden.mapOnProperty = hidden
+                    deleted.mapOnProperty = deleted
+                }
+            }
+        }
+    }
+}
+
+
+
+plugin.tx_rkworder {
+	view {
+		templateRootPaths.0 = {$plugin.tx_rkworder.view.templateRootPath}
+		partialRootPaths.0 = {$plugin.tx_rkworder.view.partialRootPath}
+		layoutRootPaths.0 = {$plugin.tx_rkworder.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_rkworder.persistence.storagePid}
+	}
+
+	settings {
+		termsPid = {$plugin.tx_rkworder.settings.termsPid}
+		backendUserIdForMails = {$plugin.tx_rkworder.settings.backendUserIdForMails}
+	}
+
+}
+
+# Add jquery if not disabled
+[globalVar = LIT:1 = {$plugin.tx_rkworder.settings.includeJQuery}]
+    page.includeJSFooterlibs.jquery         = EXT:rkw_order/Resources/Public/Scripts/jquery-1.11.1.min.js
+[global]
+
+page.includeJSFooter.rkwOrderScript     = EXT:rkw_order/Resources/Public/Scripts/rkw_order.js
+
+
+
+txRkwOrderJson = PAGE
+txRkwOrderJson {
+    typeNum = 1510210402
+    config {
+        disableAllHeaderCode = 1
+        xhtml_cleaning = 0
+        admPanel = 0
+        debug = 0
+        no_cache = 0
+        additionalHeaders.10.header = Content-type:application/json
+    }
+
+    20 = USER_INT
+    20 {
+
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        vendorName = RKW
+        extensionName = RkwOrder
+        pluginName = Rkworder
+        controller = Order
+        switchableControllerActions {
+
+            # Again: Controller-Name and Action
+            Order {
+                1 = newAjax
+            }
+        }
+
+        settings =< plugin.tx_rkworder.settings
+        persistence =< plugin.tx_rkworder.persistence
+        view =< plugin.tx_rkworder.view
+    }
+}
+
+
+plugin.tx_rkworder._CSS_DEFAULT_STYLE (
+	textarea.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.typo3-messages .message-error {
+		color:red;
+	}
+
+	.typo3-messages .message-ok {
+		color:green;
+	}
+)

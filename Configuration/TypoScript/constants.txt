@@ -1,0 +1,29 @@
+
+plugin.tx_rkworder {
+	view {
+		# cat=plugin.tx_rkworder/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:rkw_order/Resources/Private/Templates/
+		# cat=plugin.tx_rkworder/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:rkw_order/Resources/Private/Partials/
+		# cat=plugin.tx_rkworder/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:rkw_order/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_rkworder//a; type=string; label=Default storage PID
+		storagePid =
+
+	}
+
+	settings {
+
+        # cat=plugin.tx_rkworder/a; type=boolean; label=Include jQuery?
+        includeJQuery = 0
+
+		# cat=plugin.tx_rkworder//a; type=integer; label=Pid of terms & conditions
+		termsPid =
+
+		# cat=plugin.tx_rkworder//a; type=integer; label=Uid of BE-User if none is set in plugin
+		backendUserIdForMails =
+	}
+
+}

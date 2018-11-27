@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-05-04T11:35:59Z" product-name="rkw_order">
+		<header/>
+		<body>
+			<trans-unit id="page_title.description">
+				<source>siteTitle</source>
+			</trans-unit>
+			<trans-unit id="page_subtitel.description">
+				<source>siteSubtitel</source>
+			</trans-unit>
+			<trans-unit id="first_name.description">
+				<source>firstName</source>
+			</trans-unit>
+			<trans-unit id="last_name.description">
+				<source>lastName</source>
+			</trans-unit>
+			<trans-unit id="address.description">
+				<source>address</source>
+			</trans-unit>
+			<trans-unit id="zip.description">
+				<source>zip</source>
+			</trans-unit>
+			<trans-unit id="city.description">
+				<source>city</source>
+			</trans-unit>
+			<trans-unit id="email.description">
+				<source>email</source>
+			</trans-unit>
+			<trans-unit id="amount.description">
+				<source>amount</source>
+			</trans-unit>
+			<trans-unit id="frontend_user.description">
+				<source>frontendUser</source>
+			</trans-unit>
+			<trans-unit id="pages.description">
+				<source>pages</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
