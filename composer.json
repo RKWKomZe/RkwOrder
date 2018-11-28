@@ -1,10 +1,10 @@
 {
-    "name": "rkw/rkw-newsletter",
+    "name": "rkw/rkw-order",
     "type": "typo3-cms-extension",
-    "description": "Extension for editing and sending newsletters",
+    "description": "Extension for ordering publications",
     "homepage": "https://www.rkw-kompetenzzentrum.de",
     "license": ["GPL-2.0+"],
-    "keywords": ["TYPO3 CMS", "RKW", "Newsletter"],
+    "keywords": ["TYPO3 CMS", "RKW", "Bookstore"],
     "support": {
         "email": "developer@steffenkroggel.de"
     },
@@ -26,7 +26,7 @@
         "typo3/cms-core": "^7.6.0 || ^8.7.0",
         "rkw/rkw-basics": "~7.6.12", 
         "rkw/rkw-mailer": "~7.6.13",
-        "rkw/rkw-registration": "~7.6.10", 
+        "rkw/rkw-registration": "~7.6.10"
     },
     "autoload": {
         "psr-4": {
