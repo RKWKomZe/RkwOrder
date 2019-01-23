@@ -30,12 +30,12 @@
     },
     "autoload": {
         "psr-4": {
-            "RKW\\RkwNewsletter\\": "Classes/"
+            "RKW\\RkwOrder\\": "Classes/"
         }
     },
     "extra": {
         "typo3/cms": {
-            "extension-key": "rkw_newsletter"
+            "extension-key": "rkw_order"
         }
     }
 }
