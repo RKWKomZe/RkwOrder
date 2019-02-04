@@ -28,5 +28,32 @@ namespace RKW\RkwOrder\Domain\Model;
 class Pages extends \RKW\RkwBasics\Domain\Model\Pages
 {
 
+    /**
+     * txRkworderPublication
+     *
+     * @var \RKW\RkwOrder\Domain\Model\Publication
+     */
+    protected $txRkworderPublication = null;
+
+    /**
+     * Returns the txRkworderPublication
+     *
+     * @return \RKW\RkwOrder\Domain\Model\Publication $txRkworderPublication
+     */
+    public function getTxRkworderPublication()
+    {
+        return $this->txRkworderPublication;
+    }
+
+    /**
+     * Sets the txRkworderPublication
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Publication $txRkworderPublication
+     * @return void
+     */
+    public function setTxRkworderPublication(\RKW\RkwOrder\Domain\Model\Publication $txRkworderPublication)
+    {
+        $this->txRkworderPublication = $txRkworderPublication;
+    }
 
 }

@@ -1,0 +1,31 @@
+{namespace rkwOrder=RKW\RkwOrder\ViewHelpers}
+
+<f:if condition="{publication}">
+
+    <!-- check availability of series -->
+    <f:if condition="<rkwOrder:checkSeriesAvailability publication='{publication}' />">
+        <f:else>
+            <div class="typo3-messages" role="alert">
+                <div class="message-warning typo3-message">
+                    <f:translate key="partials_order_availability.seriesNotAvailable" extensionName="rkw_order"/>
+                </div>
+                <ol class="message-warning typo3-message">
+                    <f:for each="<rkwOrder:outOfStockSeries publication='{publication}' />" as="publicationElement">
+                        <li>{publicationElement.title}</li>
+                    </f:for>
+                </ol>
+            </div>
+        </f:else>
+    </f:if>
+
+    <!-- check availability of all other publications -->
+    <f:if condition="<rkwOrder:checkPublicationAvailability publication='{publication}' />">
+        <f:else>
+            <div class="typo3-messages" role="alert">
+                <div class="message-warning typo3-message">
+                    <f:translate key="partials_order_availability.notAvailable" extensionName="rkw_order" />
+                </div>
+            </div>
+        </f:else>
+    </f:if>
+</f:if>

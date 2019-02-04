@@ -7,18 +7,6 @@
 				<source>RKW Order: Order</source>
 				<target>RKW Order: Publikationsbestellungen</target>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.page_title">
-				<source>Site Title</source>
-				<target>Publikationstitel</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.page_subtitle">
-				<source>Site Subtitle</source>
-				<target>Publikationsuntertitel</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.series_title">
-				<source>Series Title</source>
-				<target>Titel der Reihe/Serie</target>
-			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.send_series">
 				<source>Send Series</source>
 				<target>Ganze Reihe/Serie zusenden</target>
@@ -42,6 +30,14 @@
 			<trans-unit id="tx_rkworder_domain_model_order.gender.I.neutral">
 				<source>Not set</source>
 				<target>Nicht gesetzt</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.title" approved="yes">
+				<source>Title</source>
+				<target>Title</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.title.please_choose" approved="yes">
+				<source>---</source>
+				<target>---</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.first_name">
 				<source>First Name</source>
@@ -83,6 +79,10 @@
 				<source>Pages</source>
 				<target>Seiten-ID der Publikation</target>
 			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.publication">
+				<source>Publication</source>
+				<target>Publikation</target>
+			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.status">
 				<source>Status</source>
 				<target>Status</target>
@@ -97,8 +97,46 @@
 			</trans-unit>
 
 
-			<!-- flexform -->
 
+			<trans-unit id="tx_rkworder_domain_model_publication">
+				<source>RKW Order: Publication</source>
+				<target>RKW Order: Publikation</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_publication.title">
+				<source>Title</source>
+				<target>Publikationstitel</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_publication.subtitle">
+				<source>Subtitle</source>
+				<target>Publikationsuntertitel</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_publication.admin_email">
+				<source>Admin E-Mail (Fallback, if no BackendUser is set)</source>
+				<target>Admin E-Mail (Fallback, wenn kein BackendUser gesetzt ist)</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_publication.stock">
+				<source>Stock</source>
+				<target>Gedruckte Auflage (Stückzahl)</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_publication.allow_series">
+				<source>Allow series</source>
+				<target>Erlaube Bestellung von Serien/Reihen</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_publication.allow_subscription">
+				<source>Allow Subscription</source>
+				<target>Erlaube Abonnement</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_publication.series">
+				<source>Series</source>
+				<target>Serie</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_publication.backend_user">
+				<source>Backend Users</source>
+				<target>Backend User für Bestell-Email</target>
+			</trans-unit>
+
+
+			<!-- flexform -->
 			<trans-unit id="flexform.order.sheetTitle">
 				<source>BackendUser</source>
 			</trans-unit>

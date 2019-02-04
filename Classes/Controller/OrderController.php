@@ -4,6 +4,7 @@ namespace RKW\RkwOrder\Controller;
 
 use \RKW\RkwBasics\Helper\Common;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use \RKW\RkwOrder\Helper\Stock;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -136,34 +137,70 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function newInitAction(\RKW\RkwOrder\Domain\Model\Order $newOrder = null)
     {
-
         /** @var \RKW\RkwOrder\Domain\Model\Pages $pages */
         $pages = $this->pagesRepository->findByUid($this->getImportedParentPid(intval($GLOBALS['TSFE']->id)));
+        if ($publication = $pages->getTxRkworderPublication()) {
 
-        $this->view->assignMultiple(
-            array(
-                'frontendUser'      => null,
-                'newOrder'          => $newOrder,
-                'termsPid'          => intval($this->settings['termsPid']),
-                'seriesTitle'       => $pages->getTxRkwbasicsSeries() ? $pages->getTxRkwbasicsSeries()->getName() : '',
-                'allowSeries'       => $this->settings['order']['allowSeries'],
-                'allowSubscription' => $this->settings['order']['allowSubscription'],
-                'pages'             => $pages,
-                'pageUid'           => intval($GLOBALS['TSFE']->id),
-            )
-        );
+            // @toDo: if allowSeries is true, check if the whole series is still available
+            $this->view->assignMultiple(
+                array(
+                    'frontendUser'       => null,
+                    'newOrder'           => $newOrder,
+                    'pageUid'            => intval($GLOBALS['TSFE']->id),
+                    'termsPid'           => intval($this->settings['termsPid']),
+                    'publication'        => $publication,
+                    'maximumOrderAmount' => Stock::getStock($publication),
+                )
+            );
+        }
     }
 
 
     /**
      * action newAjax
      *
+     * @param int $pid
      * @return void
      */
-    public function newAjaxAction()
+    public function newAjaxAction($pid = 0)
     {
         /** @var \RKW\RkwBasics\Helper\Json $jsonHelper */
         $jsonHelper = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwBasics\\Helper\\Json');
+        if ($pid > 0) {
+
+            /** @var \RKW\RkwOrder\Domain\Model\Pages $pages */
+            $pages = $this->pagesRepository->findByUid($this->getImportedParentPid(intval($pid)));
+            if ($publication = $pages->getTxRkworderPublication()) {
+
+                // check if publication is completely out of stock
+                if (
+                    (!$publication->getSeries())
+                    && (Stock::getStock($publication) < 1)
+                ) {
+
+                    // remove content of form
+                    $jsonHelper->setHtml(
+                        'rkw-order-wrap',
+                        array(),
+                        'replace'
+                    );
+                }
+
+                // Availability messages behind cache
+                $replacements = array(
+                    'publication' => $publication,
+                );
+
+                $jsonHelper->setHtml(
+                    'rkw-order-availability',
+                    $replacements,
+                    'replace',
+                    'Ajax/New/Availability.html'
+                );
+
+            }
+        }
+
 
         /*
          * @toDo: When loading partials via AJAX the object properties are not set!
@@ -211,21 +248,20 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function newAction(\RKW\RkwOrder\Domain\Model\Order $newOrder = null)
     {
-
         /** @var \RKW\RkwOrder\Domain\Model\Pages $pages */
         $pages = $this->pagesRepository->findByUid($this->getImportedParentPid(intval($GLOBALS['TSFE']->id)));
+        if ($publication = $pages->getTxRkworderPublication()) {
 
-        $this->view->assignMultiple(
-            array(
-                'newOrder'          => $newOrder,
-                'termsPid'          => intval($this->settings['termsPid']),
-                'seriesTitle'       => $pages->getTxRkwbasicsSeries() ? $pages->getTxRkwbasicsSeries()->getName() : '',
-                'allowSeries'       => $this->settings['order']['allowSeries'],
-                'allowSubscription' => $this->settings['order']['allowSubscription'],
-                'pages'             => $pages,
-            )
-        );
-
+            $this->view->assignMultiple(
+                array(
+                    'frontendUser'       => null,
+                    'newOrder'           => $newOrder,
+                    'termsPid'           => intval($this->settings['termsPid']),
+                    'publication'        => $publication,
+                    'maximumOrderAmount' => Stock::getStock($publication),
+                )
+            );
+        }
     }
 
 
@@ -233,19 +269,21 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action create
      *
      * @param \RKW\RkwOrder\Domain\Model\Order $newOrder
-     * @param integer $terms
-     * @param integer $privacy
+     * @param integer                          $terms
+     * @param integer                          $privacy
      * @return void
      * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
     public function createAction(\RKW\RkwOrder\Domain\Model\Order $newOrder, $terms = null, $privacy = null)
     {
+
+        // 1. Some checks
         // check if terms are checked
         if (
             (!$terms)
@@ -276,17 +314,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             //===
         }
 
-        // 1. get page and pageTitle / pageSubtitle of it
-        /** @var \RKW\RkwOrder\Domain\Model\Pages $pages */
-        $pages = $this->pagesRepository->findByUid($this->getImportedParentPid(intval($GLOBALS['TSFE']->id)));
-
-        $newOrder->setPageTitle($pages->getTitle());
-        $newOrder->setPageSubtitle($pages->getSubtitle());
-        $newOrder->setPages($pages);
-
-        if ($pages->getTxRkwbasicsSeries()) {
-            $newOrder->setSeriesTitle($pages->getTxRkwbasicsSeries()->getName());
-        }
 
         // 2. register order
         // 2.1 if user is logged in
@@ -298,6 +325,9 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             // update FE-User-Data if none is set so long
             if (!$feUser->getTxRkwregistrationGender()) {
                 $feUser->setTxRkwregistrationGender($newOrder->getGender());
+            }
+            if (!$feUser->getTitle()) {
+                $feUser->setTxRkwregistrationTitle($newOrder->getTitle());
             }
             if (!$feUser->getFirstName()) {
                 $feUser->setFirstName($newOrder->getFirstName());
@@ -322,11 +352,11 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->persistenceManager->persistAll();
 
             // connect order with FE-User and save order
-            $newOrder->setFrontendUser($feUser);
+            $newOrder->setFrontendUser($this->getFrontendUser());
             $this->finalSaveOrder($newOrder);
 
             // add privacy info
-            \RKW\RkwRegistration\Tools\Privacy::addPrivacyData($this->request, $feUser, $newOrder, 'new order');
+            \RKW\RkwRegistration\Tools\Privacy::addPrivacyData($this->request, $newOrder->getFrontendUser(), $newOrder, 'new order');
 
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
@@ -378,6 +408,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $registration->register(
                 array(
                     'tx_rkwregistration_gender' => $newOrder->getGender(),
+                    'tx_rkwregistration_title'  => $newOrder->getTitle(),
                     'first_name'                => $newOrder->getFirstName(),
                     'last_name'                 => $newOrder->getLastName(),
                     'company'                   => $newOrder->getCompany(),
@@ -414,6 +445,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @return void
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
@@ -421,7 +453,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function optInAction()
     {
-
         $tokenYes = preg_replace('/[^a-zA-Z0-9]/', '', ($this->request->hasArgument('token_yes') ? $this->request->getArgument('token_yes') : ''));
         $tokenNo = preg_replace('/[^a-zA-Z0-9]/', '', ($this->request->hasArgument('token_no') ? $this->request->getArgument('token_no') : ''));
         $userSha1 = preg_replace('/[^a-zA-Z0-9]/', '', $this->request->getArgument('user'));
@@ -477,7 +508,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function createOrder(\RKW\RkwRegistration\Domain\Model\FrontendUser $feUser, \RKW\RkwRegistration\Domain\Model\Registration $registration)
     {
-
         // 1. get order from registration and save it
         if (
             ($newOrder = $registration->getData())
@@ -491,6 +521,13 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 || ($feUser->getTxRkwregistrationGender() == 99)
             ) {
                 $feUser->setTxRkwregistrationGender($newOrder->getGender());
+            }
+
+            if (
+                (!$feUser->getTxRkwregistrationTitle())
+                || ($feUser->getTxRkwregistrationTitle() == 99)
+            ) {
+                $feUser->setTxRkwregistrationTitle($newOrder->getTitle());
             }
 
             if (!$feUser->getFirstName()) {
@@ -525,16 +562,21 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->persistenceManager->persistAll();
 
             $newOrder->setFrontendUser($feUser);
-            $this->finalSaveOrder($newOrder);
+            $this->finalSaveOrder($newOrder, $registration);
         }
     }
 
 
     /**
-     * Removes all open orders of a FE-User - used by Signal-Slot
+     * Removes all open orders of a FE-User
+     * Used by Signal-Slot
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
     public function removeAllOfUserSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
     {
@@ -570,7 +612,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                             $backendUsers[] = $admin;
                         }
                     }
-                    $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array($backendUsers, $frontendUser, $order));
+                    $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array($backendUsers, $order));
                     $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Deleted order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
 
                 }
@@ -583,36 +625,46 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * finalSaveOrder
+     *
      * Adds the order finally to database and sends information mails to user and admin
      * This function is used bei the "createOrderAction" and "createOrder"-Function
      *
-     * @param \RKW\RkwOrder\Domain\Model\Order $newOrder
+     * @param \RKW\RkwOrder\Domain\Model\Order               $newOrder
+     * @param \RKW\RkwRegistration\Domain\Model\Registration $registration
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function finalSaveOrder(\RKW\RkwOrder\Domain\Model\Order $newOrder)
+    protected function finalSaveOrder(\RKW\RkwOrder\Domain\Model\Order $newOrder, \RKW\RkwRegistration\Domain\Model\Registration $registration = null)
     {
         // save it
         $this->orderRepository->add($newOrder);
 
-        $this->persistenceManager->persistAll();
-
         // 2. send final confirmation mail to user
         $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($newOrder->getFrontendUser(), $newOrder));
 
+
         // 3. send information mail to admins
-        $adminUidList = explode(',', $this->settings['mail']['backendUser']);
         $backendUsers = array();
-        foreach ($adminUidList as $adminUid) {
-            if ($adminUid) {
-                $admin = $this->backendUserRepository->findByUid($adminUid);
+
+        /** @var \RKW\RkwOrder\Domain\Model\Pages $pages */
+        $pages = $this->pagesRepository->findByUid($this->getImportedParentPid(intval($GLOBALS['TSFE']->id)));
+        /**    @var \RKW\RkwOrder\Domain\Model\Publication $publication */
+        $publication = $pages->getTxRkworderPublication();
+
+        if (!count($publication->getBackendUser())) {
+            if ($publication->getAdminEmail()) {
+                $admin = $this->backendUserRepository->findByEmail($publication->getAdminEmail());
                 if ($admin) {
                     $backendUsers[] = $admin;
                 }
             }
+        } else {
+            $backendUsers = $publication->getBackendUser()->toArray();
         }
+
 
         // 4. fallback-handling
         if (
@@ -641,7 +693,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected function getImportedParentPid($pid)
     {
-
         // Check if it is an imported page!
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('bm_pdf2content')) {
 
@@ -679,7 +730,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Returns current logged in user object
      *
-     * @return \RKW\RkwRegistration\Domain\Model\FrontendUser|NULL
+     * @return \RKW\RkwRegistration\Domain\Model\FrontendUser|null
      */
     protected function getFrontendUser()
     {
@@ -700,11 +751,10 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Gets FE-User data from session
      *
-     * @return \RKW\RkwOrder\Domain\Model\FrontendUser | null
+     * @return \RKW\RkwOrder\Domain\Model\FrontendUser|null
      */
     protected function getFrontendUserBySession()
     {
-
         $frontendUser = null;
 
         /**  @var $feAuth \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication */
@@ -714,6 +764,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             && ($dataOfNotLoggedUser = $feAuth->getKey('ses', 'rkwOrderUserData'))
             && (is_array($dataOfNotLoggedUser))
         ) {
+
+            /** @var \RKW\RkwOrder\Domain\Model\FrontendUser $frontendUser */
             $frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwOrder\\Domain\\Model\\FrontendUser');
             $frontendUser->setTxRkwRegistrationGender($dataOfNotLoggedUser['tx_rkwregistration_gender']);
             $frontendUser->setFirstName($dataOfNotLoggedUser['first_name']);
@@ -738,7 +790,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected function setFrontendUserBySession(\RKW\RkwOrder\Domain\Model\Order $newOrder)
     {
-
         /**  @var $feAuth \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication */
         if (
             (!$this->getFrontendUser())
@@ -762,11 +813,10 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Id of logged User
      *
-     * @return integer|NULL
+     * @return integer|null
      */
     protected function getFrontendUserId()
     {
-
         // is $GLOBALS set?
         if (
             ($GLOBALS['TSFE'])
@@ -802,7 +852,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
     {
-
         return Common::getTyposcriptConfiguration('Rkworder', $which);
         //===
     }

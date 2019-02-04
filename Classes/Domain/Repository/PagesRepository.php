@@ -23,10 +23,33 @@ namespace RKW\RkwOrder\Domain\Repository;
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Rkw Kompetenzzentrum
  * @package RKW_RkwOrder
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class PagesRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+    /**
+     * findByUidAlsoHiddenAndDeleted
+     *
+     * @param int $uid
+     * @return array|null|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findByUidAlsoHiddenAndDeleted($uid)
+    {
+
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setIncludeDeleted(true);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+        $query->matching(
+            $query->equals('uid', intval($uid))
+        );
+
+        return $query->execute()->getFirst();
+        //===
+
+    }
+
+
     /**
      * Returns all parent pages that have been imported via bm_pdf2content
      *
@@ -35,7 +58,6 @@ class PagesRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     public function findAllImportedParentPages()
     {
-
         // Check if extension is installed
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('bm_pdf2content')) {
 
@@ -56,6 +78,135 @@ class PagesRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
 
         return null;
+        //===
+    }
+
+
+    /**
+     * Returns all parent pages that have been imported via bm_pdf2content
+     *
+     * @param integer $uid
+     * @return null|\RKW\RkwOrder\Domain\Model\Pages
+     */
+    public function findOneImportedParentPagesByUid($uid)
+    {
+        // Check if extension is installed
+        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('bm_pdf2content')) {
+
+            $query = $this->createQuery();
+            $query->getQuerySettings()->setRespectStoragePage(false);
+            $query->getQuerySettings()->setIncludeDeleted(true);
+            $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+            $query->matching(
+                $query->logicalAnd(
+                    $query->equals('uid', intval($uid)),
+                    $query->equals('tx_bmpdf2content_is_import', 1),
+                    $query->equals('tx_bmpdf2content_is_import_sub', 0)
+                )
+            );
+
+            return $query->execute()->getFirst();
+            //===
+        }
+
+        return null;
+        //===
+    }
+
+
+    /**
+     * Returns all visible parent pages that have been imported via bm_pdf2content
+     *
+     * @return array|null|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findAllVisibleAndHiddenImportedParentPages()
+    {
+
+        // Check if extension is installed
+        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('bm_pdf2content')) {
+
+            $query = $this->createQuery();
+            $query->getQuerySettings()->setRespectStoragePage(false);
+            $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+            $query->matching(
+                $query->logicalAnd(
+                    $query->equals('tx_bmpdf2content_is_import', 1),
+                    $query->equals('tx_bmpdf2content_is_import_sub', 0),
+                    $query->logicalOr(
+                        $query->equals('hidden', 1),
+                        $query->equals('hidden', 0)
+                    )
+                )
+            );
+
+            return $query->execute();
+            //===
+        }
+
+        return null;
+        //===
+
+    }
+
+
+    /**
+     * Returns all hidden and deleted parent pages that have been imported via bm_pdf2content and a certain title + subtitle
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Publication $publication
+     * @return array|null|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findAllHiddenAndDeletedImportedParentPagesByTitleAndSubtitle(\RKW\RkwOrder\Domain\Model\Publication $publication)
+    {
+        // Check if extension is installed
+        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('bm_pdf2content')) {
+
+            $query = $this->createQuery();
+            $query->getQuerySettings()->setRespectStoragePage(false);
+            $query->getQuerySettings()->setIncludeDeleted(true);
+            $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+            $query->matching(
+                $query->logicalAnd(
+                    $query->equals('tx_bmpdf2content_is_import', 1),
+                    $query->equals('tx_bmpdf2content_is_import_sub', 0),
+                    $query->logicalOr(
+                        $query->equals('hidden', 1),
+                        $query->equals('deleted', 1)
+                    ),
+                    $query->equals('title', $publication->getTitle()),
+                    $query->equals('subtitle', $publication->getSubtitle())
+                )
+            );
+
+            return $query->execute();
+            //===
+        }
+
+        return null;
+        //===
+    }
+
+
+    /**
+     * findByTxRkworderPublication
+     *
+     * Hint: Written because magic function does not work by any reason
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Publication $publication
+     * @return null|\RKW\RkwOrder\Domain\Model\Pages
+     */
+    public function findByTxRkworderPublication(\RKW\RkwOrder\Domain\Model\Publication $publication)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+
+        $query->matching(
+            $query->equals('txRkworderPublication', $publication)
+        );
+
+        return $query->execute()->getFirst();
         //===
 
     }

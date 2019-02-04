@@ -1,32 +1,45 @@
 
 <f:layout name="Default" />
 
-This template displays a NEW form for the current domain object.
-
-If you modify this template, do not forget to change the overwrite settings
-in /Configuration/ExtensionBuilder/settings.yaml:
-  Resources:
-    Private:
-      Templates:
-        New.html: keep
-
-Otherwise your changes will be overwritten the next time you save the extension in the extension builder
-
 <f:section name="main">
 
-	<f:flashMessages renderMode="div" />
-	<f:render partial="FormErrors" arguments="{object:Order}" />
+    <div id="rkw-order-availability"></div>
 
-	<f:if condition="{seriesTitle}">
-		<f:then>
-			<p><f:translate key="templates_order_new.introductionSeries" /></p>
-		</f:then>
-		<f:else>
-			<p><f:translate key="templates_order_new.introduction" /></p>
-		</f:else>
-	</f:if>
+    <f:flashMessages as="flashMessages">
+        <f:for each="{flashMessages}" as="flashMessage">
+            <div class="typo3-messages">
+                <div class="alert alert-{flashMessage.class}">
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="alert-message">
+                                {flashMessage.message}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </f:for>
+    </f:flashMessages>
 
-	<f:form action="create" name="newOrder" object="{newOrder}" class="form-fields" id="rkw-order-container" additionalAttributes="{data-url : '/?type=1510210402&id={pageUid}'}" >
-        <f:render partial="Order/FormFields"  arguments="{_all}" />
-	</f:form>
+    <f:render partial="FormErrors" arguments="{object:Order}" />
+
+    <f:if condition="{publication}">
+        <div id="rkw-order-wrap">
+
+            <!-- different labels -->
+            <f:if condition="{publication.series}">
+                <f:then>
+                    <p><f:translate key="templates_order_new.introductionSeries" /></p>
+                </f:then>
+                <f:else>
+                    <p><f:translate key="templates_order_new.introduction" /></p>
+                </f:else>
+            </f:if>
+
+            <!-- form -->
+            <f:form action="create" name="newOrder" object="{newOrder}" class="form-fields" id="rkw-order-container" additionalAttributes="{data-url : '/?type=1510210402&tx_rkworder_rkworder[pid]={pageUid}'}" >
+                <f:render partial="Order/FormFields"  arguments="{_all}" />
+            </f:form>
+        </div>
+    </f:if>
 </f:section>

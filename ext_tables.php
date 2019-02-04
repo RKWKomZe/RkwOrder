@@ -18,6 +18,7 @@ if (!defined('TYPO3_MODE')) {
 //=================================================================
 // Add Flexform
 //=================================================================
+/*
 $extensionName = strtolower(\TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY));
 $pluginName = strtolower('Rkworder');
 $pluginSignature = $extensionName.'_'.$pluginName;
@@ -25,4 +26,5 @@ $pluginSignature = $extensionName.'_'.$pluginName;
 $TCA['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'layout,select_key,pages';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:'.$_EXTKEY . '/Configuration/FlexForms/Order.xml');
+*/
 

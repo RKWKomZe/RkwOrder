@@ -2,8 +2,10 @@
 
 namespace RKW\RkwOrder\Service;
 
-use \RKW\RkwBasics\Helper\Common;
-use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use RKW\RkwBasics\Helper\Common;
+use Symfony\Component\Debug\Debug;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -34,7 +36,6 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      * @param \RKW\RkwRegistration\Domain\Model\Registration $registration
-     * @param mixed $signalInformation
      * @return void
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -44,9 +45,12 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function handleOptInRequestEvent(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwRegistration\Domain\Model\Registration $registration = null)
+    public function handleOptInRequestEvent
+    (
+        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
+        \RKW\RkwRegistration\Domain\Model\Registration $registration = null
+    )
     {
-
         // get settings
         $settings = $this->getSettings(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $settingsDefault = $this->getSettings();
@@ -63,7 +67,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                         'tokenYes'     => $registration->getTokenYes(),
                         'tokenNo'      => $registration->getTokenNo(),
                         'userSha1'     => $registration->getUserSha1(),
-                        'frontendUser' => $frontendUser,
+                        //'frontendUser' => $frontendUser,
                         'registration' => $registration,
                         'pageUid'      => intval($GLOBALS['TSFE']->id),
                         'loginPid'     => intval($settingsDefault['loginPid']),
@@ -90,10 +94,12 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Handles confirm order mail for user
+     *
      * Works with RkwRegistration-FrontendUser -> this is correct! (data comes from TxRkwRegistration)
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order $order
+     * @param \RKW\RkwOrder\Domain\Model\Order               $order
+     *
      * @return void
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -103,7 +109,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function confirmationOrderUser(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwOrder\Domain\Model\Order $order)
+    public function confirmationOrderUser
+    (
+        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
+        \RKW\RkwOrder\Domain\Model\Order $order
+    )
     {
         $this->userMail($frontendUser, $order, 'confirmation');
     }
@@ -113,7 +123,8 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * Handles confirm order mail for admin
      *
      * @param \RKW\RkwOrder\Domain\Model\BackendUser|array $backendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order $order
+     * @param \RKW\RkwOrder\Domain\Model\Order             $order
+     *
      * @return void
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -123,7 +134,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function confirmationOrderAdmin($backendUser, \RKW\RkwOrder\Domain\Model\Order $order)
+    public function confirmationOrderAdmin
+    (
+        $backendUser,
+        \RKW\RkwOrder\Domain\Model\Order $order
+    )
     {
         $this->adminMail($backendUser, $order, 'confirmation');
     }
@@ -131,10 +146,12 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * Handles delete order mail for user
+     *
      * Works with RkwRegistration-FrontendUser -> this is correct! (data comes from TxRkwRegistration)
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order $order
+     * @param \RKW\RkwOrder\Domain\Model\Order               $order
+     *
      * @return void
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -144,7 +161,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function deleteOrderUser(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwOrder\Domain\Model\Order $order)
+    public function deleteOrderUser
+    (
+        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
+        \RKW\RkwOrder\Domain\Model\Order $order
+    )
     {
         $this->userMail($frontendUser, $order, 'delete');
     }
@@ -153,9 +174,10 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Handles delete order mail for admin
      *
-     * @param \RKW\RkwOrder\Domain\Model\BackendUser|array $backendUser
+     * @param \RKW\RkwOrder\Domain\Model\BackendUser|array   $backendUser
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order $order
+     * @param \RKW\RkwOrder\Domain\Model\Order               $order
+     *
      * @return void
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -165,7 +187,12 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function deleteOrderAdmin($backendUser, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwOrder\Domain\Model\Order $order)
+    public function deleteOrderAdmin
+    (
+        $backendUser,
+        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
+        \RKW\RkwOrder\Domain\Model\Order $order
+    )
     {
         $this->adminMail($backendUser, $order, 'delete', $frontendUser);
     }
@@ -175,8 +202,8 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * Sends an E-Mail to a Frontend-User
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order $order
-     * @param string $action
+     * @param \RKW\RkwOrder\Domain\Model\Order               $order
+     * @param string                                         $action
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
@@ -185,9 +212,13 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function userMail(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwOrder\Domain\Model\Order $order, $action = 'confirmation')
+    protected function userMail
+    (
+        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
+        \RKW\RkwOrder\Domain\Model\Order $order,
+        $action = 'confirmation'
+    )
     {
-
         // get settings
         $settings = $this->getSettings(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $settingsDefault = $this->getSettings();
@@ -230,9 +261,9 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Sends an E-Mail to an Admin
      *
-     * @param \RKW\RkwOrder\Domain\Model\BackendUser|array $backendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order $order
-     * @param string $action
+     * @param \RKW\RkwOrder\Domain\Model\BackendUser|array   $backendUser
+     * @param \RKW\RkwOrder\Domain\Model\Order               $order
+     * @param string                                         $action
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -242,9 +273,14 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function adminMail($backendUser, \RKW\RkwOrder\Domain\Model\Order $order, $action = 'confirmation', \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null)
+    protected function adminMail
+    (
+        $backendUser,
+        \RKW\RkwOrder\Domain\Model\Order $order,
+        $action = 'confirmation',
+        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null
+    )
     {
-
         // get settings
         $settings = $this->getSettings(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $settingsDefault = $this->getSettings();
@@ -309,6 +345,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                 $mailService->send();
             }
         }
+
     }
 
 
@@ -320,7 +357,6 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
     {
-
         return Common::getTyposcriptConfiguration('Rkworder', $which);
         //===
     }

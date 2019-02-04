@@ -31,6 +31,22 @@
 				<source>-- Please select --</source>
 				<target>-- Bitte wählen --</target>
 			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.title" approved="yes">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.title.please_choose" approved="yes">
+				<source>-- Please select --</source>
+				<target>-- Bitte wählen --</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.title.1" approved="yes">
+				<source>Dr.</source>
+				<target>Dr.</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.title.2" approved="yes">
+				<source>Dr. Prof.</source>
+				<target>Dr. Prof.</target>
+			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.first_name">
 				<source>First Name</source>
 				<target>Vorname</target>
@@ -162,8 +178,8 @@
 
 			<!-- Templates/Email/OptInRequest.html -->
 			<trans-unit id="templates_email_optInRequest.headline">
-				<source>Hello  %s %s,</source>
-				<target>Hallo %s %s,</target>
+				<source>Hello</source>
+				<target>Hallo</target>
 			</trans-unit>
 			<trans-unit id="templates_email_optInRequest.text1">
 				<source>thank you for your interest in RKW products.</source>
@@ -198,8 +214,8 @@
 
 			<!-- Templates/Email/ConfirmOrderUser.html -->
 			<trans-unit id="templates_email_confirmationOrderUser.headline">
-				<source>Hello %s %s,</source>
-				<target>Hallo %s %s,</target>
+				<source>Hello</source>
+				<target>Hallo</target>
 			</trans-unit>
 			<trans-unit id="templates_email_confirmationOrderUser.text1">
 				<source>thank you for your order.</source>
@@ -226,8 +242,8 @@
 
 			<!-- Templates/Email/DeleteOrderUser.html -->
 			<trans-unit id="templates_email_deleteOrderUser.headline">
-				<source>Hello %s %s,</source>
-				<target>Hallo %s %s,</target>
+				<source>Hello</source>
+				<target>Hallo</target>
 			</trans-unit>
 			<trans-unit id="templates_email_deleteOrderUser.text1">
 				<source>thank you for your order.</source>
@@ -315,23 +331,37 @@
 				<source>Here you can order a print-version of the current publication or the whole series the publication belongs to.</source>
 				<target>Hier können Sie diese Publikation oder die ganze Publikationsreihe kostenlos als Print-Version bestellen. Geben Sie dafür einfach die gewünschte Lieferadresse an.</target>
 			</trans-unit>
-			<trans-unit id="templates_order_new.order_button">
+			
+
+			<!-- Partials/Order/Availability.html -->
+            <trans-unit id="partials_order_availability.seriesNotAvailable">
+                <source>The following parts of the series are currently out of stock:</source>
+                <target>Folgende Teile der Serie sind derzeit leider vergriffen:</target>
+            </trans-unit>
+            <trans-unit id="partials_order_availability.notAvailable">
+                <source>The desired publication is currently out of stock.</source>
+                <target><![CDATA[Hm, da waren Sie wohl nicht schnell genug – Diese Publikation ist leider bereits vergriffen :-)<br/>Ob eine weitere Auflage geplant ist, erfragen Sie am besten per E-Mail an <a href="mailto:kommunikation@rkw.de">kommunikation@rkw.de</a>.]]></target>
+            </trans-unit>
+
+
+
+            <!-- Partials/Order/FormFields/Order.html -->
+            <trans-unit id="partials_order_formFields_order.terms">
+                <source>I accept the terms and conditions.</source>
+                <target>Ich akzeptiere die Nutzungsbedingungen.</target>
+            </trans-unit>
+            <trans-unit id="partials_order_formFields_order.sendSeries">
+                <source>Please send the whole series "%s".</source>
+                <target>Bitte senden Sie mir die gesamte Reihe "%s" zu.</target>
+            </trans-unit>
+            <trans-unit id="partials_order_formFields_order.subscribe">
+                <source>I want to subscribe to "%s".</source>
+                <target>Ich möchte die Reihe "%s" kostenlos abonnieren.</target>
+            </trans-unit>
+			<trans-unit id="partials_order_formFields_order.order_button">
 				<source>Order now</source>
 				<target>Jetzt bestellen</target>
 			</trans-unit>
-			<trans-unit id="templates_order_new.terms">
-				<source>I accept the terms and conditions.</source>
-				<target>Ich akzeptiere die Nutzungsbedingungen.</target>
-			</trans-unit>
-			<trans-unit id="templates_order_new.sendSeries">
-				<source>Please send the whole series "%s".</source>
-				<target>Bitte senden Sie mir die gesamte Reihe "%s" zu.</target>
-			</trans-unit>
-			<trans-unit id="templates_order_new.subscribe">
-				<source>I want to subscribe to "%s".</source>
-				<target>Ich möchte die Reihe "%s" kostenlos abonnieren.</target>
-			</trans-unit>
-
 
 			<!-- ================================================================================== -->
 

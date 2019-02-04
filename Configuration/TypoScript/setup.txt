@@ -71,6 +71,19 @@ config.tx_extbase.persistence {
                 }
             }
         }
+
+        #===============================================
+
+        RKW\RkwOrder\Domain\Model\Publication{
+            mapping {
+                columns {
+                    crdate.mapOnProperty = crdate
+                    tstamp.mapOnProperty = tstamp
+                    hidden.mapOnProperty = hidden
+                    deleted.mapOnProperty = deleted
+                }
+            }
+        }
     }
 }
 
@@ -156,3 +169,6 @@ plugin.tx_rkworder._CSS_DEFAULT_STYLE (
 		color:green;
 	}
 )
+
+# needed for CommandController (otherwise PID 1 would be the storagePid)
+module.tx_rkworder.persistence.storagePid < plugin.tx_rkworder.persistence.storagePid

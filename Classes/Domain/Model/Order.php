@@ -59,27 +59,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $status = 0;
 
     /**
-     * pageTitle
-     *
-     * @var string
-     */
-    protected $pageTitle;
-
-    /**
-     * pageSubtitle
-     *
-     * @var string
-     */
-    protected $pageSubtitle;
-
-    /**
-     * seriesTitle
-     *
-     * @var string
-     */
-    protected $seriesTitle;
-
-    /**
      * sendSeries
      *
      * @var integer
@@ -99,8 +78,17 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * gender
      *
      * @var integer
+     * @validate \RKW\RkwRegistration\Validation\GenderValidator
      */
     protected $gender = 99;
+
+
+    /**
+     * title
+     *
+     * @var \RKW\RkwRegistration\Domain\Model\Title
+     */
+    protected $title = null;
 
 
     /**
@@ -193,6 +181,13 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var \RKW\RkwOrder\Domain\Model\Pages
      */
     protected $pages = null;
+
+    /**
+     * pages
+     *
+     * @var \RKW\RkwOrder\Domain\Model\Publication
+     */
+    protected $publication = null;
 
 
     /**
@@ -294,71 +289,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         //===
     }
 
-
-    /**
-     * Returns the pageTitle
-     *
-     * @return string $pageTitle
-     */
-    public function getPageTitle()
-    {
-        return $this->pageTitle;
-    }
-
-    /**
-     * Sets the pageTitle
-     *
-     * @param string $pageTitle
-     * @return void
-     */
-    public function setPageTitle($pageTitle)
-    {
-        $this->pageTitle = $pageTitle;
-    }
-
-    /**
-     * Returns the pageSubtitle
-     *
-     * @return string $pageSubtitle
-     */
-    public function getPageSubtitle()
-    {
-        return $this->pageSubtitle;
-    }
-
-    /**
-     * Sets the pageSubtitle
-     *
-     * @param string $pageSubtitle
-     * @return void
-     */
-    public function setPageSubtitle($pageSubtitle)
-    {
-        $this->pageSubtitle = $pageSubtitle;
-    }
-
-    /**
-     * Returns the seriesTitle
-     *
-     * @return string $seriesTitle
-     */
-    public function getSeriesTitle()
-    {
-        return $this->seriesTitle;
-    }
-
-    /**
-     * Sets the seriesTitle
-     *
-     * @param string $seriesTitle
-     * @return void
-     */
-    public function setSeriesTitle($seriesTitle)
-    {
-        $this->seriesTitle = $seriesTitle;
-    }
-
-
     /**
      * Returns the sendSeries
      *
@@ -424,6 +354,28 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->gender = $gender;
     }
 
+    /**
+     * Returns the title
+     *
+     * @return \RKW\RkwRegistration\Domain\Model\Title $title
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Sets the title
+     *
+     * Hint: default "null" is needed to make value in forms optional
+     *
+     * @param \RKW\RkwRegistration\Domain\Model\Title $title
+     * @return void
+     */
+    public function setTitle(\RKW\RkwRegistration\Domain\Model\Title $title = null)
+    {
+        $this->title = $title;
+    }
 
     /**
      * Returns the firstName
@@ -659,16 +611,25 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->pages;
     }
 
+
     /**
-     * Sets the pages
+     * Returns the publication
      *
-     * @param \RKW\RkwOrder\Domain\Model\Pages $pages
-     * @return void
+     * @return \RKW\RkwOrder\Domain\Model\Publication $publication
      */
-    public function setPages(\RKW\RkwOrder\Domain\Model\Pages $pages)
+    public function getPublication()
     {
-        $this->pages = $pages;
+        return $this->publication;
     }
 
-
+    /**
+     * Sets the publication
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Publication $publication
+     * @return void
+     */
+    public function setPublication(\RKW\RkwOrder\Domain\Model\Publication $publication)
+    {
+        $this->publication = $publication;
+    }
 }

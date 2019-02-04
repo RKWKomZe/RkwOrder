@@ -33,7 +33,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * Used by SOAP-API
      *
      * @param integer $uid
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return object
      */
     public function findByUidAll($uid)
     {

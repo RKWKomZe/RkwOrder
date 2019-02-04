@@ -4,46 +4,45 @@
 
 <f:section name="orderAmount">
 
-    <!-- email (show only if no user is logged in) -->
-    <f:if condition="<vh:validEmail frontendUser='{frontendUser}' /> == 1">
-        <f:then>
+	<!-- email (show only if no user is logged in) -->
+	<f:if condition="<vh:validEmail frontendUser='{frontendUser}' /> == 1">
+		<f:then>
 
-            <!-- amount -->
-            <div class="v320-1-of-2">
-                <div class="v320-1">
-                    <label for="txrkworder-amount" class="form-label">
-                        <f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amount" />
-                    </label>
-                    <f:form.select id="txrkworder-amount" property="amount" options="<vh:integerToOptions numberOfOptions='{settings.order.maximum}' append='<f:translate key=\"tx_rkworder_domain_model_order.amountAppend\" />' appendFirst='<f:translate key=\"tx_rkworder_domain_model_order.amountAppendFirst\" />' />"  class="feedback-field"/>
-                </div>
-            </div>
+			<!-- amount -->
+			<div class="v320-1-of-2">
+				<div class="v320-1">
+					<label for="txrkworder-amount" class="form-label">
+						<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amount" />
+					</label>
+					<f:form.select id="txrkworder-amount" property="amount" options="<vh:integerToOptions numberOfOptions='{maximumOrderAmount}' append='<f:translate key=\"tx_rkworder_domain_model_order.amountAppend\" />' appendFirst='<f:translate key=\"tx_rkworder_domain_model_order.amountAppendFirst\" />' />"  class="feedback-field"/>
+				</div>
+			</div>
 
-            <!-- email -->
-            <div id="rkw-order-user-data-email">
-                <f:render partial="Order/FormFields/UserData" section="userDataEmail" arguments="{_all}" />
-            </div>
-        </f:then>
-        <f:else>
+			<!-- email -->
+			<div id="rkw-order-user-data-email">
+				<f:render partial="Order/FormFields/UserData" section="userDataEmail" arguments="{_all}" />
+			</div>
+		</f:then>
+		<f:else>
 
-            <!-- email -->
-            <div id="rkw-order-user-data-email">
-                <f:render partial="Order/FormFields/UserData" section="userDataEmail" arguments="{_all}" />
-            </div>
+			<!-- email -->
+			<div id="rkw-order-user-data-email">
+				<f:render partial="Order/FormFields/UserData" section="userDataEmail" arguments="{_all}" />
+			</div>
 
-            <!-- amount -->
-            <div class="v320-2-of-2">
+			<!-- amount -->
+			<div class="v320-2-of-2">
 
-                <div class="v320-1">
-                    <label for="txrkworder-amount" class="form-label">
-                        <f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amount" />
-                    </label>
-                    <f:form.select id="txrkworder-amount" property="amount" options="<vh:integerToOptions numberOfOptions='{settings.order.maximum}' append='<f:translate key=\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amountAppend\" />' appendFirst='<f:translate key=\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amountAppendFirst\" />' />"  class="feedback-field"/>
-                </div>
+				<div class="v320-1">
+					<label for="txrkworder-amount" class="form-label">
+						<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amount" />
+					</label>
+					<f:form.select id="txrkworder-amount" property="amount" options="<vh:integerToOptions numberOfOptions='{maximumOrderAmount}' append='<f:translate key=\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amountAppend\" />' appendFirst='<f:translate key=\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amountAppendFirst\" />' />"  class="feedback-field"/>
+				</div>
 
-            </div>
-
-        </f:else>
-    </f:if>
+			</div>
+		</f:else>
+	</f:if>
 </f:section>
 
 
@@ -53,84 +52,72 @@
 
 <f:section name="order">
 
-    <!-- remark -->
-    <div class="v320-1">
-
-        <f:if condition="{pages.txRkwbasicsDepartment.uid} == 2">
-		<span class="checkbox">
-			<label>
-				<f:form.checkbox id="tx-rkworder-newsletter" value="1" property="remark" />
-				<span class="text-smaller">
-					<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.newsletter" />
-				</span>
-			</label>
-		</span>
-        </f:if>
-
-        <!-- Hier das eigentliche textfeld. Wird aktiviert, sobald der checkbox newsletter-workaround nicht mehr benötigt wird -->
-        <f:comment>
+	<!-- remark -->
+    <f:comment>
+        <div class="v320-1">
             <label for="tx-rkworder-remark" class="form-label">
                 <f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.remark" />
             </label>
             <f:form.textarea id="tx-rkworder-remark" property="remark" />
-        </f:comment>
-    </div>
+        </div>
+    </f:comment>
 
+	<p class="v320-1">
+		<f:if condition="{publication.allowSeries}">
+			<f:if condition="{publication.series}">
+				<span class="checkbox">
+					<label>
+						<f:form.checkbox property="sendSeries" value="1" />
+						<span class="text-smaller">
+							<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields_order.sendSeries" arguments="{0 : publication.series.name}" />
+						</span>
+					</label>
+				</span>
+			</f:if>
+		</f:if>
 
+		<f:if condition="{publication.allowSubscription}">
+			<f:if condition="{publication.series}">
+			<span class="checkbox">
+				<label>
+					<f:form.checkbox property="subscribe" value="1" />
+					<span class="text-smaller">
+						<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields_order.subscribe" arguments="{0 : publication.series.name}" />
+					</span>
+				</label>
+			</span>
+			</f:if>
+		</f:if>
 
-    <p class="v320-1">
-        <f:if condition="{allowSeries}">
-            <f:if condition="{seriesTitle}">
-            <span class="checkbox">
-                <label>
-                    <f:form.checkbox property="sendSeries" value="1" />
-                    <span class="text-smaller">
-                        <f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:templates_order_new.sendSeries" arguments="{0 : seriesTitle}" />
-                    </span>
-                </label>
-            </span>
-            </f:if>
-        </f:if>
+		<f:security.ifAuthenticated>
+			<f:else>
+			<span class="checkbox">
+				<label>
+					<f:form.checkbox name="terms" value="1" />
+					<span class="text-smaller">
+						<f:link.page pageUid="{termsPid}" target="_blank">
+							<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields_order.terms" />
+						</f:link.page>
+					</span>
+				</label>
+			</span>
+			</f:else>
+		</f:security.ifAuthenticated>
+		<span class="checkbox">
+			<label>
+				<f:form.checkbox name="privacy" value="1" />
+				<rkwRegistration:privacyText textVersion="order" />
+			</label>
+		</span>
+	</p>
+	<p class="v320-1">
+		<button class="button" type="submit">
+			<span><f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields_order.order_button" /></span>
+		</button>
+	</p>
 
-        <f:if condition="{allowSubscription}">
-            <f:if condition="{seriesTitle}">
-            <span class="checkbox">
-                <label>
-                    <f:form.checkbox property="subscribe" value="1" />
-                    <span class="text-smaller">
-                        <f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:templates_order_new.subscribe" arguments="{0 : seriesTitle}" />
-                    </span>
-                </label>
-            </span>
-            </f:if>
-        </f:if>
-
-        <f:security.ifAuthenticated>
-            <f:else>
-            <span class="checkbox">
-                <label>
-                    <f:form.checkbox name="terms" value="1" />
-                    <span class="text-smaller">
-                        <f:link.page pageUid="{termsPid}" target="_blank">
-                            <f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:templates_order_new.terms" />
-                        </f:link.page>
-                    </span>
-                </label>
-            </span>
-            </f:else>
-        </f:security.ifAuthenticated>
-        <span class="checkbox">
-            <label>
-                <f:form.checkbox name="privacy" value="1" />
-                <rkwRegistration:privacyText textVersion="order" />
-            </label>
-        </span>
-    </p>
-    <p class="v320-1">
-        <button class="button" type="submit">
-            <span><f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:templates_order_new.order_button" /></span>
-        </button>
-    </p>
+    <!-- set publication -->
+    <f:form.hidden property="publication" value="{publication}" />
 </f:section>
 
 

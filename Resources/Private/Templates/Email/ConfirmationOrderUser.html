@@ -1,23 +1,23 @@
-{namespace vh=RKW\RkwMailer\ViewHelpers}
+{namespace rkwMailer=RKW\RkwMailer\ViewHelpers}
 <f:layout name="Email/{mailType}" />
 
 
 <!-- PLAINTEXT -->
 <f:section name="Plaintext">
-<vh:frontend.translate key="templates_email_confirmationOrderUser.headline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" arguments="{0 : frontendUser.firstName, 1: frontendUser.lastName}" />
+<rkwMailer:recipientSalutation queueRecipient="{queueRecipient}" prependText="<rkwMailer:frontend.translate key='templates_email_confirmationOrderUser.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwOrder' /> " appendText=","/>
 
-<vh:frontend.translate key="templates_email_confirmationOrderUser.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" />
-<vh:frontend.translate key="templates_email_confirmationOrderUser.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" />
+<rkwMailer:frontend.translate key="templates_email_confirmationOrderUser.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" />
+<rkwMailer:frontend.translate key="templates_email_confirmationOrderUser.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" />
 
 <f:render partial="Email/Details" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
 </f:section>
 
 <!-- HTML -->
 <f:section name="Html">
-	<h1><vh:frontend.translate key="templates_email_confirmationOrderUser.headline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" arguments="{0 : frontendUser.firstName, 1: frontendUser.lastName}" /></h1>
-	<p>
-		<vh:frontend.translate key="templates_email_confirmationOrderUser.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" /><br>
-		<vh:frontend.translate key="templates_email_confirmationOrderUser.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" />
+    <rkwMailer:recipientSalutation queueRecipient="{queueRecipient}" prependText="<rkwMailer:frontend.translate key='templates_email_confirmationOrderUser.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwOrder' /> " appendText=","/>
+    <p>
+		<rkwMailer:frontend.translate key="templates_email_confirmationOrderUser.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" /><br>
+		<rkwMailer:frontend.translate key="templates_email_confirmationOrderUser.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" />
 	</p>
 	<f:render partial="Email/Details" section="Html" arguments="{order: order, frontendUser: order.frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
 </f:section>

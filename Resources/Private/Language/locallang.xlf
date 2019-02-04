@@ -24,6 +24,18 @@
 			<trans-unit id="tx_rkworder_domain_model_order.gender.I.neutral">
 				<source>-- Please select --</source>
 			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.title" approved="yes">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.title.please_choose" approved="yes">
+				<source>-- Please select --</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.title.1" approved="yes">
+				<source>Dr.</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.title.2" approved="yes">
+				<source>Dr. Prof.</source>
+			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.first_name">
 				<source>First Name</source>
 			</trans-unit>
@@ -128,6 +140,21 @@
 			<trans-unit id="templates_email_optInRequest.headline">
 				<source>Hello  %s %s,</source>
 			</trans-unit>
+			<trans-unit id="templates_email_optInRequest.headline.greet">
+				<source>Hello </source>
+			</trans-unit>
+			<trans-unit id="templates_email_optInRequest.headline.greet.without_name">
+				<source>Hello!</source>
+			</trans-unit>
+			<trans-unit id="templates_email_optInRequest.headline.title.1">
+				<source>Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates_email_optInRequest.headline.title.2">
+				<source>Prof. Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates_email_optInRequest.headline.name">
+				<source>%s %s!</source>
+			</trans-unit>
 			<trans-unit id="templates_email_optInRequest.text1">
 				<source>thank you for your interest in RKW products.</source>
 			</trans-unit>
@@ -156,6 +183,21 @@
 			<trans-unit id="templates_email_confirmationOrderUser.headline">
 				<source>Hello %s %s,</source>
 			</trans-unit>
+			<trans-unit id="templates_email_confirmationOrderUser.headline.greet">
+				<source>Hello </source>
+			</trans-unit>
+			<trans-unit id="templates_email_confirmationOrderUser.headline.greet.without_name">
+				<source>Hello!</source>
+			</trans-unit>
+			<trans-unit id="templates_email_confirmationOrderUser.headline.title.1">
+				<source>Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates_email_confirmationOrderUser.headline.title.2">
+				<source>Prof. Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates_email_confirmationOrderUser.headline.name">
+				<source>%s %s!</source>
+			</trans-unit>
 			<trans-unit id="templates_email_confirmationOrderUser.text1">
 				<source>thank you for your order.</source>
 			</trans-unit>
@@ -178,6 +220,21 @@
 			<!-- Templates/Email/DeleteOrderUser.html -->
 			<trans-unit id="templates_email_deleteOrderUser.headline">
 				<source>Hello %s %s,</source>
+			</trans-unit>
+			<trans-unit id="templates_email_deleteOrderUser.headline.greet">
+				<source>Hello </source>
+			</trans-unit>
+			<trans-unit id="templates_email_deleteOrderUser.headline.greet.without_name">
+				<source>Hello!</source>
+			</trans-unit>
+			<trans-unit id="templates_email_deleteOrderUser.headline.title.1">
+				<source>Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates_email_deleteOrderUser.headline.title.2">
+				<source>Prof. Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates_email_deleteOrderUser.headline.name">
+				<source>%s %s!</source>
 			</trans-unit>
 			<trans-unit id="templates_email_deleteOrderUser.text1">
 				<source>thank you for your order.</source>
