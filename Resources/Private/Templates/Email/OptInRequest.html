@@ -24,7 +24,7 @@
 </f:section>
 <!-- HTML -->
 <f:section name="Html">
-    <rkwMailer:recipientSalutation queueRecipient="{queueRecipient}" prependText="<rkwMailer:frontend.translate key='templates_email_optInRequest.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwOrder' /> " appendText=","/>
+    <h1><rkwMailer:recipientSalutation queueRecipient="{queueRecipient}" prependText="<rkwMailer:frontend.translate key='templates_email_optInRequest.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwOrder' /> " appendText=","/></h1>
     <p>
 		<rkwMailer:frontend.translate key="templates_email_optInRequest.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" /><br>
 		<strong><rkwMailer:frontend.translate key="templates_email_optInRequest.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" /></strong>

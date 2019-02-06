@@ -3,19 +3,21 @@
 <f:if condition="{publication}">
 
     <!-- check availability of series -->
-    <f:if condition="<rkwOrder:checkSeriesAvailability publication='{publication}' />">
-        <f:else>
-            <div class="typo3-messages" role="alert">
-                <div class="message-warning typo3-message">
-                    <f:translate key="partials_order_availability.seriesNotAvailable" extensionName="rkw_order"/>
+    <f:if condition="{publication.allowSeries}">
+        <f:if condition="<rkwOrder:checkSeriesAvailability publication='{publication}' />">
+            <f:else>
+                <div class="typo3-messages" role="alert">
+                    <div class="message-warning typo3-message">
+                        <f:translate key="partials_order_availability.seriesNotAvailable" extensionName="rkw_order"/>
+                    </div>
+                    <div class="message-warning typo3-message">
+                        <f:for each="<rkwOrder:outOfStockSeries publication='{publication}' />" as="publicationElement">
+                            &ndash;&nbsp;{publicationElement.title}<br/>
+                        </f:for>
+                    </div>
                 </div>
-                <ol class="message-warning typo3-message">
-                    <f:for each="<rkwOrder:outOfStockSeries publication='{publication}' />" as="publicationElement">
-                        <li>{publicationElement.title}</li>
-                    </f:for>
-                </ol>
-            </div>
-        </f:else>
+            </f:else>
+        </f:if>
     </f:if>
 
     <!-- check availability of all other publications -->

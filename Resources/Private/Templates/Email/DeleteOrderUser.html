@@ -14,7 +14,7 @@
 
 <!-- HTML -->
 <f:section name="Html">
-    <rkwMailer:recipientSalutation queueRecipient="{queueRecipient}" prependText="<rkwMailer:frontend.translate key='templates_email_deleteOrderUser.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwOrder' /> " appendText=","/>
+    <h1><rkwMailer:recipientSalutation queueRecipient="{queueRecipient}" prependText="<rkwMailer:frontend.translate key='templates_email_deleteOrderUser.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwOrder' /> " appendText=","/></h1>
 	<p>
 		<rkwMailer:frontend.translate key="templates_email_deleteOrderUser.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" /><br>
 		<rkwMailer:frontend.translate key="templates_email_deleteOrderUser.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwOrder" />

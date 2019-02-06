@@ -3,8 +3,6 @@
 
 <f:section name="main">
 
-    <f:render partial="Order/Availability"  arguments="{_all}" />
-
     <f:flashMessages as="flashMessages">
         <f:for each="{flashMessages}" as="flashMessage">
             <div class="typo3-messages">
@@ -21,6 +19,7 @@
         </f:for>
     </f:flashMessages>
 
+    <f:render partial="Order/Availability"  arguments="{_all}" />
     <f:render partial="FormErrors" arguments="{object:Order}" />
 
     <f:if condition="{publication}">
