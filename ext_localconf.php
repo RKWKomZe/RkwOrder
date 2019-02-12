@@ -18,7 +18,6 @@ if (!defined('TYPO3_MODE')) {
 // register command controller (cronjob)
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = 'RKW\\RkwOrder\\Controller\\OrderCommandController';
 
-
 /**
  * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
  */

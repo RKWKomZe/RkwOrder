@@ -171,11 +171,11 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * frontendUser
      *
-     * @var \RKW\RkwRegistration\Domain\Model\FrontendUser
+     * @var \RKW\RkwOrder\Domain\Model\FrontendUser
      */
     protected $frontendUser = null;
 
-    /**
+     /**
      * pages
      *
      * @var \RKW\RkwOrder\Domain\Model\Pages
@@ -582,7 +582,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the frontendUser
      *
-     * @return \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @return \RKW\RkwOrder\Domain\Model\FrontendUser $frontendUser
      */
     public function getFrontendUser()
     {
@@ -605,12 +605,24 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Returns the pages
      *
      * @return \RKW\RkwOrder\Domain\Model\Pages $pages
+     * @deprecated
      */
     public function getPages()
     {
         return $this->pages;
     }
 
+
+    /**
+     * Returns the pages
+     *
+     * @return int $pages
+     * @deprecated
+     */
+    public function getPagesNumeric()
+    {
+        return intval($this->pages);
+    }
 
     /**
      * Returns the publication
@@ -620,6 +632,17 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getPublication()
     {
         return $this->publication;
+    }
+
+
+    /**
+     * Returns the publication
+     *
+     * @return int $pages
+     */
+    public function getPublicationNumeric()
+    {
+        return intval($this->publication);
     }
 
     /**
