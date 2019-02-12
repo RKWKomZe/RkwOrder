@@ -121,7 +121,7 @@ return array(
 				'minitems' => 0,
 				'maxitems' => 1,
 				'items' => array(
-					array('LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.title.please_choose', 99),
+					array('LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.title.please_choose', 0),
 				),
 			),
 		),

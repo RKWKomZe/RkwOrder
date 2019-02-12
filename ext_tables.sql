@@ -8,7 +8,7 @@ CREATE TABLE tx_rkworder_domain_model_order (
 
 
 	gender tinyint(4) DEFAULT '0' NOT NULL,
-	title int(11) DEFAULT '99' NOT NULL,
+	title int(11) DEFAULT '0' NOT NULL,
 	first_name varchar(255) DEFAULT '' NOT NULL,
 	last_name varchar(255) DEFAULT '' NOT NULL,
 	company varchar(255) DEFAULT '' NOT NULL,

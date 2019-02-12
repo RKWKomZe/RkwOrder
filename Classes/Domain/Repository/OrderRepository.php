@@ -30,12 +30,12 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
     /**
      * Find all orders by uid, even if they are hidden
-     * Used by SOAP-API
      *
+     * @api used by SOAP-API
      * @param integer $uid
      * @return object
      */
-    public function findByUidAll($uid)
+    public function findByUidSoap($uid)
     {
 
         $query = $this->createQuery();
@@ -55,14 +55,16 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Find all orders that have been updated recently
      *
-     * @api Used by RKW Soap
+     * @api used by RKW Soap
      * @param integer $timestamp
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function findByTimestamp($timestamp)
+    public function findByTimestampSoap($timestamp)
     {
 
         $query = $this->createQuery();
+
         $query->getQuerySettings()->setRespectStoragePage(false);
         $query->getQuerySettings()->setIncludeDeleted(true);
         $query->getQuerySettings()->setIgnoreEnableFields(true);
@@ -70,11 +72,14 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query->matching(
             $query->greaterThanOrEqual('tstamp', intval($timestamp))
         );
+
         $query->setOrderings(array('tstamp' => QueryInterface::ORDER_ASCENDING));
 
-        return $query->execute();
+        // return raw data here in order to include deleted relations, too!!!!
+        return $query->execute(true);
         //===
     }
+
 
 
     /**
