@@ -15,54 +15,6 @@
 				<source>Subscription</source>
 				<target>Abonnement</target>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.gender">
-				<source>Salutation</source>
-				<target>Anrede</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.gender.I.man">
-				<source>Mr.</source>
-				<target>Herr</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.gender.I.woman">
-				<source>Mrs.</source>
-				<target>Frau</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.gender.I.neutral">
-				<source>Not set</source>
-				<target>Nicht gesetzt</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.title" approved="yes">
-				<source>Title</source>
-				<target>Title</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.title.please_choose" approved="yes">
-				<source>---</source>
-				<target>---</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.first_name">
-				<source>First Name</source>
-				<target>Vorname</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.last_name">
-				<source>Last Name</source>
-				<target>Nachname</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.company">
-				<source>Company</source>
-				<target>Firma</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.address">
-				<source>Address</source>
-				<target>Adresse</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.zip">
-				<source>ZIP</source>
-				<target>PLZ</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.city">
-				<source>City</source>
-				<target>Stadt</target>
-			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.email">
 				<source>E-Mail</source>
 				<target>E-Mail</target>
@@ -74,6 +26,10 @@
 			<trans-unit id="tx_rkworder_domain_model_order.frontend_user">
 				<source>Frontend User</source>
 				<target>Frontend User</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_order.shipping_address">
+				<source>Shipping Address</source>
+				<target>Lieferadresse</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.pages">
 				<source>Pages</source>
@@ -96,6 +52,60 @@
 				<target>Anmerkung</target>
 			</trans-unit>
 
+
+
+            <trans-unit id="tx_rkworder_domain_model_shippingaddress.gender">
+				<source>RKW Order: Shipping Address</source>
+				<target>RKW Order: Lieferadresse</target>
+			</trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_shippingaddress.gender">
+				<source>Salutation</source>
+				<target>Anrede</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.gender.I.man">
+				<source>Mr.</source>
+				<target>Herr</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.gender.I.woman">
+				<source>Mrs.</source>
+				<target>Frau</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.gender.I.neutral">
+				<source>Not set</source>
+				<target>Nicht gesetzt</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.title" approved="yes">
+				<source>Title</source>
+				<target>Title</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.title.please_choose" approved="yes">
+				<source>---</source>
+				<target>---</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.first_name">
+				<source>First Name</source>
+				<target>Vorname</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.last_name">
+				<source>Last Name</source>
+				<target>Nachname</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.company">
+				<source>Company</source>
+				<target>Firma</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.address">
+				<source>Address</source>
+				<target>Adresse</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.zip">
+				<source>ZIP</source>
+				<target>PLZ</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.city">
+				<source>City</source>
+				<target>Stadt</target>
+			</trans-unit>
 
 
 			<trans-unit id="tx_rkworder_domain_model_publication">

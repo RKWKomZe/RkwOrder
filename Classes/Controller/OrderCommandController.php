@@ -112,6 +112,7 @@ class OrderCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandCo
 
         // do only something, if there no entries in db
         if (!count($publicationRepository->findAll())) {
+
             /** @var \RKW\RkwOrder\Domain\Repository\PagesRepository $pagesRepository */
             $pagesRepository = $objectManager->get('RKW\\RkwOrder\\Domain\\Repository\\PagesRepository');
             // use visible and hidden! (only bypass deleted records!)
