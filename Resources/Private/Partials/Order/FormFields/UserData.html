@@ -7,9 +7,9 @@
 		<!-- Gender -->
 		<div class="v320-1">
 			<label for="txrkworder-gender" class="form-label">
-				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.gender" />
+				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.gender" />
 			</label>
-			<f:form.select id="txrkworder-gender" property="gender" value="{f:if(condition:'{newOrder.gender} != 99',then:'{newOrder.gender}',else:'{frontendUser.txRkwregistrationGender}')}" options="{99: '{f:translate(key:\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.gender.I.neutral\")}', 0: '{f:translate(key:\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.gender.I.man\")}', 1: '{f:translate(key:\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.gender.I.woman\")}'}" optionValueField="uid" optionLabelField="name" />
+			<f:form.select id="txrkworder-gender" property="shippingAddress.gender" value="{f:if(condition:'{newOrder.shippingAddress.gender} != 99',then:'{newOrder.shippingAddress.gender}',else:'{frontendUser.txRkwregistrationGender}')}" options="{99: '{f:translate(key:\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.gender.I.neutral\")}', 0: '{f:translate(key:\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.gender.I.man\")}', 1: '{f:translate(key:\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.gender.I.woman\")}'}" optionValueField="uid" optionLabelField="name" />
 		</div>
 
 		<!-- title -->
@@ -18,20 +18,20 @@
 				<f:translate key="tx_rkworder_domain_model_order.title" />
 				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields.labelOptional" /></span>
 			</label>
-			<f:form.select id="txrkworder-title" property="title" options="<rkwRegistration:titleList />" optionValueField="uid" optionLabelField="name" prependOptionValue="0" prependOptionLabel="{f:translate(key:'LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.gender.I.neutral')}" />
+			<f:form.select id="txrkworder-title" property="shippingAddress.title" options="<rkwRegistration:titleList />" optionValueField="uid" optionLabelField="name" prependOptionValue="0" prependOptionLabel="{f:translate(key:'LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.title.I.neutral')}" />
 		</div>
 
 		<!-- firstName -->
 		<div class="v320-1">
 			<label for="txrkworder-firstName" class="form-label">
-				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.first_name" />
+				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.first_name" />
 			</label>
 			<f:if condition="{newOrder.firstName}">
 				<f:then>
-					<f:form.textfield id="txrkworder-firstName" property="firstName" value="{firstName}" additionalAttributes="{autocomplete: 'fname'}" class="feedback-field" />
+					<f:form.textfield id="txrkworder-firstName" property="shippingAddress.firstName" value="{shippingAddress.firstName}" additionalAttributes="{autocomplete: 'fname'}" class="feedback-field" />
 				</f:then>
 				<f:else>
-					<f:form.textfield id="txrkworder-firstName" property="firstName" value="{frontendUser.firstName}" additionalAttributes="{autocomplete: 'fname'}" class="feedback-field" />
+					<f:form.textfield id="txrkworder-firstName" property="shippingAddress.firstName" value="{frontendUser.firstName}" additionalAttributes="{autocomplete: 'fname'}" class="feedback-field" />
 				</f:else>
 			</f:if>
 		</div>
@@ -39,14 +39,14 @@
 		<!-- lastName -->
 		<div class="v320-1">
 			<label for="txrkworder-lastName" class="form-label">
-				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.last_name" />
+				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.last_name" />
 			</label>
 			<f:if condition="{newOrder.lastName}">
 				<f:then>
-					<f:form.textfield id="txrkworder-lastName" property="lastName" value="{lastName}" additionalAttributes="{autocomplete: 'lname'}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-lastName" property="shippingAddress.lastName" value="{shippingAddress.lastName}" additionalAttributes="{autocomplete: 'lname'}" class="feedback-field"/>
 				</f:then>
 				<f:else>
-					<f:form.textfield id="txrkworder-lastName" property="lastName" value="{frontendUser.lastName}" additionalAttributes="{autocomplete: 'lname'}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-lastName" property="shippingAddress.lastName" value="{frontendUser.lastName}" additionalAttributes="{autocomplete: 'lname'}" class="feedback-field"/>
 				</f:else>
 			</f:if>
 		</div>
@@ -58,15 +58,15 @@
 		<!-- company -->
 		<div class="v320-1">
 			<label for="txrkworder-company" class="form-label">
-				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.company" />
+				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.company" />
 				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields.labelOptional" /></span>
 			</label>
-			<f:if condition="{newOrder.company}">
+			<f:if condition="{newOrder.shippingAddress.company}">
 				<f:then>
-					<f:form.textfield id="txrkworder-company" property="company" value="{company}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-company" property="shippingAddress.company" value="{shippingAddress.company}" class="feedback-field"/>
 				</f:then>
 				<f:else>
-					<f:form.textfield id="txrkworder-company" property="company" value="{frontendUser.company}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-company" property="shippingAddress.company" value="{frontendUser.company}" class="feedback-field"/>
 				</f:else>
 			</f:if>
 		</div>
@@ -74,14 +74,14 @@
 		<!-- address -->
 		<div class="v320-1">
 			<label for="txrkworder-address" class="form-label">
-				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.address" />
+				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.address" />
 			</label>
-			<f:if condition="{newOrder.address}">
+			<f:if condition="{newOrder.shippingAddress.address}">
 				<f:then>
-					<f:form.textfield id="txrkworder-address" property="address" value="{address}" additionalAttributes="{autocomplete: 'address'}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-address" property="shippingAddress.address" value="{shippingAddress.address}" additionalAttributes="{autocomplete: 'address'}" class="feedback-field"/>
 				</f:then>
 				<f:else>
-					<f:form.textfield id="txrkworder-address" property="address" value="{frontendUser.address}" additionalAttributes="{autocomplete: 'address'}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-address" property="shippingAddress.address" value="{frontendUser.address}" additionalAttributes="{autocomplete: 'address'}" class="feedback-field"/>
 				</f:else>
 			</f:if>
 		</div>
@@ -89,14 +89,14 @@
 		<!-- zip -->
 		<div class="v320-1">
 			<label for="txrkworder-zip" class="form-label">
-				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.zip" />
+				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.zip" />
 			</label>
-			<f:if condition="{newOrder.zip}">
+			<f:if condition="{newOrder.shippingAddress.zip}">
 				<f:then>
-					<f:form.textfield id="txrkworder-zip" property="zip" value="{zip}" additionalAttributes="{autocomplete: 'zip'}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-zip" property="shippingAddress.zip" value="{shippingAddress.zip}" additionalAttributes="{autocomplete: 'zip'}" class="feedback-field"/>
 				</f:then>
 				<f:else>
-					<f:form.textfield id="txrkworder-zip" property="zip" value="{frontendUser.zip}" additionalAttributes="{autocomplete: 'zip'}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-zip" property="shippingAddress.zip" value="{frontendUser.zip}" additionalAttributes="{autocomplete: 'zip'}" class="feedback-field"/>
 				</f:else>
 			</f:if>
 		</div>
@@ -104,11 +104,11 @@
 		<!-- city -->
 		<div class="v320-1">
 			<label for="txrkworder-city" class="form-label">
-				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.city" />
+				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.city" />
 			</label>
-			<f:if condition="{newOrder.city}">
+			<f:if condition="{newOrder.shippingAddress.city}">
 				<f:then>
-					<f:form.textfield id="txrkworder-city" property="city" value="{city}" additionalAttributes="{autocomplete: 'city'}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-city" property="city" value="{shippingAddress.city}" additionalAttributes="{autocomplete: 'city'}" class="feedback-field"/>
 				</f:then>
 				<f:else>
 					<f:form.textfield id="txrkworder-city" property="city" value="{frontendUser.city}" additionalAttributes="{autocomplete: 'city'}" class="feedback-field"/>

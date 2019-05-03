@@ -137,6 +137,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function newInitAction(\RKW\RkwOrder\Domain\Model\Order $newOrder = null)
     {
+
         /** @var \RKW\RkwOrder\Domain\Model\Pages $pages */
         $pages = $this->pagesRepository->findByUid($this->getImportedParentPid(intval($GLOBALS['TSFE']->id)));
         if ($publication = $pages->getTxRkworderPublication()) {
@@ -325,28 +326,28 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
             // update FE-User-Data if none is set so long
             if (!$feUser->getTxRkwregistrationGender()) {
-                $feUser->setTxRkwregistrationGender($newOrder->getGender());
+                $feUser->setTxRkwregistrationGender($newOrder->getShippingAddress()->getGender());
             }
             if (!$feUser->getTitle()) {
-                $feUser->setTxRkwregistrationTitle($newOrder->getTitle());
+                $feUser->setTxRkwregistrationTitle($newOrder->getShippingAddress()->getTitle());
             }
             if (!$feUser->getFirstName()) {
-                $feUser->setFirstName($newOrder->getFirstName());
+                $feUser->setFirstName($newOrder->getShippingAddress()->getFirstName());
             }
             if (!$feUser->getLastName()) {
-                $feUser->setLastName($newOrder->getLastName());
+                $feUser->setLastName($newOrder->getShippingAddress()->getLastName());
             }
             if (!$feUser->getCompany()) {
-                $feUser->setCompany($newOrder->getCompany());
+                $feUser->setCompany($newOrder->getShippingAddress()->getCompany());
             }
             if (!$feUser->getAddress()) {
-                $feUser->setAddress($newOrder->getAddress());
+                $feUser->setAddress($newOrder->getShippingAddress()->getAddress());
             }
             if (!$feUser->getZip()) {
-                $feUser->setZip($newOrder->getZip());
+                $feUser->setZip($newOrder->getShippingAddress()->getZip());
             }
             if (!$feUser->getCity()) {
-                $feUser->setCity($newOrder->getCity());
+                $feUser->setCity($newOrder->getShippingAddress()->getCity());
             }
 
             $this->frontendUserRepository->update($feUser);
@@ -366,9 +367,9 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             );
 
 
-            // 2.2 if user is not logged in - or is logged in and has no valid email (e.g. when having registered via Facebook or Twitter)
-            // A not logged user always has to confirm his orders. If the email already exists, there will be no new
-            // user created
+        // 2.2 if user is not logged in - or is logged in and has no valid email (e.g. when having registered via Facebook or Twitter)
+        // A not logged user always has to confirm his orders. If the email already exists, there will be no new
+        // user created
         } else {
 
             // check if email is valid

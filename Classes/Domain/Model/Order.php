@@ -105,6 +105,14 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $frontendUser = null;
 
+
+    /**
+     * shippingAddress
+     *
+     * @var \RKW\RkwOrder\Domain\Model\ShippingAddress
+     */
+    protected $shippingAddress = null;
+
      /**
      * pages
      *
@@ -347,6 +355,26 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->frontendUser = $frontendUser;
     }
 
+    /**
+     * Returns the frontendUser
+     *
+     * @return \RKW\RkwOrder\Domain\Model\ShippingAddress $shippingAddress
+     */
+    public function getShippingAddress()
+    {
+        return $this->shippingAddress;
+    }
+
+    /**
+     * Sets the frontendUser
+     *
+     * @param \RKW\RkwOrder\Domain\Model\ShippingAddress $shippingAddress
+     * @return void
+     */
+    public function setShippingAddress(\RKW\RkwOrder\Domain\Model\ShippingAddress $shippingAddress)
+    {
+        $this->shippingAddress = $shippingAddress;
+    }
 
     /**
      * Returns the pages

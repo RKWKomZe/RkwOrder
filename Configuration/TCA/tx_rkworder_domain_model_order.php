@@ -116,6 +116,15 @@ return array(
 				'readOnly' =>1,
 			),
 		),
+        'email' => array(
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.email',
+            'config' => array(
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
+            ),
+        ),
         'shipping_address' => array(
             'exclude' => 0,
             'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.shipping_address',
