@@ -60,7 +60,36 @@ config.tx_extbase.persistence {
 
         #===============================================
 
+        RKW\RkwRegistration\Domain\Model\ShippingAddress {
+            subclasses {
+                Tx_RkwOrder_ShippingAddress = RKW\RkwOrder\Domain\Model\ShippingAddress
+            }
+        }
+
+        RKW\RkwOrder\Domain\Model\ShippingAddress {
+            mapping {
+
+                # tablename
+                tableName = tx_rkwregistration_domain_model_shippingaddress
+            }
+        }
+
+        #===============================================
+
         RKW\RkwOrder\Domain\Model\Order {
+            mapping {
+                columns {
+                    crdate.mapOnProperty = crdate
+                    tstamp.mapOnProperty = tstamp
+                    hidden.mapOnProperty = hidden
+                    deleted.mapOnProperty = deleted
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwOrder\Domain\Model\Publication {
             mapping {
                 columns {
                     crdate.mapOnProperty = crdate

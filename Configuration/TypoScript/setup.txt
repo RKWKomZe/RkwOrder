@@ -42,7 +42,6 @@ config.tx_extbase.persistence {
 
         #===============================================
 
-
         TYPO3\CMS\Extbase\Domain\Model\BackendUser {
             subclasses {
                 Tx_RkwOrder_BackendUser = RKW\RkwOrder\Domain\Model\BackendUser
@@ -56,6 +55,22 @@ config.tx_extbase.persistence {
                 columns {
                     usergroup.mapOnProperty = backendUserGroups
                 }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwRegistration\Domain\Model\ShippingAddress {
+            subclasses {
+                Tx_RkwOrder_ShippingAddress = RKW\RkwOrder\Domain\Model\ShippingAddress
+            }
+        }
+
+        RKW\RkwOrder\Domain\Model\ShippingAddress {
+            mapping {
+
+                # tablename
+                tableName = tx_rkwregistration_domain_model_shippingaddress
             }
         }
 

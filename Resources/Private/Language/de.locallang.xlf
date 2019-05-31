@@ -144,10 +144,6 @@
 				<source>Value can't be 0</source>
 				<target>Bitte geben Sie eine Bestellmenge an, die größer als 0 ist. Sonst macht das hier wenig Sinn ;-)</target>
 			</trans-unit>
-			<trans-unit id="validator.zip.incorrect">
-				<source>The zip is not valid</source>
-				<target>Die Postleitzahl ist leider nicht korrekt.</target>
-			</trans-unit>
 
 
 

@@ -108,10 +108,10 @@
 			</label>
 			<f:if condition="{newOrder.shippingAddress.city}">
 				<f:then>
-					<f:form.textfield id="txrkworder-city" property="city" value="{shippingAddress.city}" additionalAttributes="{autocomplete: 'city'}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-city" property="shippingAddress.city" value="{shippingAddress.city}" additionalAttributes="{autocomplete: 'city'}" class="feedback-field"/>
 				</f:then>
 				<f:else>
-					<f:form.textfield id="txrkworder-city" property="city" value="{frontendUser.city}" additionalAttributes="{autocomplete: 'city'}" class="feedback-field"/>
+					<f:form.textfield id="txrkworder-city" property="shippingAddress.city" value="{frontendUser.city}" additionalAttributes="{autocomplete: 'city'}" class="feedback-field"/>
 				</f:else>
 			</f:if>
 		</div>

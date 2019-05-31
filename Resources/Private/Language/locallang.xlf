@@ -110,10 +110,6 @@
 			<trans-unit id="validator.notzero.zero">
 				<source>Value can't be 0</source>
 			</trans-unit>
-			<trans-unit id="validator.zip.incorrect">
-				<source>The zip is not valid</source>
-			</trans-unit>
-
 
 
 			<!-- ================================================================================== -->

@@ -74,7 +74,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $subscribe = 0;
 
 
-
     /**
      * email
      *
@@ -88,7 +87,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var string
      */
-    protected $remark;
+    protected $remark = '';
 
     /**
      * amount

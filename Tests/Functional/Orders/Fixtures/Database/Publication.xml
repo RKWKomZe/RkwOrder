@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_rkworder_domain_model_publication>
+        <uid>1</uid>
+        <pid>0</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>hans@rkw.de</admin_email>
+        <stock>100</stock>
+        <allow_series>0</allow_series>
+        <allow_subscription>0</allow_subscription>
+        <backend_user>1</backend_user>
+    </tx_rkworder_domain_model_publication>
+</dataset>

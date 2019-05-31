@@ -3,16 +3,16 @@ namespace RKW\RkwOrder\Tests\Functional\Orders;
 
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
-use RKW\RkwOrder\Orders\OrderManager;
 use RKW\RkwOrder\Domain\Model\Order;
+use RKW\RkwOrder\Domain\Model\ShippingAddress;
+use RKW\RkwOrder\Orders\OrderManager;
 use RKW\RkwOrder\Domain\Repository\OrderRepository;
+use RKW\RkwOrder\Domain\Repository\PublicationRepository;
+use RKW\RkwOrder\Domain\Repository\ShippingAddressRepository;
+
+use RKW\RkwRegistration\Domain\Model\FrontendUser;
 use RKW\RkwRegistration\Domain\Repository\FrontendUserRepository;
 
-use RKW\RkwRegistration\Domain\Repository\BackendUserRepository;
-use RKW\RkwMailer\Domain\Repository\StatisticMailRepository;
-
-
-use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -58,6 +58,11 @@ class OrderManagerTest extends FunctionalTestCase
     protected $coreExtensionsToLoad = [];
 
     /**
+     * @var \RKW\RkwOrder\Domain\Model\Order
+     */
+    private $fixtureDummy = null;
+
+    /**
      * @var \RKW\RkwOrder\Orders\OrderManager
      */
     private $subject = null;
@@ -68,9 +73,20 @@ class OrderManagerTest extends FunctionalTestCase
     private $frontendUserRepository;
 
     /**
+     * @var \RKW\RkwOrder\Domain\Repository\ShippingAddressRepository
+     */
+    private $shippingAddressRepository;
+
+
+    /**
      * @var \RKW\RkwOrder\Domain\Repository\OrderRepository
      */
     private $orderRepository;
+
+    /**
+     * @var \RKW\RkwOrder\Domain\Repository\PublicationRepository
+     */
+    private $publicationRepository;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
@@ -91,19 +107,13 @@ class OrderManagerTest extends FunctionalTestCase
     {
         parent::setUp();
 
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/BeUsers.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/FeUsers.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/Pages.xml');
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Publication.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/Order.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/ShippingAddress.xml');
 
-
-        /*
-
-        $this->importDataSet(__DIR__ . '/Fixtures/Database/QueueMail.xml');
-        $this->importDataSet(__DIR__ . '/Fixtures/Database/QueueRecipient.xml');
-        $this->importDataSet(__DIR__ . '/Fixtures/Database/StatisticMail.xml');
-        $this->importDataSet(__DIR__ . '/Fixtures/Database/BeUsers.xml');
-        */
 
 
         $this->setUpFrontendRootPage(
@@ -115,31 +125,28 @@ class OrderManagerTest extends FunctionalTestCase
             ]
         );
 
-        /*
-                $this->setUpFrontendRootPage(
-                    2,
-                    [
-                        'EXT:rkw_registration/Configuration/TypoScript/setup.txt',
-                        'EXT:rkw_mailer/Configuration/TypoScript/setup.txt',
-                        'EXT:rkw_mailer/Tests/Functional/Service/Fixtures/Frontend/Configuration/Subpage.typoscript',
-                    ]
-                );*/
 
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
-        /*
-        $this->queueMailRepository = $this->objectManager->get(QueueMailRepository::class);
-        $this->queueRecipientRepository = $this->objectManager->get(QueueRecipientRepository::class);
-        $this->statisticMailRepository = $this->objectManager->get(StatisticMailRepository::class);
-        $this->backendUserRepository = $this->objectManager->get(BackendUserRepository::class);
-        */
-
         $this->subject = $this->objectManager->get(OrderManager::class);
         $this->frontendUserRepository = $this->objectManager->get(FrontendUserRepository::class);
+        $this->shippingAddressRepository = $this->objectManager->get(ShippingAddressRepository::class);
         $this->orderRepository = $this->objectManager->get(OrderRepository::class);
+        $this->publicationRepository = $this->objectManager->get(PublicationRepository::class);
+
+        /** @var \RKW\RkwOrder\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = $this->shippingAddressRepository->findByUid(1);
+
+        /** @var \RKW\RkwOrder\Domain\Model\Publication $publication */
+        $publication = $this->publicationRepository->findByUid(1);
+
+        $this->fixtureDummy = GeneralUtility::makeInstance(Order::class);
+        $this->fixtureDummy->setPublication($publication);
+        $this->fixtureDummy->setShippingAddress($shippingAddress);
+        $this->fixtureDummy->setEmail('email@rkw.de');
 
     }
 
@@ -154,10 +161,24 @@ class OrderManagerTest extends FunctionalTestCase
         static::expectException(\RKW\RkwOrder\Exception::class);
         static::expectExceptionMessage('orderManager.error.acceptTerms');
 
-        /** @var \RKW\Rkworder\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByUid(1);
+        $this->subject->createOrder($this->fixtureDummy, null, false, false);
 
-        $this->subject->createOrder($order, null, false, false);
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwOrder\Exception
+     */
+    public function createOrderGivenNonPersistentFrontendUserAndTermsFalseThrowsException ()
+    {
+
+        static::expectException(\RKW\RkwOrder\Exception::class);
+        static::expectExceptionMessage('orderManager.error.acceptTerms');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
+        $frontendUser = GeneralUtility::makeInstance(FrontendUser::class);
+
+        $this->subject->createOrder($this->fixtureDummy, $frontendUser, false, false);
 
     }
 
@@ -171,10 +192,7 @@ class OrderManagerTest extends FunctionalTestCase
         static::expectException(\RKW\RkwOrder\Exception::class);
         static::expectExceptionMessage('orderManager.error.acceptPrivacy');
 
-        /** @var \RKW\Rkworder\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByUid(1);
-
-        $this->subject->createOrder($order, null, true, false);
+        $this->subject->createOrder($this->fixtureDummy, null, true, false);
 
     }
 
@@ -188,13 +206,27 @@ class OrderManagerTest extends FunctionalTestCase
         static::expectException(\RKW\RkwOrder\Exception::class);
         static::expectExceptionMessage('orderManager.error.acceptPrivacy');
 
-        /** @var \RKW\Rkworder\Domain\Model\Order $order */
-        $order = GeneralUtility::makeInstance(Order::class);
-
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
-        $this->subject->createOrder($order, $frontendUser, true, false);
+        $this->subject->createOrder($this->fixtureDummy, $frontendUser, true, false);
+
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwOrder\Exception
+     */
+    public function createOrderGivenNonPersistentFrontendUserAndTermsFalseAndPrivacyTrueThrowsException ()
+    {
+
+        static::expectException(\RKW\RkwOrder\Exception::class);
+        static::expectExceptionMessage('orderManager.error.acceptTerms');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
+        $frontendUser = GeneralUtility::makeInstance(FrontendUser::class);
+
+        $this->subject->createOrder($this->fixtureDummy, $frontendUser, false, true);
 
     }
 
@@ -205,13 +237,10 @@ class OrderManagerTest extends FunctionalTestCase
     public function createOrderGivenFrontendUserAndTermsFalseAndPrivacyTrueReturnsTrue ()
     {
 
-        /** @var \RKW\Rkworder\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByUid(1);
-
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
-        static::assertTrue($this->subject->createOrder($order, $frontendUser, false, true));
+        static::assertTrue($this->subject->createOrder($this->fixtureDummy, $frontendUser, false, true));
 
     }
 
@@ -226,12 +255,32 @@ class OrderManagerTest extends FunctionalTestCase
         static::expectException(\RKW\RkwOrder\Exception::class);
         static::expectExceptionMessage('orderManager.error.invalidEmail');
 
-        /** @var \RKW\Rkworder\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByUid(1);
-        $order->setEmail('invalid-email');
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        $this->fixtureDummy->setEmail('invalid-email');
+
+        $this->subject->createOrder($this->fixtureDummy, $frontendUser, true, true);
+
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwOrder\Exception
+     */
+    public function createOrderGivenFrontendUserWithInvalidEmailAndTermsTrueAndPrivacyTrueAndMissingShippingAddressModelThrowsException ()
+    {
+
+        static::expectException(\RKW\RkwOrder\Exception::class);
+        static::expectExceptionMessage('orderManager.error.noShippingAddress');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        /** @var \RKW\RkwOrder\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
 
         $this->subject->createOrder($order, $frontendUser, true, true);
 
@@ -239,6 +288,128 @@ class OrderManagerTest extends FunctionalTestCase
 
     //=============================================
 
+    /**
+     * @test
+     * @throws \RKW\RkwOrder\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     */
+    public function saveOrderGivenOrderWithoutShippingAddressModelThrowsException ()
+    {
+
+        static::expectException(\RKW\RkwOrder\Exception::class);
+        static::expectExceptionMessage('orderManager.error.noShippingAddress');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        /** @var \RKW\RkwOrder\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+
+        $this->subject->saveOrder($order, $frontendUser);
+
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwOrder\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     */
+    public function saveOrderGivenOrderAndNonPersistedFrontendUserThrowsException ()
+    {
+
+        static::expectException(\RKW\RkwOrder\Exception::class);
+        static::expectExceptionMessage('orderManager.error.frontendUserNotPersisted');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
+        $frontendUser = GeneralUtility::makeInstance(FrontendUser::class);
+
+        $this->subject->saveOrder($this->fixtureDummy, $frontendUser);
+
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwOrder\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     */
+    public function saveOrderGivenPersistedOrderAndPersistedFrontendUserThrowsException ()
+    {
+
+        static::expectException(\RKW\RkwOrder\Exception::class);
+        static::expectExceptionMessage('orderManager.error.orderAlreadyPersisted');
+
+        /** @var \RKW\RkwOrder\Domain\Model\Order $order */
+        $order = $this->orderRepository->findByUid(1);
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        $this->subject->saveOrder($order, $frontendUser);
+
+    }
+
+
+    /**
+     * @test
+     * @throws \RKW\RkwOrder\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     */
+    public function saveOrderOrderAndPersistedFrontendUserReturnsTrueAndAddsOrderAndShippingAddressToDatabaseWithFrontendUserSet ()
+    {
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        self::assertTrue($this->subject->saveOrder($this->fixtureDummy, $frontendUser));
+
+        /** @var \RKW\RkwOrder\Domain\Model\Order $order */
+        $order = $this->orderRepository->findByUid(2);
+
+        self::assertEquals($frontendUser->getUid(), $order->getFrontendUser()->getUid());
+        self::assertEquals($frontendUser->getUid(), $order->getShippingAddress()->getFrontendUser()->getUid());
+
+    }
+
+
+    /**
+     * @test
+     * @throws \RKW\RkwOrder\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     */
+    public function saveOrderOrderAndPersistedFrontendUserReturnsTrueAndAddsOrderAndShippingAddressWithExpectedDataToDatabase ()
+    {
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        self::assertTrue($this->subject->saveOrder($this->fixtureDummy, $frontendUser));
+
+        /** @var \RKW\RkwOrder\Domain\Model\Order $order */
+        $order = $this->orderRepository->findByUid(2);
+
+/** ToDO: Check for values of object!!!! */
+
+        self::assertEquals($frontendUser->getUid(), $order->getFrontendUser()->getUid());
+        self::assertEquals($frontendUser->getUid(), $order->getShippingAddress()->getFrontendUser()->getUid());
+
+    }
+
+    //=============================================
 
     /**
      * TearDown
