@@ -388,17 +388,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * Returns the pages
-     *
-     * @return int $pages
-     * @deprecated
-     */
-    public function getPagesNumeric()
-    {
-        return intval($this->pages);
-    }
-
-    /**
      * Returns the publication
      *
      * @return \RKW\RkwOrder\Domain\Model\Publication $publication
@@ -409,15 +398,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
 
-    /**
-     * Returns the publication
-     *
-     * @return int $pages
-     */
-    public function getPublicationNumeric()
-    {
-        return intval($this->publication);
-    }
 
     /**
      * Sets the publication

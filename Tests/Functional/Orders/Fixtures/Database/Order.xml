@@ -4,7 +4,7 @@
         <uid>1</uid>
         <pid>0</pid>
         <email>test@dummy.de</email>
-        <remark />
+        <remark>Toller Hinweis!!!</remark>
         <amount>4</amount>
         <shipping_address>1</shipping_address>
     </tx_rkworder_domain_model_order>

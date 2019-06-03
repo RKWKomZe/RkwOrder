@@ -39,8 +39,8 @@ $signalSlotDispatcher->connect(
 $signalSlotDispatcher->connect(
 	'RKW\\RkwRegistration\\Tools\\Registration',
 	\RKW\RkwRegistration\Tools\Registration::SIGNAL_AFTER_USER_REGISTER_GRANT . 'RkwOrder',
-	'RKW\\RkwOrder\\Controller\\OrderController',
-	'createOrder'
+	'RKW\\RkwOrder\\Orders\\OrderManager',
+	'saveOrderSignalSlot'
 );
 
 $signalSlotDispatcher->connect(

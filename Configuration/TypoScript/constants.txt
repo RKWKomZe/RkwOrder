@@ -22,8 +22,8 @@ plugin.tx_rkworder {
 		# cat=plugin.tx_rkworder//a; type=integer; label=Pid of terms & conditions
 		termsPid =
 
-		# cat=plugin.tx_rkworder//a; type=integer; label=Uid of BE-User if none is set in plugin
-		backendUserIdForMails =
+		# cat=plugin.tx_rkworder//a; type=integer; label=Username of BE-User if none is set in plugin
+		fallbackBackendUserForMails =
 	}
 
 }

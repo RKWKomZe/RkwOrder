@@ -123,6 +123,15 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 
     /**
+     * OrderManager
+     *
+     * @var \RKW\RkwOrder\Orders\OrderManager
+     * @inject
+     */
+    protected $orderManager;
+
+
+    /**
      * @var \TYPO3\CMS\Core\Log\Logger
      */
     protected $logger;
@@ -496,78 +505,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
 
-    //=================================================================================================
-
-    /**
-     * Creates an order - used by SignalSlot
-     *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $feUser
-     * @param \RKW\RkwRegistration\Domain\Model\Registration $registration
-     * @return void
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    public function createOrder(\RKW\RkwRegistration\Domain\Model\FrontendUser $feUser, \RKW\RkwRegistration\Domain\Model\Registration $registration)
-    {
-        // 1. get order from registration and save it
-        if (
-            ($newOrder = $registration->getData())
-            && ($newOrder instanceof \RKW\RkwOrder\Domain\Model\Order)
-        ) {
-
-            // update FE-User-Data if none is set so long
-            // only relevant for existing users that are NOT logged in!
-            if (
-                (!$feUser->getTxRkwregistrationGender())
-                || ($feUser->getTxRkwregistrationGender() == 99)
-            ) {
-                $feUser->setTxRkwregistrationGender($newOrder->getGender());
-            }
-
-            if (
-                (!$feUser->getTxRkwregistrationTitle())
-                || ($feUser->getTxRkwregistrationTitle() == 99)
-            ) {
-                $feUser->setTxRkwregistrationTitle($newOrder->getTitle());
-            }
-
-            if (!$feUser->getFirstName()) {
-                $feUser->setFirstName($newOrder->getFirstName());
-            }
-
-            if (!$feUser->getLastName()) {
-                $feUser->setLastName($newOrder->getLastName());
-            }
-
-            if (!$feUser->getCompany()) {
-                $feUser->setCompany($newOrder->getCompany());
-            }
-
-            if (!$feUser->getAddress()) {
-                $feUser->setAddress($newOrder->getAddress());
-            }
-
-            if (!$feUser->getZip()) {
-                $feUser->setZip($newOrder->getZip());
-            }
-
-            if (!$feUser->getCity()) {
-                $feUser->setCity($newOrder->getCity());
-            }
-
-            if (!\RKW\RkwRegistration\Tools\Registration::validEmail($feUser->getEmail())) {
-                $feUser->setEmail($newOrder->getEmail());
-            }
-
-            $this->frontendUserRegistrationRepository->update($feUser);
-            $this->persistenceManager->persistAll();
-
-            $newOrder->setFrontendUser($feUser);
-            $this->finalSaveOrder($newOrder, $registration);
-        }
-    }
 
 
     /**

@@ -4,6 +4,7 @@ namespace RKW\RkwOrder\Orders;
 
 use \TYPO3\CMS\Core\Utility\GeneralUtility;
 use \RKW\RkwOrder\Exception;
+use \RKW\RkwBasics\Helper\Common;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -80,7 +81,24 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @var \RKW\RkwOrder\Domain\Repository\OrderRepository
      * @inject
      */
-    protected $orderRepository = null;
+    protected $orderRepository;
+
+    /**
+     * BackendUserRepository
+     *
+     * @var \RKW\RkwOrder\Domain\Repository\BackendUserRepository
+     * @inject
+     */
+    protected $backendUserRepository;
+
+
+    /**
+     * configurationManager
+     *
+     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+     * @inject
+     */
+    protected $configurationManager;
 
 
     /**
@@ -155,12 +173,12 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \RKW\RkwOrder\Domain\Model\Order $order
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @return bool
+     * @return array
      * @throws \RKW\RkwOrder\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function saveOrder (\RKW\RkwOrder\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
     {
@@ -174,6 +192,12 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         // check frontendUser
         if ($frontendUser->_isNew()) {
             throw new Exception('orderManager.error.frontendUserNotPersisted');
+            //===
+        }
+
+        // check publication
+        if (! $order->getPublication()) {
+            throw new Exception('orderManager.error.noPublication');
             //===
         }
 
@@ -191,48 +215,42 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         $this->orderRepository->add($order);
         $this->persistenceManager->persistAll();
 
-        return true;
-        //===
 
-        // 2. send final confirmation mail to user
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($newOrder->getFrontendUser(), $newOrder));
+        // send final confirmation mail to user
+        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($frontendUser, $order));
 
-                // 3. send information mail to admins
-        $backendUsers = array();
+        // now handle admin mails
+        $beUsers = $order->getPublication()->getBackendUser()->toArray();
 
-        /** @var \RKW\RkwOrder\Domain\Model\Pages $pages */
-        $pages = $this->pagesRepository->findByUid($this->getImportedParentPid(intval($GLOBALS['TSFE']->id)));
-        /**    @var \RKW\RkwOrder\Domain\Model\Publication $publication */
-        $publication = $pages->getTxRkworderPublication();
+        // get field for alternative e-emails
+        if ($email = $order->getPublication()->getAdminEmail()) {
 
-        if (!count($publication->getBackendUser())) {
-            if ($publication->getAdminEmail()) {
-                $admin = $this->backendUserRepository->findByEmail($publication->getAdminEmail());
-                if ($admin) {
-                    $backendUsers[] = $admin;
-                }
+            /** @var \RKW\RkwOrder\Domain\Model\BackendUser $beUser */
+            $beUser = $this->backendUserRepository->findOneByEmail($email);
+            if ($beUser) {
+                $beUsers[] = $beUser;
             }
-        } else {
-            $backendUsers = $publication->getBackendUser()->toArray();
         }
 
-
-        // 4. fallback-handling
+        // fallback-handling
+        $settings = $this->getSettings();
         if (
-            (count($backendUsers) < 1)
-            && ($backendUserFallback = intval($this->settings['backendUserIdForMails']))
+            (count($beUsers) < 1)
+            && ($fallbackBeUser = $settings['fallbackBackendUserForMails'])
         ) {
-            $admin = $this->backendUserRepository->findByUid($backendUserFallback);
-            if (
-                ($admin)
-                && ($admin->getEmail())
-            ) {
-                $backendUsers[] = $admin;
-            }
 
+            /** @var \RKW\RkwOrder\Domain\Model\BackendUser $beUser */
+            $beUser = $this->backendUserRepository->findOneByUsername($fallbackBeUser);
+            if (
+                ($beUser)
+                && ($beUser->getEmail())
+            ) {
+                $beUsers[] = $beUser;
+            }
         }
 
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array($backendUsers, $newOrder));
+        return $beUsers;
+        //===
 
     }
 
@@ -244,10 +262,11 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      * @param \RKW\RkwRegistration\Domain\Model\Registration $registration
      * @return void
+     * @throws \RKW\RkwOrder\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function saveOrderSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwRegistration\Domain\Model\Registration $registration)
     {
@@ -259,6 +278,24 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
             $this->saveOrder($order, $frontendUser);
         }
+    }
+
+
+
+    /**
+     * Returns TYPO3 settings
+     *
+     * @return array
+     */
+    protected function getSettings()
+    {
+        $settings = $this->configurationManager->getConfiguration(
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
+            'Rkworder'
+        );
+
+        return $settings['plugin.']['tx_rkworder.']['settings.'];
+        //===
     }
 
 

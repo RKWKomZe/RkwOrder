@@ -1,8 +1,22 @@
-plugin.tx_rkworder {
+plugin.tx_rkworder  {
     persistence {
         // cat=plugin.tx_rkworder_rkworder//a; type=string; label=Default storage PID
-        storagePid = 0
-
+        storagePid = 1
     }
 
+    settings {
+
+        fallbackBackendUserForMails = fallback
+    }
+
+}
+
+
+module.tx_rkwmailer {
+    settings {
+
+        # cat=module.tx_rkwmailer; type=integer; label=Pid of redirect plugin
+        redirectPid = 88888
+
+    }
 }

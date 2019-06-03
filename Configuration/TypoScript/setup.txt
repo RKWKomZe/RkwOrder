@@ -116,7 +116,7 @@ plugin.tx_rkworder {
 
 	settings {
 		termsPid = {$plugin.tx_rkworder.settings.termsPid}
-		backendUserIdForMails = {$plugin.tx_rkworder.settings.backendUserIdForMails}
+		fallbackBackendUserForMails = {$plugin.tx_rkworder.settings.fallbackBackendUserForMails}
 	}
 
 }
