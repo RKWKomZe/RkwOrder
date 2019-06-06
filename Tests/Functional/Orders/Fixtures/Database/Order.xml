@@ -2,10 +2,35 @@
 <dataset>
     <tx_rkworder_domain_model_order>
         <uid>1</uid>
-        <pid>0</pid>
+        <pid>1</pid>
+        <publication>1</publication>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <amount>4</amount>
         <shipping_address>1</shipping_address>
+    </tx_rkworder_domain_model_order>
+
+    <!-- orders of feUser 3 -->
+    <tx_rkworder_domain_model_order>
+        <uid>2</uid>
+        <pid>1</pid>
+        <publication>1</publication>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <amount>4</amount>
+        <shipping_address>1</shipping_address>
+        <frontend_user>3</frontend_user>
+        <status>1</status>
+    </tx_rkworder_domain_model_order>
+    <tx_rkworder_domain_model_order>
+        <uid>3</uid>
+        <pid>1</pid>
+        <publication>1</publication>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <amount>4</amount>
+        <shipping_address>1</shipping_address>
+        <frontend_user>3</frontend_user>
+        <status>0</status>
     </tx_rkworder_domain_model_order>
 </dataset>

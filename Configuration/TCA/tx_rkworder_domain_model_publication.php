@@ -1,9 +1,10 @@
 <?php
+
 return array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_publication',
 		'label' => 'title',
-		'label_alt' => 'title,subtitle',
+		'label_alt' => 'subtitle',
 		'label_alt_force' => 1,
 		'default_sortby' => 'ORDER BY title',
 		'tstamp' => 'tstamp',
@@ -13,18 +14,19 @@ return array(
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'requestUpdate' => 'series',
 		'delete' => 'deleted',
 		'enablecolumns' => array(
 			'disabled' => 'hidden',
 		),
-		'searchFields' => 'title,subtitle,admin_email,stock,allow_subscription,allow_series, series,backend_user,',
+		'searchFields' => 'title,subtitle,admin_email,stock,allow_subscription,bundle_only, series,backend_user,',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rkw_order') . 'Resources/Public/Icons/tx_rkworder_domain_model_publication.gif'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, stock, allow_subscription, allow_series, series, backend_user, admin_email',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, stock, allow_subscription, bundle_only, series, backend_user, admin_email',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, subtitle, stock, allow_subscription, allow_series, series, backend_user, admin_email, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, subtitle, stock, allow_subscription, bundle_only, series, backend_user, admin_email, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -43,8 +45,9 @@ return array(
 					array('LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1),
 					array('LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0)
 				),
-			),
-		),
+                'default' => 0
+            ),
+        ),
 		'l10n_parent' => array(
 			'displayCond' => 'FIELD:sys_language_uid:>:0',
 			'exclude' => 1,
@@ -108,9 +111,11 @@ return array(
                 'default' => 100
 			),
 		),
-		'allow_series' => array(
+
+		'bundle_only' => array(
+            'displayCond' => 'FIELD:series:REQ:TRUE',
 			'exclude' => 0,
-			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_publication.allow_series',
+			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_publication.bundle_only',
 			'config' => array(
 				'type' => 'check',
 				'default' => 0
@@ -125,6 +130,7 @@ return array(
 			)
 		),
 		'series' => array(
+            'onChange' => 'reload',
 			'exclude' => 0,
 			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_publication.series',
 			'config' => array(
@@ -153,11 +159,18 @@ return array(
 				'foreign_table_where' => 'AND be_users.deleted = 0 AND be_users.disable = 0 ORDER BY be_users.username ASC',
 			)
 		),
-        'old_page' => array(
+        'ordered' => array(
+            'exclude' => 0,
             'config' => array(
                 'type' => 'passthrough',
-                'foreign_table' => 'pages',
             ),
         ),
-	),
+
+        'ordered_external' => array(
+            'exclude' => 0,
+            'config' => array(
+                'type' => 'passthrough',
+            ),
+        ),
+    ),
 );

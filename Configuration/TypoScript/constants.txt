@@ -22,8 +22,11 @@ plugin.tx_rkworder {
 		# cat=plugin.tx_rkworder//a; type=integer; label=Pid of terms & conditions
 		termsPid =
 
+        # cat=plugin.tx_rkworder/a; type=boolean; label=Disable admin mails?
+        disableAdminMails = 0
+
 		# cat=plugin.tx_rkworder//a; type=integer; label=Username of BE-User if none is set in plugin
-		fallbackBackendUserForMails =
+		fallbackBackendUserForAdminMails =
 	}
 
 }

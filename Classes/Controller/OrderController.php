@@ -278,32 +278,37 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action create
      *
-     * @param \RKW\RkwOrder\Domain\Model\Order $newOrder
-     * @param integer                          $terms
-     * @param integer                          $privacy
+     * @param \RKW\RkwOrder\Domain\Model\Order $order
+     * @param integer $terms
+     * @param integer $privacy
      * @return void
+     * @throws \RKW\RkwOrder\Exception
      * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      */
-    public function createAction(\RKW\RkwOrder\Domain\Model\Order $newOrder, $terms = null, $privacy = null)
+    public function createAction(\RKW\RkwOrder\Domain\Model\Order $order, $terms = null, $privacy = null)
     {
 
-        // 1. Some checks
-        // check if terms are checked
-        if (
-            (!$terms)
-            && (!$this->getFrontendUser())
-        ) {
+        try {
 
+            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'orderController.error.accept_terms', 'rkw_order'
+                    $message, 'rkw_order'
+                )
+            );
+
+        } catch (\RKW\RkwOrder\Exception $exception) {
+            $this->addFlashMessage(
+                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                    $exception->getMessage(), 'rkw_order'
                 ),
                 '',
                 \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR
@@ -311,138 +316,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
             $this->forward('new');
             //===
-        }
-
-        if (!$privacy) {
-            $this->addFlashMessage(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'registrationController.error.accept_privacy', 'rkw_registration'
-                ),
-                '',
-                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR
-            );
-            $this->forward('new');
-            //===
-        }
-
-
-        // 2. register order
-        // 2.1 if user is logged in
-        if (
-            ($feUser = $this->getFrontendUser())
-            && (\RKW\RkwRegistration\Tools\Registration::validEmail($this->getFrontendUser()))
-        ) {
-
-            // update FE-User-Data if none is set so long
-            if (!$feUser->getTxRkwregistrationGender()) {
-                $feUser->setTxRkwregistrationGender($newOrder->getShippingAddress()->getGender());
-            }
-            if (!$feUser->getTitle()) {
-                $feUser->setTxRkwregistrationTitle($newOrder->getShippingAddress()->getTitle());
-            }
-            if (!$feUser->getFirstName()) {
-                $feUser->setFirstName($newOrder->getShippingAddress()->getFirstName());
-            }
-            if (!$feUser->getLastName()) {
-                $feUser->setLastName($newOrder->getShippingAddress()->getLastName());
-            }
-            if (!$feUser->getCompany()) {
-                $feUser->setCompany($newOrder->getShippingAddress()->getCompany());
-            }
-            if (!$feUser->getAddress()) {
-                $feUser->setAddress($newOrder->getShippingAddress()->getAddress());
-            }
-            if (!$feUser->getZip()) {
-                $feUser->setZip($newOrder->getShippingAddress()->getZip());
-            }
-            if (!$feUser->getCity()) {
-                $feUser->setCity($newOrder->getShippingAddress()->getCity());
-            }
-
-            $this->frontendUserRepository->update($feUser);
-            $this->persistenceManager->persistAll();
-
-            // connect order with FE-User and save order
-            $newOrder->setFrontendUser($this->getFrontendUser());
-            $this->finalSaveOrder($newOrder);
-
-            // add privacy info
-            \RKW\RkwRegistration\Tools\Privacy::addPrivacyData($this->request, $newOrder->getFrontendUser(), $newOrder, 'new order');
-
-            $this->addFlashMessage(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'orderController.message.order_created', 'rkw_order'
-                )
-            );
-
-
-        // 2.2 if user is not logged in - or is logged in and has no valid email (e.g. when having registered via Facebook or Twitter)
-        // A not logged user always has to confirm his orders. If the email already exists, there will be no new
-        // user created
-        } else {
-
-            // check if email is valid
-            if (!\RKW\RkwRegistration\Tools\Registration::validEmail($newOrder->getEmail())) {
-                $this->addFlashMessage(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                        'orderController.error.no_valid_email', 'rkw_order'
-                    ),
-                    '',
-                    \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR
-                );
-
-                $this->forward('new');
-                //===
-            }
-
-            // check if email is not already used - relevant for logged in users with no email-address (e.g. via Facebook or Twitter)
-            if (
-                ($this->getFrontendUser())
-                && (!\RKW\RkwRegistration\Tools\Registration::validEmailUnique($newOrder->getEmail(), $this->getFrontendUser()))
-            ) {
-
-                $this->addFlashMessage(
-                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                        'orderController.error.email_already_in_use', 'rkw_order'
-                    ),
-                    '',
-                    \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR
-                );
-
-                $this->forward('new');
-                //===
-            }
-
-            // register new user or simply send opt-in to existing user
-            /** @var \RKW\RkwRegistration\Tools\Registration $registration */
-            $registration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwRegistration\\Tools\\Registration');
-            $registration->register(
-                array(
-                    'tx_rkwregistration_gender' => $newOrder->getGender(),
-                    'tx_rkwregistration_title'  => $newOrder->getTitle(),
-                    'first_name'                => $newOrder->getFirstName(),
-                    'last_name'                 => $newOrder->getLastName(),
-                    'company'                   => $newOrder->getCompany(),
-                    'address'                   => $newOrder->getAddress(),
-                    'zip'                       => $newOrder->getZip(),
-                    'city'                      => $newOrder->getCity(),
-                    'email'                     => $newOrder->getEmail(),
-                    'username'                  => ($this->getFrontendUser() ? $this->getFrontendUser()->getUsername() : $newOrder->getEmail()),
-                ),
-                false,
-                $newOrder,
-                'rkwOrder',
-                $this->request
-            );
-
-            $this->addFlashMessage(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    'orderController.message.order_created_email', 'rkw_order'
-                )
-            );
-
-            // save data of not logged user in session (redmine Ticket #2559)
-            $this->setFrontendUserBySession($newOrder);
         }
 
         $this->redirect('new');
@@ -505,125 +378,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
 
-
-
-    /**
-     * Removes all open orders of a FE-User
-     * Used by Signal-Slot
-     *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @return void
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    public function removeAllOfUserSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
-    {
-        try {
-            $orders = $this->orderRepository->findOpenByFrontendUser($frontendUser);
-            if ($orders) {
-
-                /** @var \RKW\RkwOrder\Domain\Model\Order $order $order */
-                foreach ($orders as $order) {
-
-                    // 1. delete order
-                    $this->orderRepository->remove($order);
-
-                    /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
-                    $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-
-                    /** @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager */
-                    $persistenceManager = $objectManager->get('TYPO3\\CMS\Extbase\\Persistence\\Generic\\PersistenceManager');
-                    $persistenceManager->persistAll();
-
-                    // 2. send final confirmation mail to user
-                    $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_USER, array($frontendUser, $order));
-
-                    // 3. Admin mail
-                    $backendUsers = array();
-                    $settings = $this->getSettings();
-                    if ($backendUserId = intval($settings['backendUserIdForMails'])) {
-                        $admin = $this->backendUserRepository->findByUid($backendUserId);
-                        if (
-                            ($admin)
-                            && ($admin->getEmail())
-                        ) {
-                            $backendUsers[] = $admin;
-                        }
-                    }
-                    $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array($backendUsers, $order));
-                    $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Deleted order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
-
-                }
-            }
-        } catch (\Exception $e) {
-            $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::ERROR, sprintf('Error while deleting orders of user via signal-slot: %s', $e->getMessage()));
-        }
-    }
-
-
-    /**
-     * finalSaveOrder
-     *
-     * Adds the order finally to database and sends information mails to user and admin
-     * This function is used bei the "createOrderAction" and "createOrder"-Function
-     *
-     * @param \RKW\RkwOrder\Domain\Model\Order               $newOrder
-     * @param \RKW\RkwRegistration\Domain\Model\Registration $registration
-     * @return void
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    protected function finalSaveOrder(\RKW\RkwOrder\Domain\Model\Order $newOrder, \RKW\RkwRegistration\Domain\Model\Registration $registration = null)
-    {
-        // save it
-        $this->orderRepository->add($newOrder);
-
-        // 2. send final confirmation mail to user
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($newOrder->getFrontendUser(), $newOrder));
-
-
-        // 3. send information mail to admins
-        $backendUsers = array();
-
-        /** @var \RKW\RkwOrder\Domain\Model\Pages $pages */
-        $pages = $this->pagesRepository->findByUid($this->getImportedParentPid(intval($GLOBALS['TSFE']->id)));
-        /**    @var \RKW\RkwOrder\Domain\Model\Publication $publication */
-        $publication = $pages->getTxRkworderPublication();
-
-        if (!count($publication->getBackendUser())) {
-            if ($publication->getAdminEmail()) {
-                $admin = $this->backendUserRepository->findByEmail($publication->getAdminEmail());
-                if ($admin) {
-                    $backendUsers[] = $admin;
-                }
-            }
-        } else {
-            $backendUsers = $publication->getBackendUser()->toArray();
-        }
-
-
-        // 4. fallback-handling
-        if (
-            (count($backendUsers) < 1)
-            && ($backendUserFallback = intval($this->settings['backendUserIdForMails']))
-        ) {
-            $admin = $this->backendUserRepository->findByUid($backendUserFallback);
-            if (
-                ($admin)
-                && ($admin->getEmail())
-            ) {
-                $backendUsers[] = $admin;
-            }
-
-        }
-
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array($backendUsers, $newOrder));
-
-    }
 
     /**
      * Returns the PID of the parent page if pages have been imported via bm_pdf2content

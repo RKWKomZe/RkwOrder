@@ -45,4 +45,35 @@
         <tx_rkwregistration_title>0</tx_rkwregistration_title>
         <tx_rkwregistration_language_key>en</tx_rkwregistration_language_key>
     </fe_users>
+    <fe_users>
+        <uid>4</uid>
+        <pid>0</pid>
+        <username>gruene@test.de</username>
+        <email>habeck@gruene.de</email>
+        <first_name>Robert</first_name>
+        <last_name>Habeck</last_name>
+        <company>Bündnis 90/Die Grünen Berlin</company>
+        <address>Platz vor dem Neuen Tor 1</address>
+        <zip>10115</zip>
+        <city>Berlin</city>
+        <tx_rkwregistration_gender>1</tx_rkwregistration_gender>
+        <tx_rkwregistration_title>0</tx_rkwregistration_title>
+        <tx_rkwregistration_language_key>es</tx_rkwregistration_language_key>
+    </fe_users>
+    <fe_users>
+        <uid>5</uid>
+        <pid>0</pid>
+        <username>linke@test.de</username>
+        <email>kipping@die-linke.de</email>
+        <first_name>Katja</first_name>
+        <last_name>Kipping</last_name>
+        <company>DIE LINKE</company>
+        <address>Kleine Alexanderstraße 28</address>
+        <zip>10178 </zip>
+        <city>Berlin</city>
+        <tx_rkwregistration_gender>1</tx_rkwregistration_gender>
+        <tx_rkwregistration_title>0</tx_rkwregistration_title>
+        <tx_rkwregistration_language_key>ru</tx_rkwregistration_language_key>
+    </fe_users>
+
 </dataset>

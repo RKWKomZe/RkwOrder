@@ -17,8 +17,22 @@
     <be_users>
         <uid>3</uid>
         <pid>0</pid>
+        <username>test3</username>
+        <email>test3@test.de</email>
+        <lang>de</lang>
+    </be_users>
+    <be_users>
+        <uid>4</uid>
+        <pid>0</pid>
         <username>fallback</username>
         <email>fallback@test.de</email>
+        <lang>de</lang>
+    </be_users>
+    <be_users>
+        <uid>5</uid>
+        <pid>0</pid>
+        <username>fallback-invalid</username>
+        <email>no-valid-mail</email>
         <lang>de</lang>
     </be_users>
 </dataset>

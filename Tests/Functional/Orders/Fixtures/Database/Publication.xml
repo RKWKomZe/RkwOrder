@@ -7,11 +7,10 @@
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test3@test.de</admin_email>
         <stock>100</stock>
-        <allow_series>0</allow_series>
+        <bundle_only>0</bundle_only>
         <allow_subscription>0</allow_subscription>
-        <backend_user>1,2</backend_user>
+        <backend_user>1,2,5</backend_user>
     </tx_rkworder_domain_model_publication>
-
     <tx_rkworder_domain_model_publication>
         <uid>2</uid>
         <pid>0</pid>
@@ -19,8 +18,20 @@
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email />
         <stock>100</stock>
-        <allow_series>0</allow_series>
+        <bundle_only>0</bundle_only>
         <allow_subscription>0</allow_subscription>
         <backend_user />
     </tx_rkworder_domain_model_publication>
+    <tx_rkworder_domain_model_publication>
+        <uid>3</uid>
+        <pid>0</pid>
+        <title>Leitfaden mit invalider Ersatz-Admin-Mail</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>fallback-invalid</admin_email>
+        <stock>100</stock>
+        <bundle_only>0</bundle_only>
+        <allow_subscription>0</allow_subscription>
+        <backend_user>1,2</backend_user>
+    </tx_rkworder_domain_model_publication>
+
 </dataset>

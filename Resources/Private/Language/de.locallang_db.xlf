@@ -5,7 +5,7 @@
 		<body>
 			<trans-unit id="tx_rkworder_domain_model_order">
 				<source>RKW Order: Order</source>
-				<target>RKW Order: Publikationsbestellungen</target>
+				<target>RKW Order: Bestellungen</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.send_series">
 				<source>Send Series</source>
@@ -54,83 +54,33 @@
 
 
 
-            <trans-unit id="tx_rkworder_domain_model_shippingaddress.gender">
-				<source>RKW Order: Shipping Address</source>
-				<target>RKW Order: Lieferadresse</target>
-			</trans-unit>
-            <trans-unit id="tx_rkworder_domain_model_shippingaddress.gender">
-				<source>Salutation</source>
-				<target>Anrede</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.gender.I.man">
-				<source>Mr.</source>
-				<target>Herr</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.gender.I.woman">
-				<source>Mrs.</source>
-				<target>Frau</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.gender.I.neutral">
-				<source>Not set</source>
-				<target>Nicht gesetzt</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.title" approved="yes">
-				<source>Title</source>
-				<target>Title</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.title.please_choose" approved="yes">
-				<source>---</source>
-				<target>---</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.first_name">
-				<source>First Name</source>
-				<target>Vorname</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.last_name">
-				<source>Last Name</source>
-				<target>Nachname</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.company">
-				<source>Company</source>
-				<target>Firma</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.address">
-				<source>Address</source>
-				<target>Adresse</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.zip">
-				<source>ZIP</source>
-				<target>PLZ</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_shippingaddress.city">
-				<source>City</source>
-				<target>Stadt</target>
-			</trans-unit>
-
-
 			<trans-unit id="tx_rkworder_domain_model_publication">
 				<source>RKW Order: Publication</source>
 				<target>RKW Order: Publikation</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_publication.title">
 				<source>Title</source>
-				<target>Publikationstitel</target>
+				<target>Titel</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_publication.subtitle">
 				<source>Subtitle</source>
-				<target>Publikationsuntertitel</target>
+				<target>Untertitel</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_publication.admin_email">
-				<source>Admin E-Mail (Fallback, if no BackendUser is set)</source>
-				<target>Admin E-Mail (Fallback, wenn kein BackendUser gesetzt ist)</target>
+				<source>Additional Admin-E-Mail for Order- Mails</source>
+				<target>Zusätzliche Admin-E-Mail für Bestell- E-Mails</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_publication.backend_user">
+				<source>Backend Users for Order- Mails</source>
+				<target>Backend User für Bestell- E-Mails</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_publication.stock">
 				<source>Stock</source>
-				<target>Gedruckte Auflage (Stückzahl)</target>
+				<target>Gedruckte Auflage</target>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_publication.allow_series">
-				<source>Allow series</source>
-				<target>Erlaube Bestellung von Serien/Reihen</target>
+			<trans-unit id="tx_rkworder_domain_model_publication.bundle_only">
+				<source>Can only be ordered as a bundle</source>
+				<target>Nur als Reihe bestellbar (Bundle)</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_publication.allow_subscription">
 				<source>Allow Subscription</source>
@@ -138,33 +88,19 @@
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_publication.series">
 				<source>Series</source>
-				<target>Serie</target>
+				<target>Reihe</target>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_publication.backend_user">
-				<source>Backend Users</source>
-				<target>Backend User für Bestell-Email</target>
-			</trans-unit>
+
 
 
 			<!-- flexform -->
 			<trans-unit id="flexform.order.sheetTitle">
-				<source>BackendUser</source>
+				<source>Options</source>
+				<target>Optionen</target>
 			</trans-unit>
-			<trans-unit id="flexform.select.beuser">
-				<source>Backend User to mail (only shown if email is set)</source>
-				<target>Backend User für Bestell-Email</target>
-			</trans-unit>
-			<trans-unit id="flexform.orderMaximum">
-				<source>Maximum order size</source>
-				<target>Maximale Bestellmenge</target>
-			</trans-unit>
-			<trans-unit id="flexform.allowSeries">
-				<source>Allow ordering of series</source>
-				<target>Erlaube Bestellung von Serien/Reihen</target>
-			</trans-unit>
-			<trans-unit id="flexform.allowSubscription">
-				<source>Allow Subscription</source>
-				<target>Erlaube Abonnement</target>
+			<trans-unit id="flexform.order.publication">
+				<source>Publication</source>
+				<target>Publikation</target>
 			</trans-unit>
 
 

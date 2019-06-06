@@ -20,7 +20,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 /**
  * Class OrderRepository
  *
- * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Rkw Kompetenzzentrum
  * @package RKW_RkwOrder
@@ -28,12 +27,39 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+
+
+    /**
+     * Find all orders that have been updated recently
+     *
+     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findAllByFrontendUser($frontendUser)
+    {
+
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+        $query->matching(
+            $query->logicalAnd(
+                $query->equals('frontendUser', $frontendUser)
+            )
+        );
+
+        return $query->execute();
+        //===
+    }
+
+
     /**
      * Find all orders by uid, even if they are hidden
      *
      * @api used by SOAP-API
      * @param integer $uid
      * @return object
+     * @toDo: Write Tests
      */
     public function findByUidSoap($uid)
     {
@@ -59,6 +85,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param integer $timestamp
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @toDo: Write Tests
      */
     public function findByTimestampSoap($timestamp)
     {
@@ -82,31 +109,6 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
 
 
-    /**
-     * Find all orders that have been updated recently
-     * Used by delete Signal-Slot
-     *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     */
-    public function findOpenByFrontendUser($frontendUser)
-    {
-
-        $query = $this->createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
-
-        $query->matching(
-            $query->logicalAnd(
-                $query->equals('status', 0),
-                $query->equals('frontendUser', $frontendUser)
-            )
-        );
-
-        return $query->execute();
-        //===
-    }
-
 
     /**
      * finds all order that are older than $cleanupTimestamp
@@ -114,6 +116,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      *
      * @param integer $cleanupTimestamp
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @toDo: Write Tests
      */
     public function findAllOldOrder($cleanupTimestamp)
     {
@@ -140,6 +143,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      *
      * @param \RKW\RkwOrder\Domain\Model\Order $order
      * @return void
+     * @toDo: Write Tests
      */
     public function deleteBySelf(\RKW\RkwOrder\Domain\Model\Order $order)
     {

@@ -64,12 +64,6 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $subtitle;
 
-    /**
-     * adminEmail
-     *
-     * @var string
-     */
-    protected $adminEmail;
 
     /**
      * stock
@@ -79,11 +73,11 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $stock = 0;
 
     /**
-     * allowSeries
+     * bundleOnly
      *
      * @var boolean
      */
-    protected $allowSeries = false;
+    protected $bundleOnly = false;
 
     /**
      * allowSubscription
@@ -108,11 +102,27 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * oldPage
+     * adminEmail
      *
-     * @var \RKW\RkwOrder\Domain\Model\Pages
+     * @var string
      */
-    protected $oldPage;
+    protected $adminEmail;
+
+
+    /**
+     * ordered
+     *
+     * @var int
+     */
+    protected $ordered;
+
+
+    /**
+     * orderedExternal
+     *
+     * @var int
+     */
+    protected $orderedExternal;
 
 
     /**
@@ -254,26 +264,6 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->subtitle = $subtitle;
     }
 
-    /**
-     * Returns the adminEmail
-     *
-     * @return string $adminEmail
-     */
-    public function getAdminEmail()
-    {
-        return $this->adminEmail;
-    }
-
-    /**
-     * Sets the adminEmail
-     *
-     * @param string $adminEmail
-     * @return void
-     */
-    public function setAdminEmail($adminEmail)
-    {
-        $this->adminEmail = $adminEmail;
-    }
 
     /**
      * Returns the stock
@@ -297,24 +287,24 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the allowSeries
+     * Returns the bundleOnly
      *
-     * @return boolean $allowSeries
+     * @return boolean $bundleOnly
      */
-    public function getAllowSeries()
+    public function getBundleOnly()
     {
-        return $this->allowSeries;
+        return $this->bundleOnly;
     }
 
     /**
-     * Sets the allowSeries
+     * Sets the bundleOnly
      *
-     * @param boolean $allowSeries
+     * @param boolean $bundleOnly
      * @return void
      */
-    public function setAllowSeries($allowSeries)
+    public function setBundleOnly($bundleOnly)
     {
-        $this->allowSeries = $allowSeries;
+        $this->bundleOnly = $bundleOnly;
     }
 
     /**
@@ -403,27 +393,69 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Sets the oldPage value
+     * Returns the adminEmail
      *
-     * @param \RKW\RkwOrder\Domain\Model\Pages $oldPage
-     * @api
+     * @return string $adminEmail
      */
-    public function setOldPage(\RKW\RkwOrder\Domain\Model\Pages $oldPage)
+    public function getAdminEmail()
     {
-        $this->oldPage = $oldPage;
+        return $this->adminEmail;
+    }
+
+    /**
+     * Sets the adminEmail
+     *
+     * @param string $adminEmail
+     * @return void
+     */
+    public function setAdminEmail($adminEmail)
+    {
+        $this->adminEmail = $adminEmail;
     }
 
 
     /**
-     * Returns the oldPage value
+     * Returns the ordered
      *
-     * @return \RKW\RkwOrder\Domain\Model\Pages
-     * @api
+     * @return int $ordered
      */
-    public function getOldPage()
+    public function getOrdered()
     {
-        return $this->oldPage;
-        //===
+        return $this->ordered;
+    }
+
+
+    /**
+     * Sets the ordered
+     *
+     * @param int $ordered
+     * @return void
+     */
+    public function setOrdered($ordered)
+    {
+        $this->ordered = $ordered;
+    }
+
+    /**
+     * Returns the orderedExternal
+     *
+     * @return int $orderedExternal
+     */
+    public function getOrderedExternal()
+    {
+        return $this->orderedExternal;
+    }
+
+
+    /**
+     * Sets the orderedExternal
+     *
+     * @param int $orderedExternal
+     * @return void
+     */
+    public function setOrderedExternal($orderedExternal)
+    {
+        $this->orderedExternal = $orderedExternal;
     }
 
 }

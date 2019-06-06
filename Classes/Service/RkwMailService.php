@@ -44,6 +44,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function handleOptInRequestEvent
     (
@@ -75,16 +76,20 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                 ));
 
                 $mailService->getQueueMail()->setSubject(
-                    \RKW\RkwMailer\Helper\FrontendLocalization::translate(
+                    \RKW\RkwMailer\Utility\FrontendLocalizationUtility::translate(
                         'rkwMailService.optInRequestEvent.subject',
                         'rkw_order',
                         null,
                         $frontendUser->getTxRkwregistrationLanguageKey()
                     )
                 );
-                $mailService->getQueueMail()->setPlaintextTemplate($settings['view']['templateRootPaths'][0] . 'Email/OptInRequest');
-                $mailService->getQueueMail()->setHtmlTemplate($settings['view']['templateRootPaths'][0] . 'Email/OptInRequest');
-                $mailService->getQueueMail()->setPartialPath($settings['view']['partialRootPaths'][0]);
+
+
+                $mailService->getQueueMail()->addTemplatePaths($settings['view']['templateRootPaths']);
+                $mailService->getQueueMail()->addPartialPaths($settings['view']['partialRootPaths']);
+
+                $mailService->getQueueMail()->setPlaintextTemplate('Email/OptInRequest');
+                $mailService->getQueueMail()->setHtmlTemplate('Email/OptInRequest');
 
                 $mailService->send();
             }
@@ -98,8 +103,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * Works with RkwRegistration-FrontendUser -> this is correct! (data comes from TxRkwRegistration)
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order               $order
-     *
+     * @param \RKW\RkwOrder\Domain\Model\Order $order
      * @return void
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -108,6 +112,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function confirmationOrderUser
     (
@@ -123,8 +128,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * Handles confirm order mail for admin
      *
      * @param \RKW\RkwOrder\Domain\Model\BackendUser|array $backendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order             $order
-     *
+     * @param \RKW\RkwOrder\Domain\Model\Order  $order
      * @return void
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -133,6 +137,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function confirmationOrderAdmin
     (
@@ -150,8 +155,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * Works with RkwRegistration-FrontendUser -> this is correct! (data comes from TxRkwRegistration)
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order               $order
-     *
+     * @param \RKW\RkwOrder\Domain\Model\Order $order
      * @return void
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -160,6 +164,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function deleteOrderUser
     (
@@ -167,7 +172,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         \RKW\RkwOrder\Domain\Model\Order $order
     )
     {
-        $this->userMail($frontendUser, $order, 'delete');
+        $this->userMail($frontendUser, $order, 'delete', true);
     }
 
 
@@ -186,6 +191,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     public function deleteOrderAdmin
     (
@@ -194,7 +200,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         \RKW\RkwOrder\Domain\Model\Order $order
     )
     {
-        $this->adminMail($backendUser, $order, 'delete', $frontendUser);
+        $this->adminMail($backendUser, $order, 'delete', $frontendUser, true);
     }
 
 
@@ -202,8 +208,9 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * Sends an E-Mail to a Frontend-User
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order               $order
-     * @param string                                         $action
+     * @param \RKW\RkwOrder\Domain\Model\Order $order
+     * @param string $action
+     * @param bool $renderTemplates
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
@@ -211,12 +218,14 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     protected function userMail
     (
         \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
         \RKW\RkwOrder\Domain\Model\Order $order,
-        $action = 'confirmation'
+        $action = 'confirmation',
+        $renderTemplates = false
     )
     {
         // get settings
@@ -237,19 +246,23 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                         'pageUid'      => intval($GLOBALS['TSFE']->id),
                         'loginPid'     => intval($settingsDefault['loginPid']),
                     ),
+                    $renderTemplates
                 ));
 
                 $mailService->getQueueMail()->setSubject(
-                    \RKW\RkwMailer\Helper\FrontendLocalization::translate(
+                    \RKW\RkwMailer\Utility\FrontendLocalizationUtility::translate(
                         'rkwMailService.' . strtolower($action) . 'User.subject',
                         'rkw_order',
                         null,
                         $frontendUser->getTxRkwregistrationLanguageKey()
                     )
                 );
-                $mailService->getQueueMail()->setPlaintextTemplate($settings['view']['templateRootPaths'][0] . 'Email/' . ucFirst(strtolower($action)) . 'OrderUser');
-                $mailService->getQueueMail()->setHtmlTemplate($settings['view']['templateRootPaths'][0] . 'Email/' . ucFirst(strtolower($action)) . 'OrderUser');
-                $mailService->getQueueMail()->setPartialPath($settings['view']['partialRootPaths'][0]);
+
+                $mailService->getQueueMail()->addTemplatePaths($settings['view']['templateRootPaths']);
+                $mailService->getQueueMail()->addPartialPaths($settings['view']['partialRootPaths']);
+
+                $mailService->getQueueMail()->setPlaintextTemplate('Email/' . ucFirst(strtolower($action)) . 'OrderUser');
+                $mailService->getQueueMail()->setHtmlTemplate('Email/' . ucFirst(strtolower($action)) . 'OrderUser');
 
                 $mailService->send();
             }
@@ -261,10 +274,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Sends an E-Mail to an Admin
      *
-     * @param \RKW\RkwOrder\Domain\Model\BackendUser|array   $backendUser
-     * @param \RKW\RkwOrder\Domain\Model\Order               $order
-     * @param string                                         $action
+     * @param \RKW\RkwOrder\Domain\Model\BackendUser|array $backendUser
+     * @param \RKW\RkwOrder\Domain\Model\Order $order
+     * @param string $action
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param bool $renderTemplates
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
@@ -272,13 +286,15 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Fluid\View\Exception\InvalidTemplateResourceException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     protected function adminMail
     (
         $backendUser,
         \RKW\RkwOrder\Domain\Model\Order $order,
         $action = 'confirmation',
-        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null
+        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null,
+        $renderTemplates = false
     )
     {
         // get settings
@@ -312,12 +328,13 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                             'pageUid'      => intval($GLOBALS['TSFE']->id),
                             'loginPid'     => intval($settingsDefault['loginPid']),
                         ),
-                        'subject' => \RKW\RkwMailer\Helper\FrontendLocalization::translate(
+                        'subject' => \RKW\RkwMailer\Utility\FrontendLocalizationUtility::translate(
                             'rkwMailService.' . strtolower($action) . 'Admin.subject',
                             'rkw_order',
                             null,
                             $recipient->getLang()
                         ),
+                        $renderTemplates
                     ));
                 }
             }
@@ -330,16 +347,19 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
             }
 
             $mailService->getQueueMail()->setSubject(
-                \RKW\RkwMailer\Helper\FrontendLocalization::translate(
+                \RKW\RkwMailer\Utility\FrontendLocalizationUtility::translate(
                     'rkwMailService.' . strtolower($action) . 'Admin.subject',
                     'rkw_order',
                     null,
                     'de'
                 )
             );
-            $mailService->getQueueMail()->setPlaintextTemplate($settings['view']['templateRootPaths'][0] . 'Email/' . ucfirst(strtolower($action)) . 'OrderAdmin');
-            $mailService->getQueueMail()->setHtmlTemplate($settings['view']['templateRootPaths'][0] . 'Email/' . ucfirst(strtolower($action)) . 'OrderAdmin');
-            $mailService->getQueueMail()->setPartialPath($settings['view']['partialRootPaths'][0]);
+
+            $mailService->getQueueMail()->addTemplatePaths($settings['view']['templateRootPaths']);
+            $mailService->getQueueMail()->addPartialPaths($settings['view']['partialRootPaths']);
+
+            $mailService->getQueueMail()->setPlaintextTemplate('Email/' . ucfirst(strtolower($action)) . 'OrderAdmin');
+            $mailService->getQueueMail()->setHtmlTemplate('Email/' . ucfirst(strtolower($action)) . 'OrderAdmin');
 
             if (count($mailService->getTo())) {
                 $mailService->send();
@@ -354,6 +374,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param string $which Which type of settings will be loaded
      * @return array
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
     protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
     {

@@ -39,7 +39,7 @@ $signalSlotDispatcher->connect(
 $signalSlotDispatcher->connect(
 	'RKW\\RkwRegistration\\Tools\\Registration',
 	\RKW\RkwRegistration\Tools\Registration::SIGNAL_AFTER_USER_REGISTER_GRANT . 'RkwOrder',
-	'RKW\\RkwOrder\\Orders\\OrderManager',
+	'RKW\RkwOrder\Orders\OrderManager',
 	'saveOrderSignalSlot'
 );
 
@@ -60,8 +60,8 @@ $signalSlotDispatcher->connect(
 $signalSlotDispatcher->connect(
 	'RKW\\RkwRegistration\\Tools\\Registration',
 	\RKW\RkwRegistration\Tools\Registration::SIGNAL_AFTER_DELETING_USER,
-	'RKW\\RkwOrder\\Controller\\OrderController',
-	'removeAllOfUserSignalSlot'
+    'RKW\RkwOrder\Orders\OrderManager',
+    'removeAllOrdersOfFrontendUserSignalSlot'
 );
 
 $signalSlotDispatcher->connect(
