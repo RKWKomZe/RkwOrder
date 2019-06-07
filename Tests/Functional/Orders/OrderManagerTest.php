@@ -4,10 +4,10 @@ namespace RKW\RkwOrder\Tests\Functional\Orders;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
 use RKW\RkwOrder\Domain\Model\Order;
-use RKW\RkwOrder\Domain\Model\Publication;
+use RKW\RkwOrder\Domain\Model\Product;
 use RKW\RkwOrder\Orders\OrderManager;
 use RKW\RkwOrder\Domain\Repository\OrderRepository;
-use RKW\RkwOrder\Domain\Repository\PublicationRepository;
+use RKW\RkwOrder\Domain\Repository\ProductRepository;
 use RKW\RkwOrder\Domain\Repository\FrontendUserRepository;
 use RKW\RkwOrder\Domain\Repository\ShippingAddressRepository;
 
@@ -93,9 +93,9 @@ class OrderManagerTest extends FunctionalTestCase
     private $orderRepository;
 
     /**
-     * @var \RKW\RkwOrder\Domain\Repository\PublicationRepository
+     * @var \RKW\RkwOrder\Domain\Repository\ProductRepository
      */
-    private $publicationRepository;
+    private $productRepository;
 
     /**
      * @var \RKW\RkwRegistration\Domain\Repository\PrivacyRepository
@@ -134,7 +134,7 @@ class OrderManagerTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/Fixtures/Database/BeUsers.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/FeUsers.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/Pages.xml');
-        $this->importDataSet(__DIR__ . '/Fixtures/Database/Publication.xml');
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Product.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/Order.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/ShippingAddress.xml');
 
@@ -159,7 +159,7 @@ class OrderManagerTest extends FunctionalTestCase
         $this->frontendUserRepository = $this->objectManager->get(FrontendUserRepository::class);
         $this->shippingAddressRepository = $this->objectManager->get(ShippingAddressRepository::class);
         $this->orderRepository = $this->objectManager->get(OrderRepository::class);
-        $this->publicationRepository = $this->objectManager->get(PublicationRepository::class);
+        $this->productRepository = $this->objectManager->get(ProductRepository::class);
         $this->privacyRepository = $this->objectManager->get(PrivacyRepository::class);
         $this->registrationRepository = $this->objectManager->get(RegistrationRepository::class);
 
@@ -174,11 +174,11 @@ class OrderManagerTest extends FunctionalTestCase
         /** @var \RKW\RkwOrder\Domain\Model\ShippingAddress $shippingAddress */
         $shippingAddress = $this->shippingAddressRepository->findByUid(1);
 
-        /** @var \RKW\RkwOrder\Domain\Model\Publication $publication */
-        $publication = $this->publicationRepository->findByUid(1);
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
 
         $this->fixtureDummy = GeneralUtility::makeInstance(Order::class);
-        $this->fixtureDummy->setPublication($publication);
+        $this->fixtureDummy->addProduct($product);
         $this->fixtureDummy->setShippingAddress($shippingAddress);
         $this->fixtureDummy->setEmail('email@rkw.de');
         $this->fixtureDummy->setAmount(5);
@@ -366,11 +366,11 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function createOrderGivenPersistentFrontendUserAndTermsTrueAndPrivacyTrueAndMissingPublicationThrowsException ()
+    public function createOrderGivenPersistentFrontendUserAndTermsTrueAndPrivacyTrueAndMissingProductThrowsException ()
     {
 
         static::expectException(\RKW\RkwOrder\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noPublication');
+        static::expectExceptionMessage('orderManager.error.noProduct');
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
@@ -500,11 +500,11 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderGivenOrderWithoutPublicationThrowsException ()
+    public function saveOrderGivenOrderWithoutProductThrowsException ()
     {
 
         static::expectException(\RKW\RkwOrder\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noPublication');
+        static::expectExceptionMessage('orderManager.error.noProduct');
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
@@ -533,12 +533,12 @@ class OrderManagerTest extends FunctionalTestCase
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
-        /** @var \RKW\RkwOrder\Domain\Model\Publication $publication */
-        $publication = $this->publicationRepository->findByUid(1);
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
 
         /** @var \RKW\RkwOrder\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
-        $order->setPublication($publication);
+        $order->addProduct($product);
 
         $this->subject->saveOrder($order, $frontendUser);
 
@@ -553,25 +553,20 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderGivenOrderAndPersistedFrontendUserReturnsTrueAndAddsOrderAndShippingAddressToDatabaseWithFrontendUserSetAndUpdatesPublicationOrderedValue ()
+    public function saveOrderGivenOrderAndPersistedFrontendUserReturnsTrueAndAddsOrderAndShippingAddressToDatabaseWithFrontendUserSet ()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
-        $expectedOrderValue = ($this->fixtureDummy->getPublication()->getOrdered() + $this->fixtureDummy->getAmount());
 
         static::assertTrue($this->subject->saveOrder($this->fixtureDummy, $frontendUser));
 
         /** @var \RKW\RkwOrder\Domain\Model\Order $order */
         $order = $this->orderRepository->findByUid($this->maxNumbers['order']+1);
 
-        /** @var \RKW\RkwOrder\Domain\Model\Publication $publication */
-        $publication = $this->publicationRepository->findByUid($this->fixtureDummy->getPublication()->getUid());
-
         self::assertEquals($frontendUser->getUid(), $order->getFrontendUser()->getUid());
         self::assertEquals($frontendUser->getUid(), $order->getShippingAddress()->getFrontendUser()->getUid());
 
-        self::assertEquals($expectedOrderValue, $publication->getOrdered());
 
     }
 
@@ -584,23 +579,19 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderGivenOrderAndPersistedFrontendUserReturnsTrueAndAddsOrderAndShippingAddressWithExpectedDataToDatabaseAndUpdatesPublicationOrderedValue ()
+    public function saveOrderGivenOrderAndPersistedFrontendUserReturnsTrueAndAddsOrderAndShippingAddressWithExpectedDataToDatabase ()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
-        $expectedOrderValue = ($this->fixtureDummy->getPublication()->getOrdered() + $this->fixtureDummy->getAmount());
 
         static::assertTrue($this->subject->saveOrder($this->fixtureDummy, $frontendUser));
 
         /** @var \RKW\RkwOrder\Domain\Model\Order $order */
         $order = $this->orderRepository->findByUid($this->maxNumbers['order']+1);
 
-        /** @var \RKW\RkwOrder\Domain\Model\Publication $publication */
-        $publication = $this->publicationRepository->findByUid($this->fixtureDummy->getPublication()->getUid());
-
         /** ToDo: Check for title object!!!! */
-        self::assertEquals($this->fixtureDummy->getPublication()->getUid(), $order->getPublication()->getUid());
+        self::assertEquals($this->fixtureDummy->getProduct()->current()->getUid(), $order->getProduct()->current()->getUid());
         self::assertEquals($this->fixtureDummy->getShippingAddress()->getFirstName(), $order->getShippingAddress()->getFirstName());
         self::assertEquals($this->fixtureDummy->getShippingAddress()->getLastName(), $order->getShippingAddress()->getLastName());
         self::assertEquals($this->fixtureDummy->getShippingAddress()->getCompany(), $order->getShippingAddress()->getCompany());
@@ -612,7 +603,6 @@ class OrderManagerTest extends FunctionalTestCase
         self::assertEquals($this->fixtureDummy->getRemark(), $order->getRemark());
         self::assertEquals($this->fixtureDummy->getAmount(), $order->getAmount());
 
-        self::assertEquals($expectedOrderValue, $publication->getOrdered());
 
     }
     //=============================================
@@ -635,25 +625,24 @@ class OrderManagerTest extends FunctionalTestCase
         $resultAll = $this->orderRepository->findAll();
 
         self::assertCount(0, $result);
-        self::assertCount(1, $resultAll);
+        self::assertCount($this->maxNumbers['order']-2, $resultAll);
     }
 
     //=============================================
 
     /**
      * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
     public function getRemainingStockReturnsSubstractsOrderedAndOrderedExternalFromStock ()
     {
 
-        /** @var \RKW\RkwOrder\Domain\Model\Publication $publication */
-        $publication = GeneralUtility::makeInstance(Publication::class);
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = GeneralUtility::makeInstance(Product::class);
+        $product->setStock(100);
+        $product->setOrderedExternal(20);
 
-        $publication->setStock(100);
-        $publication->setOrdered(5);
-        $publication->setOrderedExternal(20);
-
-        self::assertEquals(75, $this->subject->getRemainingStockOfPublication($publication));
+        self::assertEquals(75, $this->subject->getRemainingStockOfProduct($product));
 
     }
 
@@ -663,14 +652,13 @@ class OrderManagerTest extends FunctionalTestCase
     public function getRemainingStockReturnsZeroIfCalculatedValuesIsBelowZero ()
     {
 
-        /** @var \RKW\RkwOrder\Domain\Model\Publication $publication */
-        $publication = GeneralUtility::makeInstance(Publication::class);
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = GeneralUtility::makeInstance(Product::class);
 
-        $publication->setStock(100);
-        $publication->setOrdered(5);
-        $publication->setOrderedExternal(200);
+        $product->setStock(100);
+        $product->setOrderedExternal(200);
 
-        self::assertEquals(0, $this->subject->getRemainingStockOfPublication($publication));
+        self::assertEquals(0, $this->subject->getRemainingStockOfProduct($product));
 
     }
 
@@ -680,11 +668,14 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function getBackendUsersForAdminMailsGivenPublicationWithAdminsSetAndOneAdminWithInvalidEmailReturnsArrayWithBackendUsersWithValidEmailOnly ()
+    public function getBackendUsersForAdminMailsGivenProductWithAdminsSetAndOneAdminWithInvalidEmailReturnsArrayWithBackendUsersWithValidEmailOnly ()
     {
 
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
         /** @var \RKW\RkwOrder\Domain\Model\BackendUser $result[] */
-        $result = $this->subject->getBackendUsersForAdminMails($this->fixtureDummy);
+        $result = $this->subject->getBackendUsersForAdminMails($product);
         static::assertInternalType('array', $result);
 
         self::assertCount(3, $result);
@@ -701,15 +692,14 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function getBackendUsersForAdminMailsGivenPublicationWithInvalidAdminMailInFieldReturnsArrayWithBackendUsersWithValidEmailOnly ()
+    public function getBackendUsersForAdminMailsGivenProductWithInvalidAdminMailInFieldReturnsArrayWithBackendUsersWithValidEmailOnly ()
     {
 
-        /** @var \RKW\RkwOrder\Domain\Model\Publication $publication */
-        $publication = $this->publicationRepository->findByUid(3);
-        $this->fixtureDummy->setPublication($publication);
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(3);
 
         /** @var \RKW\RkwOrder\Domain\Model\BackendUser $result[] */
-        $result = $this->subject->getBackendUsersForAdminMails($this->fixtureDummy);
+        $result = $this->subject->getBackendUsersForAdminMails($product);
         static::assertInternalType('array', $result);
 
         self::assertCount(2, $result);
@@ -725,15 +715,14 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function getBackendUsersForAdminMailsGivenPublicationWithoutAdminsSetReturnsArrayWithFallbackBeUser ()
+    public function getBackendUsersForAdminMailsGivenProductWithoutAdminsSetReturnsArrayWithFallbackBeUser ()
     {
 
-        /** @var \RKW\RkwOrder\Domain\Model\Publication $publication */
-        $publication = $this->publicationRepository->findByUid(2);
-        $this->fixtureDummy->setPublication($publication);
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(2);
 
         /** @var \RKW\RkwOrder\Domain\Model\BackendUser $result[] */
-        $result = $this->subject->getBackendUsersForAdminMails($this->fixtureDummy);
+        $result = $this->subject->getBackendUsersForAdminMails($product);
         static::assertInternalType('array', $result);
 
         self::assertCount(1, $result);

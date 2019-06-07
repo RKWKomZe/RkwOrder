@@ -16,7 +16,7 @@ namespace RKW\RkwOrder\Domain\Repository;
  */
 
 /**
- * Class PublicationRepository
+ * Class ProductRepository
  *
  * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @author Steffen Kroggel <developer@steffenkroggel.de>
@@ -24,7 +24,7 @@ namespace RKW\RkwOrder\Domain\Repository;
  * @package RKW_RkwOrder
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class PublicationRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
     /**

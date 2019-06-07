@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dataset>
-    <tx_rkworder_domain_model_publication>
+    <tx_rkworder_domain_model_product>
         <uid>1</uid>
         <pid>0</pid>
         <title>Leitfaden deluxe</title>
@@ -10,8 +10,8 @@
         <bundle_only>0</bundle_only>
         <allow_subscription>0</allow_subscription>
         <backend_user>1,2,5</backend_user>
-    </tx_rkworder_domain_model_publication>
-    <tx_rkworder_domain_model_publication>
+    </tx_rkworder_domain_model_product>
+    <tx_rkworder_domain_model_product>
         <uid>2</uid>
         <pid>0</pid>
         <title>Leitfaden Ohne Admin-Mails</title>
@@ -21,8 +21,8 @@
         <bundle_only>0</bundle_only>
         <allow_subscription>0</allow_subscription>
         <backend_user />
-    </tx_rkworder_domain_model_publication>
-    <tx_rkworder_domain_model_publication>
+    </tx_rkworder_domain_model_product>
+    <tx_rkworder_domain_model_product>
         <uid>3</uid>
         <pid>0</pid>
         <title>Leitfaden mit invalider Ersatz-Admin-Mail</title>
@@ -32,6 +32,18 @@
         <bundle_only>0</bundle_only>
         <allow_subscription>0</allow_subscription>
         <backend_user>1,2</backend_user>
-    </tx_rkworder_domain_model_publication>
+    </tx_rkworder_domain_model_product>
+
+    <!-- for testing stock calculation -->
+    <tx_rkworder_domain_model_product>
+        <uid>4</uid>
+        <pid>0</pid>
+        <title>Leitfaden mit Bestellungen</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>fallback-invalid</admin_email>
+        <stock>100</stock>
+        <bundle_only>0</bundle_only>
+        <allow_subscription>0</allow_subscription>
+    </tx_rkworder_domain_model_product>
 
 </dataset>

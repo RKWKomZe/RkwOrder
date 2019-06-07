@@ -69,12 +69,12 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     protected $orderRepository;
 
     /**
-     * publicationRepository
+     * productRepository
      *
-     * @var \RKW\RkwOrder\Domain\Repository\PublicationRepository
+     * @var \RKW\RkwOrder\Domain\Repository\ProductRepository
      * @inject
      */
-    protected $publicationRepository;
+    protected $productRepository;
 
     /**
      * BackendUserRepository
@@ -173,9 +173,9 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             //===
         }
 
-        // check publication
-        if (! $order->getPublication()) {
-            throw new Exception('orderManager.error.noPublication');
+        // check product
+        if (! count($order->getProduct()->toArray())) {
+            throw new Exception('orderManager.error.noProduct');
             //===
         }
 
@@ -244,9 +244,9 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             //===
         }
 
-        // check publication
-        if (! $order->getPublication()) {
-            throw new Exception('orderManager.error.noPublication');
+        // check product
+        if (! count($order->getProduct()->toArray())) {
+            throw new Exception('orderManager.error.noProduct');
             //===
         }
 
@@ -260,19 +260,18 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         $order->setFrontendUser($frontendUser);
         $order->getShippingAddress()->setFrontendUser($frontendUser);
 
-        // set ordered value
-        $order->getPublication()->setOrdered($order->getPublication()->getOrdered() + $order->getAmount());
-
         // save it
         $this->orderRepository->add($order);
-        $this->publicationRepository->update($order->getPublication());
         $this->persistenceManager->persistAll();
 
         // send final confirmation mail to user
         $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($frontendUser, $order));
 
         // send mail to admins
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array($this->getBackendUsersForAdminMails($order), $order));
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        foreach ($order->getProduct() as $product) {
+            $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array($this->getBackendUsersForAdminMails($product), $order));
+        }
 
         return true;
         //===
@@ -324,7 +323,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     public function removeAllOrdersOfFrontendUserSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
     {
 
-        $orders = $this->orderRepository->findAllByFrontendUser($frontendUser);
+        $orders = $this->orderRepository->findByFrontendUser($frontendUser);
         if ($orders) {
 
             /** @var \RKW\RkwOrder\Domain\Model\Order $order $order */
@@ -338,7 +337,11 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
                 $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_USER, array($frontendUser, $order));
 
                 // send mail to admins
-                $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array($this->getBackendUsersForAdminMails($order), $order));
+                /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+                foreach ($order->getProduct() as $product) {
+                    $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array($this->getBackendUsersForAdminMails($product), $order));
+
+                }
                 $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Deleted order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
             }
         }
@@ -346,14 +349,16 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
 
     /**
-     * Get remaining stock of publication
+     * Get remaining stock of product
      *
-     * @param \RKW\RkwOrder\Domain\Model\Publication $publication
+     * @param \RKW\RkwOrder\Domain\Model\Product $product
      * @return int
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getRemainingStockOfPublication (\RKW\RkwOrder\Domain\Model\Publication $publication)
+    public function getRemainingStockOfProduct (\RKW\RkwOrder\Domain\Model\Product $product)
     {
-        $remainingStock = intval($publication->getStock()) - (intval($publication->getOrdered()) + intval($publication->getOrderedExternal()));
+        $orderedSum = $this->orderRepository->getOrderedSumByProduct($product);
+        $remainingStock = intval($product->getStock()) - (intval($orderedSum) + intval($product->getOrderedExternal()));
         return (($remainingStock > 0) ? $remainingStock : 0);
         //===
     }
@@ -363,10 +368,10 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Get all BackendUsers for sending admin mails
      *
-     * @param \RKW\RkwOrder\Domain\Model\Order $order
+     * @param \RKW\RkwOrder\Domain\Model\Product $product
      * @return array <\RKW\RkwOrder\Domain\Model\BackendUser> $backendUsers
      */
-    public function getBackendUsersForAdminMails (\RKW\RkwOrder\Domain\Model\Order $order)
+    public function getBackendUsersForAdminMails (\RKW\RkwOrder\Domain\Model\Product $product)
     {
 
         $backendUsers = [];
@@ -374,14 +379,14 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         if (! $settings['disableAdminMails']) {
 
             // go through ObjectStorage
-            foreach ($order->getPublication()->getBackendUser() as $backendUser) {
+            foreach ($product->getBackendUser() as $backendUser) {
                 if ((\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))) {
                     $backendUsers[] = $backendUser;
                 }
             }
 
             // get field for alternative e-emails
-            if ($email = $order->getPublication()->getAdminEmail()) {
+            if ($email = $product->getAdminEmail()) {
 
                 /** @var \RKW\RkwOrder\Domain\Model\BackendUser $backendUser */
                 $backendUser = $this->backendUserRepository->findOneByEmail($email);

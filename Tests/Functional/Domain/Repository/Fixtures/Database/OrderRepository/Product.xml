@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_rkworder_domain_model_product>
+        <uid>1</uid>
+        <pid>0</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>100</stock>
+        <bundle_only>0</bundle_only>
+        <allow_subscription>0</allow_subscription>
+    </tx_rkworder_domain_model_product>
+    <tx_rkworder_domain_model_product>
+        <uid>2</uid>
+        <pid>0</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>100</stock>
+        <bundle_only>0</bundle_only>
+        <allow_subscription>0</allow_subscription>
+    </tx_rkworder_domain_model_product>
+
+</dataset>

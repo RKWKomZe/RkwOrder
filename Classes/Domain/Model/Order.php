@@ -112,19 +112,35 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $shippingAddress = null;
 
-     /**
-     * pages
+    /**
+     * product
      *
-     * @var \RKW\RkwOrder\Domain\Model\Pages
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\Product>
      */
-    protected $pages = null;
+    protected $product = null;
+
 
     /**
-     * pages
-     *
-     * @var \RKW\RkwOrder\Domain\Model\Publication
+     * __construct
      */
-    protected $publication = null;
+    public function __construct()
+    {
+        //Do not remove the next line: It would break the functionality
+        $this->initStorageObjects();
+    }
+
+    /**
+     * Initializes all ObjectStorage properties
+     * Do not modify this method!
+     * It will be rewritten on each save in the extension builder
+     * You may modify the constructor of this class instead
+     *
+     * @return void
+     */
+    protected function initStorageObjects()
+    {
+        $this->product = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
 
 
     /**
@@ -135,9 +151,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getCrdate()
     {
-
         return $this->crdate;
-        //===
     }
 
 
@@ -150,7 +164,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getTstamp()
     {
         return $this->tstamp;
-        //===
     }
 
     /**
@@ -375,38 +388,47 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->shippingAddress = $shippingAddress;
     }
 
-    /**
-     * Returns the pages
-     *
-     * @return \RKW\RkwOrder\Domain\Model\Pages $pages
-     * @deprecated
-     */
-    public function getPages()
-    {
-        return $this->pages;
-    }
-
 
     /**
-     * Returns the publication
+     * Adds a product
      *
-     * @return \RKW\RkwOrder\Domain\Model\Publication $publication
-     */
-    public function getPublication()
-    {
-        return $this->publication;
-    }
-
-
-
-    /**
-     * Sets the publication
-     *
-     * @param \RKW\RkwOrder\Domain\Model\Publication $publication
+     * @param \RKW\RkwOrder\Domain\Model\Product $product
      * @return void
      */
-    public function setPublication(\RKW\RkwOrder\Domain\Model\Publication $publication)
+    public function addProduct(\RKW\RkwOrder\Domain\Model\Product $product)
     {
-        $this->publication = $publication;
+        $this->product->attach($product);
+    }
+
+    /**
+     * Removes a product
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Product $product
+     * @return void
+     */
+    public function removeProduct(\RKW\RkwOrder\Domain\Model\Product $product)
+    {
+        $this->product->detach($product);
+    }
+
+    /**
+     * Returns the EventWorkshop
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\Product> $product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Sets the EventWorkshop
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\Product> $product
+     * @return void
+     */
+    public function setProduct(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $product)
+    {
+        $this->product = $product;
     }
 }

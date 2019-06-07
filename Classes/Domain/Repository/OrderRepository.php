@@ -3,6 +3,7 @@
 namespace RKW\RkwOrder\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use RKW\RkwBasics\Helper\QueryTypo3;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -35,7 +36,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findAllByFrontendUser($frontendUser)
+    public function findByFrontendUser($frontendUser)
     {
 
         $query = $this->createQuery();
@@ -51,6 +52,32 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $query->execute();
         //===
     }
+
+
+    /**
+     * Get ordered sum of one product
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Product $product
+     * @return int
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     */
+    public function getOrderedSumByProduct(\RKW\RkwOrder\Domain\Model\Product $product)
+    {
+
+        $query = $this->createQuery();
+        $query->statement('
+            SELECT SUM(amount) as sum FROM tx_rkworder_domain_model_order 
+            WHERE tx_rkworder_domain_model_order.product = ' . intval($product->getUid()) .
+            QueryTypo3::getWhereClauseForVersioning('tx_rkworder_domain_model_order') .
+            QueryTypo3::getWhereClauseForEnableFields('tx_rkworder_domain_model_order') . '
+        
+        ');
+
+        $result = $query->execute(true);
+        return intval($result[0]['sum']);
+        //====
+    }
+
 
 
     /**

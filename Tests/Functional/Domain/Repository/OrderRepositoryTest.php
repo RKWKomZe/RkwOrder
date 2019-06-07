@@ -5,6 +5,7 @@ namespace RKW\RkwOrder\Tests\Functional\Domain\Repository;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
 use RKW\RkwOrder\Domain\Repository\OrderRepository;
+use RKW\RkwOrder\Domain\Repository\ProductRepository;
 use RKW\RkwOrder\Domain\Repository\FrontendUserRepository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -58,6 +59,11 @@ class OrderRepositoryTest extends FunctionalTestCase
     private $frontendUserRepository;
 
     /**
+     * @var \RKW\RkwOrder\Domain\Repository\ProductRepository
+     */
+    private $productRepository;
+
+    /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
      */
     private $persistenceManager = null;
@@ -75,6 +81,7 @@ class OrderRepositoryTest extends FunctionalTestCase
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/Fixtures/Database/OrderRepository/Pages.xml');
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/OrderRepository/Product.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/OrderRepository/Order.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/OrderRepository/FeUsers.xml');
 
@@ -93,7 +100,9 @@ class OrderRepositoryTest extends FunctionalTestCase
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->subject = $this->objectManager->get(OrderRepository::class);
+
         $this->frontendUserRepository = $this->objectManager->get(FrontendUserRepository::class);
+        $this->productRepository = $this->objectManager->get(ProductRepository::class);
 
     }
 
@@ -101,13 +110,13 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findAllByFrontendUserReturnsOrdersWithoutRespectingStorageId()
+    public function findByFrontendUserReturnsOrdersWithoutRespectingStorageId()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
-        $result = $this->subject->findAllByFrontendUser($frontendUser)->toArray();
+        $result = $this->subject->findByFrontendUser($frontendUser)->toArray();
         static::assertEquals(2, count($result));
         self::assertEquals('1', $result[0]->getUid());
         self::assertEquals('2', $result[1]->getUid());
@@ -118,13 +127,13 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findAllByFrontendUserReturnsOnlyNonDeletedOrders()
+    public function findByFrontendUserReturnsOnlyNonDeletedOrders()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(2);
 
-        $result = $this->subject->findAllByFrontendUser($frontendUser)->toArray();
+        $result = $this->subject->findByFrontendUser($frontendUser)->toArray();
         static::assertEquals(1, count($result));
         self::assertEquals('3', $result[0]->getUid());
     }
@@ -133,13 +142,13 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findAllByFrontendUserReturnsOnlyOrdersOfGivenUser()
+    public function findByFrontendUserReturnsOnlyOrdersOfGivenUser()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(3);
 
-        $result = $this->subject->findAllByFrontendUser($frontendUser)->toArray();
+        $result = $this->subject->findByFrontendUser($frontendUser)->toArray();
         static::assertEquals(1, count($result));
         self::assertEquals('5', $result[0]->getUid());
     }
@@ -148,16 +157,47 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findAllByFrontendUserReturnsOrdersWithAllStatuses()
+    public function findByFrontendUserReturnsOrdersWithAllStatuses()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(5);
 
-        $result = $this->subject->findAllByFrontendUser($frontendUser)->toArray();
+        $result = $this->subject->findByFrontendUser($frontendUser)->toArray();
         static::assertEquals(2, count($result));
         self::assertEquals('7', $result[0]->getUid());
         self::assertEquals('8', $result[1]->getUid());
+
+    }
+
+    //=============================================
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     */
+    public function getOrderedSumByProductGivenNormalProductReturnsSumOfOrderAmountsOfGivenProduct()
+    {
+
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        $result = $this->subject->getOrderedSumByProduct($product);
+        self::assertEquals(9, $result);
+
+    }
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     */
+    public function getOrderedSumByProductGivenNormalProductReturnsSumOfOrderAmountsWithoutDeletedOrders()
+    {
+
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(2);
+
+        $result = $this->subject->getOrderedSumByProduct($product);
+        self::assertEquals(5, $result);
 
     }
 

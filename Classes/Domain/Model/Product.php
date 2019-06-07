@@ -24,7 +24,7 @@ namespace RKW\RkwOrder\Domain\Model;
  * @package RKW_RkwOrder
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
     /**
@@ -72,12 +72,22 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $stock = 0;
 
+
+    /**
+     * orderedExternal
+     *
+     * @var int
+     */
+    protected $orderedExternal;
+
+
     /**
      * bundleOnly
      *
      * @var boolean
      */
     protected $bundleOnly = false;
+
 
     /**
      * allowSubscription
@@ -86,19 +96,29 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $allowSubscription = false;
 
+
     /**
-     * series
+     * productParent
      *
-     * @var \RKW\RkwBasics\Domain\Model\Series
+     * @var \RKW\RkwOrder\Domain\Model\Product
      */
-    protected $series = null;
+    protected $productParent;
+
+
+    /**
+     * page
+     *
+     * @var \RKW\RkwOrder\Domain\Model\Pages
+     */
+    protected $page;
+
 
     /**
      * backendUser
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\BackendUser>
      */
-    protected $backendUser = null;
+    protected $backendUser;
 
 
     /**
@@ -109,22 +129,8 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $adminEmail;
 
 
-    /**
-     * ordered
-     *
-     * @var int
-     */
-    protected $ordered;
 
-
-    /**
-     * orderedExternal
-     *
-     * @var int
-     */
-    protected $orderedExternal;
-
-
+    
     /**
      * __construct
      */
@@ -158,7 +164,6 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
 
         return $this->crdate;
-        //===
     }
 
 
@@ -171,7 +176,6 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getTstamp()
     {
         return $this->tstamp;
-        //===
     }
 
     /**
@@ -195,7 +199,6 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getHidden()
     {
         return $this->hidden;
-        //===
     }
 
     /**
@@ -219,7 +222,6 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getDeleted()
     {
         return $this->deleted;
-        //===
     }
 
     /**
@@ -328,26 +330,73 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->allowSubscription = $allowSubscription;
     }
 
+
     /**
-     * Returns the series
+     * Returns the orderedExternal
      *
-     * @return \RKW\RkwBasics\Domain\Model\Series $series
+     * @return int $orderedExternal
      */
-    public function getSeries()
+    public function getOrderedExternal()
     {
-        return $this->series;
+        return $this->orderedExternal;
+    }
+
+
+    /**
+     * Sets the orderedExternal
+     *
+     * @param int $orderedExternal
+     * @return void
+     */
+    public function setOrderedExternal($orderedExternal)
+    {
+        $this->orderedExternal = $orderedExternal;
+    }
+
+
+    /**
+     * Returns the productParent
+     *
+     * @return \RKW\RkwOrder\Domain\Model\Product $productParent
+     */
+    public function getProductParent()
+    {
+        return $this->productParent;
     }
 
     /**
-     * Sets the series
+     * Sets the productParent
      *
-     * @param \RKW\RkwBasics\Domain\Model\Series $series
+     * @param \RKW\RkwOrder\Domain\Model\Product $productParent
      * @return void
      */
-    public function setSeries(\RKW\RkwBasics\Domain\Model\Series $series)
+    public function setProductParent(\RKW\RkwOrder\Domain\Model\Product $productParent)
     {
-        $this->series = $series;
+        $this->productParent = $productParent;
     }
+
+
+    /**
+     * Returns the page
+     *
+     * @return \RKW\RkwOrder\Domain\Model\Pages $page
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * Sets the page
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Pages $page
+     * @return void
+     */
+    public function setPage(\RKW\RkwOrder\Domain\Model\Pages $page)
+    {
+        $this->page = $page;
+    }
+
 
     /**
      * Adds a backendUser
@@ -411,51 +460,6 @@ class Publication extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setAdminEmail($adminEmail)
     {
         $this->adminEmail = $adminEmail;
-    }
-
-
-    /**
-     * Returns the ordered
-     *
-     * @return int $ordered
-     */
-    public function getOrdered()
-    {
-        return $this->ordered;
-    }
-
-
-    /**
-     * Sets the ordered
-     *
-     * @param int $ordered
-     * @return void
-     */
-    public function setOrdered($ordered)
-    {
-        $this->ordered = $ordered;
-    }
-
-    /**
-     * Returns the orderedExternal
-     *
-     * @return int $orderedExternal
-     */
-    public function getOrderedExternal()
-    {
-        return $this->orderedExternal;
-    }
-
-
-    /**
-     * Sets the orderedExternal
-     *
-     * @param int $orderedExternal
-     * @return void
-     */
-    public function setOrderedExternal($orderedExternal)
-    {
-        $this->orderedExternal = $orderedExternal;
     }
 
 }

@@ -3,7 +3,7 @@
     <tx_rkworder_domain_model_order>
         <uid>1</uid>
         <pid>1</pid>
-        <publication>1</publication>
+        <product>1</product>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <amount>4</amount>
@@ -14,7 +14,7 @@
     <tx_rkworder_domain_model_order>
         <uid>2</uid>
         <pid>1</pid>
-        <publication>1</publication>
+        <product>1</product>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <amount>4</amount>
@@ -25,7 +25,7 @@
     <tx_rkworder_domain_model_order>
         <uid>3</uid>
         <pid>1</pid>
-        <publication>1</publication>
+        <product>1</product>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <amount>4</amount>
@@ -33,4 +33,27 @@
         <frontend_user>3</frontend_user>
         <status>0</status>
     </tx_rkworder_domain_model_order>
+
+    <!-- for testing stock calculation -->
+    <tx_rkworder_domain_model_order>
+        <uid>4</uid>
+        <pid>1</pid>
+        <product>4</product>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <amount>10</amount>
+        <shipping_address>1</shipping_address>
+        <status>0</status>
+    </tx_rkworder_domain_model_order>
+    <tx_rkworder_domain_model_order>
+        <uid>5</uid>
+        <pid>1</pid>
+        <product>4</product>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <amount>5</amount>
+        <shipping_address>1</shipping_address>
+        <status>0</status>
+    </tx_rkworder_domain_model_order>
+
 </dataset>
