@@ -6,23 +6,14 @@
 			<trans-unit id="tx_rkworder_domain_model_order">
 				<source>RKW Order: Order</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.send_series">
-				<source>Send Series</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.subscribe">
-				<source>Subscription</source>
-			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.email">
 				<source>E-Mail</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.amount">
-				<source>Amount</source>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.frontend_user">
 				<source>Frontend User</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.product">
-				<source>Product</source>
+			<trans-unit id="tx_rkworder_domain_model_order.order_product">
+				<source>Ordered Products</source>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.shipping_address">
 				<source>Shipping Address</source>
@@ -39,6 +30,19 @@
 			<trans-unit id="tx_rkworder_domain_model_order.remark" approved="yes">
 				<source>Remark</source>
 			</trans-unit>
+
+
+            
+            <trans-unit id="tx_rkworder_domain_model_orderproduct">
+				<source>RKW Order: OrderProduct</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_orderproduct.product">
+				<source>Product</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_orderproduct.amount">
+				<source>Amount</source>
+			</trans-unit>
+
 
 
             <trans-unit id="tx_rkworder_domain_model_product">
@@ -63,13 +67,16 @@
 				<source>External Orders</source>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_product.bundle_only">
-				<source>Can only be ordered as a bundle</source>
+				<source>Bundle only</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.allow_subscription">
-				<source>Allow Subscription</source>
+			<trans-unit id="tx_rkworder_domain_model_product.subscription_only">
+				<source>Subscription only</source>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_product.page">
 				<source>Page</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_product.image">
+				<source>Image</source>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_product.product_parent">
 				<source>Parent Product</source>
@@ -80,8 +87,8 @@
 			<trans-unit id="flexform.order.sheetTitle">
 				<source>Options</source>
 			</trans-unit>
-			<trans-unit id="flexform.order.product">
-				<source>Product</source>
+			<trans-unit id="flexform.order.products">
+				<source>Products</source>
 			</trans-unit>
 
 		</body>

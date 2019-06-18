@@ -1,10 +1,15 @@
 {namespace vh=RKW\RkwOrder\ViewHelpers}
 
-<div id="rkw-order-user-data">
-    <f:render partial="Order/FormFields/UserData" section="userData" arguments="{_all}" />
+<f:render partial="Order/FormFields/Order" section="productList" arguments="{_all}" />
+
+<div class="order-form">
+    <h5 class="order-form__header"><f:translate key="tx_rkworder_domain_model_shippingaddress" /></h5>
+    <div id="rkw-order-user-data">
+        <f:render partial="Order/FormFields/UserData" section="userData" arguments="{_all}" />
+    </div>
 </div>
-<f:render partial="Order/FormFields/Order" section="orderAmount" arguments="{_all}" />
-<f:render partial="Order/FormFields/Order" section="order" arguments="{_all}" />
+
+<f:render partial="Order/FormFields/Order" section="termsSubmit" arguments="{_all}" />
 
 
 

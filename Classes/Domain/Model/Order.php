@@ -59,22 +59,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $status = 0;
 
     /**
-     * sendSeries
-     *
-     * @var integer
-     */
-    protected $sendSeries = 0;
-
-
-    /**
-     * subscribe
-     *
-     * @var integer
-     */
-    protected $subscribe = 0;
-
-
-    /**
      * email
      *
      * @var string
@@ -89,13 +73,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $remark = '';
 
-    /**
-     * amount
-     *
-     * @var int
-     * @validate \RKW\RkwOrder\Validation\Validator\NotZeroValidator
-     */
-    protected $amount = 1;
 
     /**
      * frontendUser
@@ -112,12 +89,14 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $shippingAddress = null;
 
+    
     /**
-     * product
+     * orderProduct
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\Product>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\OrderProduct>
+     * @cascade remove
      */
-    protected $product = null;
+    protected $orderProduct = null;
 
 
     /**
@@ -139,7 +118,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected function initStorageObjects()
     {
-        $this->product = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->orderProduct = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
 
@@ -239,50 +218,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         //===
     }
 
-    /**
-     * Returns the sendSeries
-     *
-     * @return integer $sendSeries
-     */
-    public function getSendSeries()
-    {
-        return $this->sendSeries;
-    }
-
-    /**
-     * Sets the sendSeries
-     *
-     * @param boolean $sendSeries
-     * @return void
-     */
-    public function setSendSeries($sendSeries)
-    {
-        $this->sendSeries = (boolean)$sendSeries;
-    }
-
-
-    /**
-     * Returns the Subscribe
-     *
-     * @return integer $subscribe
-     */
-    public function getSubscribe()
-    {
-        return $this->subscribe;
-    }
-
-    /**
-     * Sets the Subscribe
-     *
-     * @param boolean $subscribe
-     * @return void
-     */
-    public function setSubscribe($subscribe)
-    {
-        $this->subscribe = (boolean)$subscribe;
-    }
-
-
+    
     /**
      * Returns the email
      *
@@ -304,26 +240,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->email = $email;
     }
 
-    /**
-     * Returns the amount
-     *
-     * @return int $amount
-     */
-    public function getAmount()
-    {
-        return $this->amount;
-    }
-
-    /**
-     * Sets the amount
-     *
-     * @param int $amount
-     * @return void
-     */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-    }
+  
 
     /**
      * Returns the remark
@@ -390,45 +307,45 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * Adds a product
+     * Adds a orderProduct
      *
-     * @param \RKW\RkwOrder\Domain\Model\Product $product
+     * @param \RKW\RkwOrder\Domain\Model\OrderProduct $orderProduct
      * @return void
      */
-    public function addProduct(\RKW\RkwOrder\Domain\Model\Product $product)
+    public function addOrderProduct(\RKW\RkwOrder\Domain\Model\OrderProduct $orderProduct)
     {
-        $this->product->attach($product);
+        $this->orderProduct->attach($orderProduct);
     }
 
     /**
-     * Removes a product
+     * Removes a orderProduct
      *
-     * @param \RKW\RkwOrder\Domain\Model\Product $product
+     * @param \RKW\RkwOrder\Domain\Model\OrderProduct $orderProduct
      * @return void
      */
-    public function removeProduct(\RKW\RkwOrder\Domain\Model\Product $product)
+    public function removeOrderProduct(\RKW\RkwOrder\Domain\Model\OrderProduct $orderProduct)
     {
-        $this->product->detach($product);
+        $this->orderProduct->detach($orderProduct);
     }
 
     /**
-     * Returns the EventWorkshop
+     * Returns the orderProduct
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\Product> $product
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\OrderProduct> $orderProduct
      */
-    public function getProduct()
+    public function getOrderProduct()
     {
-        return $this->product;
+        return $this->orderProduct;
     }
 
     /**
-     * Sets the EventWorkshop
+     * Sets the orderProduct
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\Product> $product
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\OrderProduct> $orderProduct
      * @return void
      */
-    public function setProduct(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $product)
+    public function setOrderProduct(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderProduct)
     {
-        $this->product = $product;
+        $this->orderProduct = $orderProduct;
     }
 }

@@ -90,19 +90,11 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * allowSubscription
+     * subscriptionOnly
      *
      * @var boolean
      */
-    protected $allowSubscription = false;
-
-
-    /**
-     * productParent
-     *
-     * @var \RKW\RkwOrder\Domain\Model\Product
-     */
-    protected $productParent;
+    protected $subscriptionOnly = false;
 
 
     /**
@@ -111,6 +103,22 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var \RKW\RkwOrder\Domain\Model\Pages
      */
     protected $page;
+
+    
+    /**
+     * image
+     *
+     * @var \RKW\RkwBasics\Domain\Model\FileReference
+     */
+    protected $image = null;    
+
+
+    /**
+     * productParent
+     *
+     * @var \RKW\RkwOrder\Domain\Model\Product
+     */
+    protected $productParent;
 
 
     /**
@@ -310,24 +318,24 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the allowSubscription
+     * Returns the subscriptionOnly
      *
-     * @return boolean $allowSubscription
+     * @return boolean $subscriptionOnly
      */
-    public function getAllowSubscription()
+    public function getSubscriptionOnly()
     {
-        return $this->allowSubscription;
+        return $this->subscriptionOnly;
     }
 
     /**
-     * Sets the allowSubscription
+     * Sets the subscriptionOnly
      *
-     * @param boolean $allowSubscription
+     * @param boolean $subscriptionOnly
      * @return void
      */
-    public function setAllowSubscription($allowSubscription)
+    public function setSubscriptionOnly($subscriptionOnly)
     {
-        $this->allowSubscription = $allowSubscription;
+        $this->subscriptionOnly = $subscriptionOnly;
     }
 
 
@@ -397,6 +405,28 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->page = $page;
     }
 
+
+    /**
+     * Returns the image
+     *
+     * @return \RKW\RkwBasics\Domain\Model\FileReference $image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Sets the image
+     *
+     * @param \RKW\RkwBasics\Domain\Model\FileReference $image
+     * @return void
+     */
+    public function setImage(\RKW\RkwBasics\Domain\Model\FileReference $image)
+    {
+        $this->image = $image;
+    }    
+    
 
     /**
      * Adds a backendUser

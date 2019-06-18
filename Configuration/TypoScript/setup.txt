@@ -89,7 +89,17 @@ config.tx_extbase.persistence {
 
         #===============================================
 
-        RKW\RkwOrder\Domain\Model\Publication{
+        RKW\RkwOrder\Domain\Model\OrderProduct {
+            mapping {
+                columns {
+                    ext_order.mapOnProperty = order
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwOrder\Domain\Model\Product {
             mapping {
                 columns {
                     crdate.mapOnProperty = crdate
@@ -102,6 +112,7 @@ config.tx_extbase.persistence {
     }
 }
 
+// #########################################################
 
 
 plugin.tx_rkworder {
@@ -117,9 +128,13 @@ plugin.tx_rkworder {
 	settings {
 		termsPid = {$plugin.tx_rkworder.settings.termsPid}
 		fallbackBackendUserForMails = {$plugin.tx_rkworder.settings.fallbackBackendUserForMails}
+		maxOrderItemAmount = {$plugin.tx_rkworder.settings.maxOrderItemAmount}
 	}
 
 }
+
+// #########################################################
+
 
 # Add jquery if not disabled
 [globalVar = LIT:1 = {$plugin.tx_rkworder.settings.includeJQuery}]
@@ -164,6 +179,7 @@ txRkwOrderJson {
     }
 }
 
+// #########################################################
 
 plugin.tx_rkworder._CSS_DEFAULT_STYLE (
 	textarea.f3-form-error {
@@ -184,6 +200,51 @@ plugin.tx_rkworder._CSS_DEFAULT_STYLE (
 		color:green;
 	}
 )
+
+
+
+// #########################################################
+plugin.tx_rkworder.libs {
+
+
+	# PDF Thumbnails
+	responsivePdfThumbnail = IMAGE
+	responsivePdfThumbnail {
+
+		file {
+			import.current = 1
+			treatIdAsReference = 1
+			ext = png
+			maxW = 90
+		}
+
+		# Inherit configuration from tt_content
+		layout < tt_content.image.20.1.layout
+		layoutKey = picture
+		sourceCollection < plugin.tx_rkwbasics.libs.responsiveImages.sourceCollection
+
+		# set configuration for sourceCollection
+		sourceCollection {
+
+			mobile.maxW.override = 90
+			mobile.maxW.override.if {
+				value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.mobile}
+				isLessThan = 90
+			}
+			mobileRetina2.maxW.override < .mobile.maxW.override
+
+			tablet.maxW.override < .mobile.maxW.override
+			tablet.maxW.override.if.value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.tablet}
+			tabletRetina2.maxW.override < .tablet.maxW.override
+			tabletRetina3.maxW.override < .tablet.maxW.override
+
+			desktop.maxW.override < .mobile.maxW.override
+			desktop.maxW.override.if.value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.desktop}
+            desktopRetina2.maxW.override < .desktop.maxW.override
+		}
+	}
+}
+
 
 # needed for CommandController (otherwise PID 1 would be the storagePid)
 module.tx_rkworder.persistence.storagePid < plugin.tx_rkworder.persistence.storagePid

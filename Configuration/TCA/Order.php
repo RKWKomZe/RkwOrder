@@ -8,8 +8,8 @@ if (!defined ('TYPO3_MODE')) {
 $GLOBALS['TCA']['tx_rkworder_domain_model_order'] = [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order',
-        'label' => 'last_name',
-        'label_alt' => 'last_name,first_name',
+        'label' => 'email',
+        'label_alt' => 'status',
         'label_alt_force' => 1,
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
@@ -23,10 +23,10 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_order'] = [
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rkw_order') . 'Resources/Public/Icons/tx_rkworder_domain_model_order.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'hidden, status, product, send_series, subscribe, amount, email, frontend_user, shipping_address, remark',
+		'showRecordFieldList' => 'hidden, status, email, frontend_user, shipping_address, order_product, remark',
 	],
 	'types' => [
-		'1' => ['showitem' => 'hidden;;1, status, product, send_series, subscribe, amount, email, frontend_user, shipping_address, remark'],
+		'1' => ['showitem' => 'hidden;;1, status, email, frontend_user, hipping_address, order_product, sremark'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -54,43 +54,6 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_order'] = [
 				]
 			],
 		],
-        'product' => [
-            'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.product',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectMultipleSideBySide',
-                'foreign_table' => 'tx_rkworder_domain_model_product',
-                'foreign_table_where' => 'AND tx_rkworder_domain_model_product.hidden = 0 AND tx_rkworder_domain_model_product.deleted = 0',
-                'size' => 5,
-                'minitems' => 0,
-                'maxitems' => 99,
-                'readOnly' =>1,
-            ],
-        ],
-        'send_series' => [
-            'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.send_series',
-            'config' => [
-                'type' => 'check',
-            ],
-        ],
-        'subscribe' => [
-            'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.subscribe',
-            'config' => [
-                'type' => 'check',
-            ],
-        ],
-        'amount' => [
-			'exclude' => 0,
-			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.amount',
-			'config' => [
-				'type' => 'input',
-				'size' => 4,
-				'eval' => 'int'
-			]
-		],
 		'frontend_user' => [
 			'exclude' => 0,
 			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.frontend_user',
@@ -101,7 +64,6 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_order'] = [
 				'foreign_table_where' => 'AND fe_users.disable = 0 AND fe_users.deleted = 0 ORDER BY username ASC',
 				'minitems' => 1,
 				'maxitems' => 1,
-				'readOnly' =>1,
 			],
 		],
         'email' => [
@@ -110,7 +72,38 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_order'] = [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim,email,required'
+            ],
+        ],
+        'order_product' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.order_product',
+            'config' => [
+                'type' => 'inline',
+                'internal_type' => 'db',
+                'foreign_table' => 'tx_rkworder_domain_model_orderproduct',
+                'foreign_field' => 'ext_order',
+                'minitems' => 1,
+                'maxitems' => 99,
+                'size'  => 5,
+                'show_thumbs' =>  true,
+                'appearance' => array(
+                    'elementBrowserType' => 'db',
+                    'useSortable' => false,
+                    'showPossibleLocalizationRecords' => false,
+                    'showRemovedLocalizationRecords' => false,
+                    'showSynchronizationLink' => false,
+                    'showAllLocalizationLink' => false,
+                    'enabledControls' => [
+                        'info' => true,
+                        'new' => true,
+                        'dragdrop' => false,
+                        'sort' => false,
+                        'hide' => false,
+                        'delete' => true,
+                        'localize' => false,
+                    ],
+                ),
             ],
         ],
         'shipping_address' => [
@@ -123,7 +116,6 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_order'] = [
                 'foreign_table_where' => 'AND tx_rkwregistration_domain_model_shippingaddress.deleted = 0 AND tx_rkwregistration_domain_model_shippingaddress.hidden = 0 ORDER BY tx_rkwregistration_domain_model_shippingaddress.address ASC',
                 'minitems' => 1,
                 'maxitems' => 1,
-                'readOnly' => 1,
             ],
         ],
 		'remark' => [

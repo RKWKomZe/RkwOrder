@@ -24,14 +24,14 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
 		'enablecolumns' => [
 			'disabled' => 'hidden',
 		],
-		'searchFields' => 'title,subtitle,admin_email,stock,allow_subscription,bundle_only,product_parent,backend_user,',
+		'searchFields' => 'itle, subtitle, stock, ordered_external, page, product_parent, bundle_only, subscription_only, backend_user, admin_email,',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rkw_order') . 'Resources/Public/Icons/tx_rkworder_domain_model_product.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, stock, ordered_external, page, product_parent, bundle_only, allow_subscription, backend_user, admin_email',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, image, stock, ordered_external, page, product_parent, bundle_only, subscription_only, backend_user, admin_email',
 	],
 	'types' => [
-		'1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, subtitle, stock, ordered_external, page, product_parent, bundle_only, allow_subscription, backend_user, admin_email, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, subtitle, image, stock, ordered_external, page, product_parent, bundle_only, subscription_only, backend_user, admin_email, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -126,10 +126,10 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
 				'default' => 0
 			]
 		],
-		'allow_subscription' => [
+		'subscription_only' => [
             'displayCond' => 'FIELD:product_parent:REQ:FALSE',
             'exclude' => 0,
-			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.allow_subscription',
+			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.subscription_only',
 			'config' => [
 				'type' => 'check',
 				'default' => 0
@@ -182,7 +182,53 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
                 'softref' => 'typolink'
             ],
         ],
+        'image' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.image',
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'image',
+                [
+                    'maxitems' => 1,
+
+                    // Use the imageoverlayPalette instead of the basicoverlayPalette
+                    'foreign_types' => [
+                        '0' => [
+                            'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette'
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_TEXT => [
+                            'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette'
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                            'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette'
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_AUDIO => [
+                            'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette'
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_VIDEO => [
+                            'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette'
+                        ],
+                        \TYPO3\CMS\Core\Resource\File::FILETYPE_APPLICATION => [
+                            'showitem' => '
+                            --palette--;LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,
+                            --palette--;;filePalette'
+                        ]
+                    ]
+                ],
+                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+            ),
+        ],        
         'backend_user' => [
+            'displayCond' => 'FIELD:product_parent:REQ:FALSE',
             'exclude' => 0,
             'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.backend_user',
             'config' => [
@@ -196,6 +242,7 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
             ]
         ],
         'admin_email' => [
+            'displayCond' => 'FIELD:product_parent:REQ:FALSE',
             'exclude' => 0,
             'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.admin_email',
             'config' => [

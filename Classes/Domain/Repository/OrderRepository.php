@@ -3,7 +3,6 @@
 namespace RKW\RkwOrder\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use RKW\RkwBasics\Helper\QueryTypo3;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -29,9 +28,26 @@ use RKW\RkwBasics\Helper\QueryTypo3;
 class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
+    /**
+     * initializeObject
+     *
+     * @return void
+     */
+    public function initializeObject()
+    {
+
+        /** @var $querySettings \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings */
+        $querySettings = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Typo3QuerySettings');
+
+        // don't add the pid constraint
+        $querySettings->setRespectStoragePage(false);
+        $this->setDefaultQuerySettings($querySettings);
+    }
+
+
 
     /**
-     * Find all orders that have been updated recently
+     * Find all orders of a frontendUser
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
@@ -40,8 +56,6 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
 
         $query = $this->createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
 
         $query->matching(
             $query->logicalAnd(
@@ -53,30 +67,6 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         //===
     }
 
-
-    /**
-     * Get ordered sum of one product
-     *
-     * @param \RKW\RkwOrder\Domain\Model\Product $product
-     * @return int
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     */
-    public function getOrderedSumByProduct(\RKW\RkwOrder\Domain\Model\Product $product)
-    {
-
-        $query = $this->createQuery();
-        $query->statement('
-            SELECT SUM(amount) as sum FROM tx_rkworder_domain_model_order 
-            WHERE tx_rkworder_domain_model_order.product = ' . intval($product->getUid()) .
-            QueryTypo3::getWhereClauseForVersioning('tx_rkworder_domain_model_order') .
-            QueryTypo3::getWhereClauseForEnableFields('tx_rkworder_domain_model_order') . '
-        
-        ');
-
-        $result = $query->execute(true);
-        return intval($result[0]['sum']);
-        //====
-    }
 
 
 

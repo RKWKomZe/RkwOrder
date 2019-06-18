@@ -1,93 +1,84 @@
-{namespace vh=RKW\RkwOrder\ViewHelpers}
+{namespace rkwOrder=RKW\RkwOrder\ViewHelpers}
 {namespace rkwRegistration=RKW\RkwRegistration\ViewHelpers}
 <!-- ==================================================================== -->
 
-<f:section name="orderAmount">
+<f:section name="productList">
 
-	<!-- email (show only if no user is logged in) -->
-	<f:if condition="<vh:validEmail frontendUser='{frontendUser}' /> == 1">
-		<f:then>
+	<ul class="order-list">
 
-			<!-- amount -->
-			<div class="v320-1-of-2">
-				<div class="v320-1">
-					<label for="txrkworder-amount" class="form-label">
-						<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amount" />
-					</label>
-					<f:form.select id="txrkworder-amount" property="amount" options="<vh:integerToOptions numberOfOptions='{maximumOrderAmount}' append='<f:translate key=\"tx_rkworder_domain_model_order.amountAppend\" />' appendFirst='<f:translate key=\"tx_rkworder_domain_model_order.amountAppendFirst\" />' />"  class="feedback-field"/>
+		<f:for each="{products}" as="product" iteration="productIterator">
+
+			<li class="order-list__item">
+
+				<figure class="order-list__image">
+					<f:if condition="{product.image}" >
+						<f:then>
+							<f:cObject typoscriptObjectPath="plugin.tx_rkworder.libs.responsivePdfThumbnail" data="{product.image.uid}"/>
+						</f:then>
+						<f:else>
+							<f:cObject typoscriptObjectPath="plugin.tx_rkworder.libs.responsivePdfThumbnail" data="EXT:rkw_order/Resources/Public/Images/publications-fallback.jpg"/>
+						</f:else>
+					</f:if>
+				</figure>
+
+
+				<div class="order-list__details">
+					<h4 class="order-list__title">{product.title}</h4>
+					<f:if condition="{product.subtitle}">
+						<p class="order-list__subtitle">{product.subtitle}</p>
+					</f:if>
+
+					<f:if condition="{product.subscriptionOnly}">
+						<f:then>
+							<span class="checkbox">
+								<label>
+									<f:form.checkbox property="orderProduct.{productIterator.index}.product" value="{product}" />
+									<span>
+										<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_product.subscription_only" />
+									</span>
+								</label>
+							</span>
+
+						</f:then>
+						<f:else>
+
+							<f:form.textfield id="txrkworder-amount-{product.uid}" property="orderProduct.{productIterator.index}.amount" class="feedback-field"/>
+							<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_orderproduct.amount" />
+
+							<!-- add hidden field with product -->
+							<f:form.hidden property="orderProduct.{productIterator.index}.product" value="{product}" />
+
+						</f:else>
+
+					</f:if>
+
+
 				</div>
-			</div>
 
-			<!-- email -->
-			<div id="rkw-order-user-data-email">
-				<f:render partial="Order/FormFields/UserData" section="userDataEmail" arguments="{_all}" />
-			</div>
-		</f:then>
-		<f:else>
+				<h3></h3>
 
-			<!-- email -->
-			<div id="rkw-order-user-data-email">
-				<f:render partial="Order/FormFields/UserData" section="userDataEmail" arguments="{_all}" />
-			</div>
 
-			<!-- amount -->
-			<div class="v320-2-of-2">
+			</li>
+		</f:for>
+	</ul>
 
-				<div class="v320-1">
-					<label for="txrkworder-amount" class="form-label">
-						<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amount" />
-					</label>
-					<f:form.select id="txrkworder-amount" property="amount" options="<vh:integerToOptions numberOfOptions='{maximumOrderAmount}' append='<f:translate key=\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amountAppend\" />' appendFirst='<f:translate key=\"LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.amountAppendFirst\" />' />"  class="feedback-field"/>
-				</div>
-
-			</div>
-		</f:else>
-	</f:if>
 </f:section>
 
-
-
-
 <!-- ==================================================================== -->
+<f:section name="termsSubmit">
 
-<f:section name="order">
 
 	<!-- remark -->
-    <f:comment>
-        <div class="v320-1">
-            <label for="tx-rkworder-remark" class="form-label">
-                <f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.remark" />
-            </label>
-            <f:form.textarea id="tx-rkworder-remark" property="remark" />
-        </div>
-    </f:comment>
+	<f:comment>
+		<div class="v320-1">
+			<label for="tx-rkworder-remark" class="form-label">
+				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_order.remark" />
+			</label>
+			<f:form.textarea id="tx-rkworder-remark" property="remark" />
+		</div>
+	</f:comment>
 
 	<p class="v320-1">
-		<f:if condition="{publication.allowSeries}">
-			<f:if condition="{publication.series}">
-				<span class="checkbox">
-					<label>
-						<f:form.checkbox property="sendSeries" value="1" />
-						<span class="text-smaller">
-							<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields_order.sendSeries" arguments="{0 : publication.series.name}" />
-						</span>
-					</label>
-				</span>
-			</f:if>
-		</f:if>
-
-		<f:if condition="{publication.allowSubscription}">
-			<f:if condition="{publication.series}">
-			<span class="checkbox">
-				<label>
-					<f:form.checkbox property="subscribe" value="1" />
-					<span class="text-smaller">
-						<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields_order.subscribe" arguments="{0 : publication.series.name}" />
-					</span>
-				</label>
-			</span>
-			</f:if>
-		</f:if>
 
 		<f:security.ifAuthenticated>
 			<f:else>
@@ -115,15 +106,4 @@
 			<span><f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields_order.order_button" /></span>
 		</button>
 	</p>
-
-    <!-- set publication -->
-    <f:form.hidden property="publication" value="{publication}" />
 </f:section>
-
-
-
-
-
-
-
-

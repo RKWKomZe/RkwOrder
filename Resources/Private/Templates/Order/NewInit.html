@@ -23,21 +23,13 @@
 
     <f:render partial="FormErrors" arguments="{object:Order}" />
 
-    <f:if condition="{publication}">
+    <f:if condition="{products}">
         <div id="rkw-order-wrap">
 
-            <!-- different labels -->
-            <f:if condition="{publication.series}">
-                <f:then>
-                    <p><f:translate key="templates_order_new.introductionSeries" /></p>
-                </f:then>
-                <f:else>
-                    <p><f:translate key="templates_order_new.introduction" /></p>
-                </f:else>
-            </f:if>
+            <p><f:translate key="templates_order_new.introduction" /></p>
 
             <!-- form -->
-            <f:form action="create" name="newOrder" object="{newOrder}" class="form-fields" id="rkw-order-container" additionalAttributes="{data-url : '/?type=1510210402&tx_rkworder_rkworder[pid]={pageUid}'}" >
+            <f:form action="create" name="order" object="{order}" class="form-fields" id="rkw-order-container" additionalAttributes="{data-url : '/?type=1510210402&tx_rkworder_rkworder[pid]={pageUid}'}" >
                 <f:render partial="Order/FormFields"  arguments="{_all}" />
             </f:form>
         </div>

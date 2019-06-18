@@ -8,9 +8,10 @@
         <admin_email>test3@test.de</admin_email>
         <stock>100</stock>
         <bundle_only>0</bundle_only>
-        <allow_subscription>0</allow_subscription>
+        <subscription_only>0</subscription_only>
         <backend_user>1,2,5</backend_user>
     </tx_rkworder_domain_model_product>
+
     <tx_rkworder_domain_model_product>
         <uid>2</uid>
         <pid>0</pid>
@@ -19,9 +20,10 @@
         <admin_email />
         <stock>100</stock>
         <bundle_only>0</bundle_only>
-        <allow_subscription>0</allow_subscription>
+        <subscription_only>0</subscription_only>
         <backend_user />
     </tx_rkworder_domain_model_product>
+
     <tx_rkworder_domain_model_product>
         <uid>3</uid>
         <pid>0</pid>
@@ -30,8 +32,22 @@
         <admin_email>fallback-invalid</admin_email>
         <stock>100</stock>
         <bundle_only>0</bundle_only>
-        <allow_subscription>0</allow_subscription>
+        <subscription_only>0</subscription_only>
         <backend_user>1,2</backend_user>
+    </tx_rkworder_domain_model_product>
+
+    <tx_rkworder_domain_model_product>
+        <uid>8</uid>
+        <pid>0</pid>
+        <title>Leitfaden mit Bestellungen</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>fallback-invalid</admin_email>
+        <stock>100</stock>
+        <ordered_external>20</ordered_external>
+        <bundle_only>0</bundle_only>
+        <subscription_only>0</subscription_only>
+        <product_parent>1</product_parent>
+        <backend_user>3</backend_user>
     </tx_rkworder_domain_model_product>
 
     <!-- for testing stock calculation -->
@@ -40,10 +56,12 @@
         <pid>0</pid>
         <title>Leitfaden mit Bestellungen</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
-        <admin_email>fallback-invalid</admin_email>
+        <admin_email>test4@test.de</admin_email>
         <stock>100</stock>
+        <ordered_external>20</ordered_external>
         <bundle_only>0</bundle_only>
-        <allow_subscription>0</allow_subscription>
+        <subscription_only>0</subscription_only>
     </tx_rkworder_domain_model_product>
+
 
 </dataset>

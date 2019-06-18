@@ -7,7 +7,7 @@
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
         <bundle_only>0</bundle_only>
-        <allow_subscription>0</allow_subscription>
+        <subscription_only>0</subscription_only>
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>2</uid>
@@ -16,7 +16,7 @@
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
         <bundle_only>0</bundle_only>
-        <allow_subscription>0</allow_subscription>
+        <subscription_only>0</subscription_only>
     </tx_rkworder_domain_model_product>
 
 </dataset>

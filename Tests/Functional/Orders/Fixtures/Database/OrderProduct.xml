@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>1</uid>
+        <pid>1</pid>
+        <amount>4</amount>
+        <product>1</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>2</uid>
+        <pid>1</pid>
+        <amount>4</amount>
+        <product>1</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>3</uid>
+        <pid>1</pid>
+        <amount>4</amount>
+        <product>1</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>4</uid>
+        <pid>1</pid>
+        <amount>10</amount>
+        <product>4</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>5</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>4</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+</dataset>

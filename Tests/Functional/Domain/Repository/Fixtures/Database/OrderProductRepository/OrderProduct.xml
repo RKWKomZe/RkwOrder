@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+
+    <!-- orders check for sums -->
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>1</uid>
+        <pid>1</pid>
+        <amount>4</amount>
+        <product>1</product>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>2</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>1</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <!-- orders check for sums with deleted-->
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>3</uid>
+        <pid>1</pid>
+        <amount>4</amount>
+        <product>2</product>
+        <deleted>1</deleted>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>4</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>2</product>
+    </tx_rkworder_domain_model_orderproduct>
+</dataset>

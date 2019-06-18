@@ -75,6 +75,15 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 
     /**
+     * productRepository
+     *
+     * @var \RKW\RkwOrder\Domain\Repository\ProductRepository
+     * @inject
+     */
+    protected $productRepository = null;
+
+
+    /**
      * orderRepository
      *
      * @var \RKW\RkwOrder\Domain\Repository\OrderRepository
@@ -140,26 +149,23 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action newInit
      *
-     * @param \RKW\RkwOrder\Domain\Model\Order $newOrder
-     * @ignorevalidation $newOrder
+     * @param \RKW\RkwOrder\Domain\Model\Order $order
+     * @ignorevalidation $order
      * @return void
      */
-    public function newInitAction(\RKW\RkwOrder\Domain\Model\Order $newOrder = null)
+    public function newInitAction(\RKW\RkwOrder\Domain\Model\Order $order = null)
     {
 
-        /** @var \RKW\RkwOrder\Domain\Model\Pages $pages */
-        $pages = $this->pagesRepository->findByUid($this->getImportedParentPid(intval($GLOBALS['TSFE']->id)));
-        if ($publication = $pages->getTxRkworderPublication()) {
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        if ($this->settings['products']) {
 
-            // @toDo: if allowSeries is true, check if the whole series is still available
+            $products = $this->productRepository->findByUidList($this->settings['products']);
             $this->view->assignMultiple(
                 array(
-                    'frontendUser'       => null,
-                    'newOrder'           => $newOrder,
-                    'pageUid'            => intval($GLOBALS['TSFE']->id),
-                    'termsPid'           => intval($this->settings['termsPid']),
-                    'publication'        => $publication,
-                    'maximumOrderAmount' => Stock::getStock($publication),
+                    'frontendUser'    => null,
+                    'order'           => $order,
+                    'termsPid'        => intval($this->settings['termsPid']),
+                    'products'        => $products
                 )
             );
         }

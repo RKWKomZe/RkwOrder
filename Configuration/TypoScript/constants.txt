@@ -25,8 +25,11 @@ plugin.tx_rkworder {
         # cat=plugin.tx_rkworder/a; type=boolean; label=Disable admin mails?
         disableAdminMails = 0
 
-		# cat=plugin.tx_rkworder//a; type=integer; label=Username of BE-User if none is set in plugin
+		# cat=plugin.tx_rkworder//a; type=string; label=Username of BE-User if none is set in plugin
 		fallbackBackendUserForAdminMails =
+
+		# cat=plugin.tx_rkworder//a; type=integer; label=Maximum amount per order item
+		maxOrderItemAmount = 100
 	}
 
 }

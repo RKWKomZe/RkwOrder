@@ -89,7 +89,17 @@ config.tx_extbase.persistence {
 
         #===============================================
 
-        RKW\RkwOrder\Domain\Model\Publication {
+        RKW\RkwOrder\Domain\Model\OrderProduct {
+            mapping {
+                columns {
+                    ext_order.mapOnProperty = order
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwOrder\Domain\Model\Product {
             mapping {
                 columns {
                     crdate.mapOnProperty = crdate

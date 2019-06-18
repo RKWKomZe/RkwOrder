@@ -7,18 +7,16 @@
         <pid>0</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
-        <amount>4</amount>
         <frontend_user>1</frontend_user>
-        <product />
+        <order_product>0</order_product>
     </tx_rkworder_domain_model_order>
     <tx_rkworder_domain_model_order>
         <uid>2</uid>
         <pid>1</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
-        <amount>4</amount>
         <frontend_user>1</frontend_user>
-        <product />
+        <order_product>0</order_product>
     </tx_rkworder_domain_model_order>
 
     <!-- orders of feUser 2 -->
@@ -27,19 +25,17 @@
         <pid>0</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
-        <amount>4</amount>
         <frontend_user>2</frontend_user>
-        <product />
+        <order_product>0</order_product>
     </tx_rkworder_domain_model_order>
     <tx_rkworder_domain_model_order>
         <uid>4</uid>
         <pid>1</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
-        <amount>4</amount>
         <frontend_user>2</frontend_user>
         <deleted>1</deleted>
-        <product />
+        <order_product>0</order_product>
     </tx_rkworder_domain_model_order>
 
     <!-- orders of feUser 3 -->
@@ -48,9 +44,8 @@
         <pid>0</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
-        <amount>4</amount>
         <frontend_user>3</frontend_user>
-        <product />
+        <order_product>0</order_product>
     </tx_rkworder_domain_model_order>
 
     <!-- orders of feUser 4 -->
@@ -59,9 +54,8 @@
         <pid>1</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
-        <amount>4</amount>
         <frontend_user>4</frontend_user>
-        <product />
+        <order_product>0</order_product>
     </tx_rkworder_domain_model_order>
 
     <!-- orders of feUser 5 -->
@@ -70,67 +64,19 @@
         <pid>1</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
-        <amount>4</amount>
         <frontend_user>5</frontend_user>
         <status>1</status>
-        <product />
+        <order_product>0</order_product>
     </tx_rkworder_domain_model_order>
     <tx_rkworder_domain_model_order>
         <uid>8</uid>
         <pid>1</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
-        <amount>4</amount>
         <frontend_user>5</frontend_user>
         <status>0</status>
-        <product />
+        <order_product>0</order_product>
     </tx_rkworder_domain_model_order>
 
 
-    <!-- orders check for sums -->
-    <tx_rkworder_domain_model_order>
-        <uid>9</uid>
-        <pid>1</pid>
-        <email>test@dummy.de</email>
-        <remark>Toller Hinweis!!!</remark>
-        <amount>4</amount>
-        <frontend_user>5</frontend_user>
-        <status>0</status>
-        <product>1</product>
-    </tx_rkworder_domain_model_order>
-    <tx_rkworder_domain_model_order>
-        <uid>10</uid>
-        <pid>1</pid>
-        <email>test@dummy.de</email>
-        <remark>Toller Hinweis!!!</remark>
-        <amount>5</amount>
-        <shipping_address>1</shipping_address>
-        <frontend_user>5</frontend_user>
-        <status>0</status>
-        <product>1</product>
-    </tx_rkworder_domain_model_order>
-
-    <!-- orders check for sums with deleted-->
-    <tx_rkworder_domain_model_order>
-        <uid>11</uid>
-        <pid>1</pid>
-        <email>test@dummy.de</email>
-        <remark>Toller Hinweis!!!</remark>
-        <amount>4</amount>
-        <frontend_user>5</frontend_user>
-        <status>0</status>
-        <product>2</product>
-        <deleted>1</deleted>
-    </tx_rkworder_domain_model_order>
-    <tx_rkworder_domain_model_order>
-        <uid>12</uid>
-        <pid>1</pid>
-        <email>test@dummy.de</email>
-        <remark>Toller Hinweis!!!</remark>
-        <amount>5</amount>
-        <shipping_address>1</shipping_address>
-        <frontend_user>5</frontend_user>
-        <status>0</status>
-        <product>2</product>
-    </tx_rkworder_domain_model_order>
 </dataset>

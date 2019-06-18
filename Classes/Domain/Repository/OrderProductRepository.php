@@ -2,6 +2,8 @@
 
 namespace RKW\RkwOrder\Domain\Repository;
 
+use RKW\RkwBasics\Helper\QueryTypo3;
+
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -18,13 +20,12 @@ namespace RKW\RkwOrder\Domain\Repository;
 /**
  * Class ProductRepository
  *
- * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwOrder
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class OrderProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
     /**
@@ -42,6 +43,32 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $querySettings->setRespectStoragePage(false);
 
         $this->setDefaultQuerySettings($querySettings);
+    }
+
+
+
+    /**
+     * Get ordered sum of one product
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Product $product
+     * @return int
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     */
+    public function getOrderedSumByProduct(\RKW\RkwOrder\Domain\Model\Product $product)
+    {
+
+        $query = $this->createQuery();
+        $query->statement('
+            SELECT SUM(amount) as sum FROM tx_rkworder_domain_model_orderproduct 
+            WHERE tx_rkworder_domain_model_orderproduct.product = ' . intval($product->getUid()) .
+            QueryTypo3::getWhereClauseForVersioning('tx_rkworder_domain_model_orderproduct') .
+            QueryTypo3::getWhereClauseForEnableFields('tx_rkworder_domain_model_orderproduct') . '
+        
+        ');
+
+        $result = $query->execute(true);
+        return intval($result[0]['sum']);
+        //====
     }
 
 

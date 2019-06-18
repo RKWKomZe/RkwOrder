@@ -7,13 +7,10 @@ CREATE TABLE tx_rkworder_domain_model_order (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	email varchar(255) DEFAULT '' NOT NULL,
-	amount int(11) DEFAULT '0' NOT NULL,
 	frontend_user int(11) unsigned DEFAULT '0',
+	order_product text NOT NULL,
 	shipping_address int(11) DEFAULT '0' NOT NULL,
 	pages int(11) unsigned DEFAULT '0',
-	product text NOT NULL,
-	send_series int(11) DEFAULT '0' NOT NULL,
-	subscribe int(11) DEFAULT '0' NOT NULL,
 	remark text NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
@@ -22,6 +19,28 @@ CREATE TABLE tx_rkworder_domain_model_order (
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	status tinyint(4) unsigned DEFAULT '0' NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid),
+
+);
+
+#
+# Table structure for table 'tx_rkworder_domain_model_orderproduct'
+#
+CREATE TABLE tx_rkworder_domain_model_orderproduct (
+
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+
+	ext_order int(11) unsigned DEFAULT '0',
+	product int(11) unsigned DEFAULT '0',
+	amount int(11) unsigned DEFAULT '0',
+
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
@@ -40,12 +59,13 @@ CREATE TABLE tx_rkworder_domain_model_product (
 	title varchar(255) DEFAULT '' NOT NULL,
 	subtitle varchar(255) DEFAULT '' NOT NULL,
 	stock int(11) unsigned DEFAULT '0',
+    ordered_external int(11) unsigned DEFAULT '0' NOT NULL,
 	bundle_only tinyint(4) unsigned DEFAULT '0' NOT NULL,
-	allow_subscription tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	subscription_only tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	backend_user varchar(255) DEFAULT '' NOT NULL,
 	admin_email varchar(255) DEFAULT '' NOT NULL,
-	ordered_external int(11) unsigned DEFAULT '0' NOT NULL,
 	page varchar(255) DEFAULT '' NOT NULL,
+	image int(11) unsigned NOT NULL default '0',
 	product_parent int(11) unsigned DEFAULT '0',
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,

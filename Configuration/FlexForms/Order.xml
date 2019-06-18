@@ -7,9 +7,9 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
-                    <settings.product>
+                    <settings.products>
                         <TCEforms>
-                            <label>LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:flexform.order.product</label>
+                            <label>LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:flexform.order.products</label>
                             <config>
                                 <type>select</type>
                                 <size>10</size>
@@ -20,7 +20,7 @@
                                 <foreign_table_where> AND tx_rkworder_domain_model_product.deleted = 0 AND tx_rkworder_domain_model_product.hidden = 0 AND (tx_rkworder_domain_model_product.product_parent = '' OR (SELECT bundle_only FROM tx_rkworder_domain_model_product as product_sub WHERE tx_rkworder_domain_model_product.product_parent = product_sub.uid AND product_sub.deleted = 0 AND product_sub.hidden = 0 ) = 0) ORDER BY tx_rkworder_domain_model_product.title</foreign_table_where>
                             </config>
                         </TCEforms>
-                    </settings.product>
+                    </settings.products>
                 </el>
             </ROOT>
         </sDEF>

@@ -7,21 +7,9 @@
 				<source>RKW Order: Order</source>
 				<target>RKW Order: Bestellungen</target>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.send_series">
-				<source>Send Series</source>
-				<target>Ganze Reihe/Serie zusenden</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.subscribe">
-				<source>Subscription</source>
-				<target>Abonnement</target>
-			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.email">
 				<source>E-Mail</source>
 				<target>E-Mail</target>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.amount">
-				<source>Amount</source>
-				<target>Bestellmenge</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.frontend_user">
 				<source>Frontend User</source>
@@ -31,9 +19,9 @@
 				<source>Shipping Address</source>
 				<target>Lieferadresse</target>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.product">
-				<source>Product</source>
-				<target>Produkt</target>
+			<trans-unit id="tx_rkworder_domain_model_order.order_product">
+				<source>Ordered Products</source>
+				<target>Bestellte Produkte</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.status">
 				<source>Status</source>
@@ -48,6 +36,20 @@
 				<target>Anmerkung</target>
 			</trans-unit>
 
+
+
+            <trans-unit id="tx_rkworder_domain_model_orderproduct">
+				<source>RKW Order: OrderProduct</source>
+				<target>RKW Order: OrderProduct</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_orderproduct.product">
+				<source>Product</source>
+				<target>Produkt</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_orderproduct.amount">
+				<source>Amount</source>
+				<target>Anzahl</target>
+			</trans-unit>
 
 
 			<trans-unit id="tx_rkworder_domain_model_product">
@@ -79,16 +81,20 @@
 				<target>Externe Bestellungen</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_product.bundle_only">
-				<source>Can only be ordered as a bundle</source>
+				<source>Bundle only</source>
 				<target>Nur als Reihe bestellbar (Bundle)</target>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.allow_subscription">
-				<source>Allow Subscription</source>
-				<target>Erlaube Abonnement</target>
+			<trans-unit id="tx_rkworder_domain_model_product.subscription_only">
+				<source>Subscription only</source>
+				<target>Nur als Abonnement bestellbar</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_product.page">
 				<source>Page</source>
 				<target>Produkt-Seite</target>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_product.image">
+				<source>Image</source>
+				<target>Bild</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_product.product_parent">
 				<source>Parent Product</source>
@@ -102,9 +108,9 @@
 				<source>Options</source>
 				<target>Optionen</target>
 			</trans-unit>
-			<trans-unit id="flexform.order.product">
-				<source>Product</source>
-				<target>Produkt</target>
+			<trans-unit id="flexform.order.products">
+				<source>Products</source>
+				<target>Produkte</target>
 			</trans-unit>
 
 

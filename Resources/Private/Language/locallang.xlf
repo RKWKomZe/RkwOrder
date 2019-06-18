@@ -3,80 +3,77 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2016-05-04T11:35:59Z" product-name="rkw_order">
 		<header/>
 		<body>
+
+		    <!-- tx_rkworder_domain_model_order -->
 			<trans-unit id="tx_rkworder_domain_model_order">
 				<source>Order</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.page_title">
-				<source>Site Title</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.page_subtitle">
-				<source>Site Subtitle</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.gender">
-				<source>Salutation</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.gender.I.man">
-				<source>Mr.</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.gender.I.woman">
-				<source>Mrs.</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.gender.I.neutral">
-				<source>-- Please select --</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.title" approved="yes">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.title.please_choose" approved="yes">
-				<source>-- Please select --</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.title.1" approved="yes">
-				<source>Dr.</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.title.2" approved="yes">
-				<source>Dr. Prof.</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.first_name">
-				<source>First Name</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.last_name">
-				<source>Last Name</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.company">
-				<source>Company</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.address">
-				<source>Address</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.zip">
-				<source>Zip</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.city">
-				<source>City</source>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.email">
 				<source>E-Mail</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.amount">
-				<source>Amount</source>
-			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.remark">
 				<source>Remark</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.newsletter">
-				<source>Order newsletter</source>
+
+
+            <!-- tx_rkworder_domain_model_orderproduct -->
+			<trans-unit id="tx_rkworder_domain_model_orderproduct.amount">
+				<source>Pieces</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.amountAppendFirst">
-				<source>Copy</source>
+
+
+			<!-- tx_rkworder_domain_model_product -->
+            <trans-unit id="tx_rkworder_domain_model_product.subscription_only">
+                <source>Subscribe for free</source>
+            </trans-unit>
+
+
+
+            <!-- tx_rkworder_domain_model_shippingaddress -->
+            <trans-unit id="tx_rkworder_domain_model_shippingaddress">
+				<source>Shipping Address</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.amountAppend">
-				<source>Copies</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.frontend_user">
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.frontend_user">
 				<source>Frontend User</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.pages">
-				<source>Pages</source>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.frontend_user.pleaseSelect">
+				<source>Please Select</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.gender">
+				<source>Gender</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.gender.I.man">
+				<source>Man</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.gender.I.woman">
+				<source>Woman</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.gender.I.pleaseSelect">
+				<source>Please Select</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.title.pleaseSelect">
+				<source>Please Select</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.first_name">
+				<source>First Name</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.last_name">
+				<source>Last Name</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.company">
+				<source>Company</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.address">
+				<source>Address</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.zip">
+				<source>Zip</source>
+			</trans-unit>
+			<trans-unit id="tx_rkworder_domain_model_shippingaddress.city">
+				<source>City</source>
 			</trans-unit>
 
 			<!-- ================================================================================== -->

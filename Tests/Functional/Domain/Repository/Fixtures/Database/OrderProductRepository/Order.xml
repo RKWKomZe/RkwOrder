@@ -1,54 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dataset>
+
+    <!-- orders check for sums -->
     <tx_rkworder_domain_model_order>
-        <uid>1</uid>
+        <uid>9</uid>
         <pid>1</pid>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <frontend_user>0</frontend_user>
+        <status>0</status>
         <order_product>1</order_product>
+    </tx_rkworder_domain_model_order>
+    <tx_rkworder_domain_model_order>
+        <uid>10</uid>
+        <pid>1</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <shipping_address>1</shipping_address>
-    </tx_rkworder_domain_model_order>
-
-    <!-- orders of feUser 3 -->
-    <tx_rkworder_domain_model_order>
-        <uid>2</uid>
-        <pid>1</pid>
+        <frontend_user>0</frontend_user>
+        <status>0</status>
         <order_product>2</order_product>
+    </tx_rkworder_domain_model_order>
+
+    <!-- orders check for sums with deleted-->
+    <tx_rkworder_domain_model_order>
+        <uid>11</uid>
+        <pid>1</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
-        <shipping_address>1</shipping_address>
-        <frontend_user>3</frontend_user>
-        <status>1</status>
-    </tx_rkworder_domain_model_order>
-    <tx_rkworder_domain_model_order>
-        <uid>3</uid>
-        <pid>1</pid>
+        <frontend_user>0</frontend_user>
+        <status>0</status>
         <order_product>3</order_product>
+        <deleted>1</deleted>
+    </tx_rkworder_domain_model_order>
+    <tx_rkworder_domain_model_order>
+        <uid>12</uid>
+        <pid>1</pid>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <shipping_address>1</shipping_address>
-        <frontend_user>3</frontend_user>
+        <frontend_user>0</frontend_user>
         <status>0</status>
-    </tx_rkworder_domain_model_order>
-
-    <!-- for testing stock calculation -->
-    <tx_rkworder_domain_model_order>
-        <uid>4</uid>
-        <pid>1</pid>
         <order_product>4</order_product>
-        <email>test@dummy.de</email>
-        <remark>Toller Hinweis!!!</remark>
-        <shipping_address>1</shipping_address>
-        <status>0</status>
     </tx_rkworder_domain_model_order>
-    <tx_rkworder_domain_model_order>
-        <uid>5</uid>
-        <pid>1</pid>
-        <order_product>5</order_product>
-        <email>test@dummy.de</email>
-        <remark>Toller Hinweis!!!</remark>
-        <shipping_address>1</shipping_address>
-        <status>0</status>
-    </tx_rkworder_domain_model_order>
-
 </dataset>

@@ -68,6 +68,16 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected $orderRepository;
 
+
+    /**
+     * orderProductRepository
+     *
+     * @var \RKW\RkwOrder\Domain\Repository\OrderProductRepository
+     * @inject
+     */
+    protected $orderProductRepository;
+
+
     /**
      * productRepository
      *
@@ -173,9 +183,9 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             //===
         }
 
-        // check product
-        if (! count($order->getProduct()->toArray())) {
-            throw new Exception('orderManager.error.noProduct');
+        // check orderProduct
+        if (! count($order->getOrderProduct()->toArray())) {
+            throw new Exception('orderManager.error.noOrderProduct');
             //===
         }
 
@@ -244,9 +254,9 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             //===
         }
 
-        // check product
-        if (! count($order->getProduct()->toArray())) {
-            throw new Exception('orderManager.error.noProduct');
+        // check orderProduct
+        if (! count($order->getOrderProduct()->toArray())) {
+            throw new Exception('orderManager.error.noOrderProduct');
             //===
         }
 
@@ -268,9 +278,9 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($frontendUser, $order));
 
         // send mail to admins
-        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
-        foreach ($order->getProduct() as $product) {
-            $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array($this->getBackendUsersForAdminMails($product), $order));
+        /** @var \RKW\RkwOrder\Domain\Model\OrderProduct $orderProduct */
+        foreach ($order->getOrderProduct() as $orderProduct) {
+            $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array($this->getBackendUsersForAdminMails($orderProduct->getProduct()), $order));
         }
 
         return true;
@@ -337,10 +347,9 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
                 $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_USER, array($frontendUser, $order));
 
                 // send mail to admins
-                /** @var \RKW\RkwOrder\Domain\Model\Product $product */
-                foreach ($order->getProduct() as $product) {
-                    $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array($this->getBackendUsersForAdminMails($product), $order));
-
+                /** @var \RKW\RkwOrder\Domain\Model\OrderProduct $orderProduct */
+                foreach ($order->getOrderProduct() as $orderProduct) {
+                    $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array($this->getBackendUsersForAdminMails($orderProduct->getProduct()), $order));
                 }
                 $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Deleted order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
             }
@@ -357,11 +366,27 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getRemainingStockOfProduct (\RKW\RkwOrder\Domain\Model\Product $product)
     {
-        $orderedSum = $this->orderRepository->getOrderedSumByProduct($product);
+        $orderedSum = $this->orderProductRepository->getOrderedSumByProduct($product);
         $remainingStock = intval($product->getStock()) - (intval($orderedSum) + intval($product->getOrderedExternal()));
         return (($remainingStock > 0) ? $remainingStock : 0);
         //===
     }
+
+
+
+    /**
+     * Get product status
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Product $product
+     * @return int
+     */
+    public function getProductStatus (\RKW\RkwOrder\Domain\Model\Product $product)
+    {
+
+        return 0;
+        //===
+    }
+
 
 
 
@@ -378,15 +403,20 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         $settings = $this->getSettings();
         if (! $settings['disableAdminMails']) {
 
+            $productTemp = $product;
+            if ($product->getProductParent()) {
+                $productTemp  = $product->getProductParent();
+            }
+
             // go through ObjectStorage
-            foreach ($product->getBackendUser() as $backendUser) {
+            foreach ($productTemp->getBackendUser() as $backendUser) {
                 if ((\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))) {
                     $backendUsers[] = $backendUser;
                 }
             }
 
             // get field for alternative e-emails
-            if ($email = $product->getAdminEmail()) {
+            if ($email = $productTemp->getAdminEmail()) {
 
                 /** @var \RKW\RkwOrder\Domain\Model\BackendUser $backendUser */
                 $backendUser = $this->backendUserRepository->findOneByEmail($email);
