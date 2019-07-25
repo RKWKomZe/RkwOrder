@@ -365,6 +365,13 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getRemainingStockOfProduct (\RKW\RkwOrder\Domain\Model\Product $product)
     {
+        if (
+            ($product->getProductBundle())
+            && (! $product->getProductBundle()->getAllowSingleOrder())
+        ){
+            $product = $product->getProductBundle();
+        }
+
         $orderedSum = $this->orderProductRepository->getOrderedSumByProduct($product);
         $remainingStock = intval($product->getStock()) - (intval($orderedSum) + intval($product->getOrderedExternal()));
         return (($remainingStock > 0) ? $remainingStock : 0);

@@ -651,7 +651,7 @@ class OrderManagerTest extends FunctionalTestCase
     {
 
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(4);
+        $product =$this->productRepository->findByUid(5);
         self::assertEquals(65, $this->subject->getRemainingStockOfProduct($product));
 
     }
@@ -660,15 +660,40 @@ class OrderManagerTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getRemainingStockReturnsZeroIfCalculatedValuesIsBelowZero ()
+    public function getRemainingStockReturnsZeroIfCalculatedValueIsBelowZero ()
     {
 
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(4);
+        $product =$this->productRepository->findByUid(5);
         $product->setOrderedExternal(200);
 
         self::assertEquals(0, $this->subject->getRemainingStockOfProduct($product));
 
+    }
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     */
+    public function getRemainingStockGivenProductWithProductBundleWithAllowSingleOrderFalseReturnsValueOfProductBundle ()
+    {
+
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product =$this->productRepository->findByUid(6);
+        self::assertEquals(22, $this->subject->getRemainingStockOfProduct($product));
+    }
+
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     */
+    public function getRemainingStockGivenProductWithProductBundleWithAllowSingleOrderTrueReturnsValueOfProduct()
+    {
+
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product =$this->productRepository->findByUid(8);
+        self::assertEquals(45, $this->subject->getRemainingStockOfProduct($product));
     }
 
 
@@ -749,7 +774,7 @@ class OrderManagerTest extends FunctionalTestCase
     {
 
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(8);
+        $product = $this->productRepository->findByUid(4);
 
         /** @var \RKW\RkwOrder\Domain\Model\BackendUser $result[] */
         $result = $this->subject->getBackendUsersForAdminMails($product);

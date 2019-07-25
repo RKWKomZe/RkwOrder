@@ -34,13 +34,12 @@
     </tx_rkworder_domain_model_product>
 
     <tx_rkworder_domain_model_product>
-        <uid>8</uid>
+        <uid>4</uid>
         <pid>0</pid>
         <title>Leitfaden mit Bestellungen</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>fallback-invalid</admin_email>
         <stock>100</stock>
-        <ordered_external>20</ordered_external>
         <backend_user>3</backend_user>
         <product_bundle>1</product_bundle>
         <record_type>0</record_type>
@@ -48,7 +47,7 @@
 
     <!-- for testing stock calculation -->
     <tx_rkworder_domain_model_product>
-        <uid>4</uid>
+        <uid>5</uid>
         <pid>0</pid>
         <title>Leitfaden mit Bestellungen</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
@@ -58,5 +57,54 @@
         <record_type>0</record_type>
     </tx_rkworder_domain_model_product>
 
+    <tx_rkworder_domain_model_product>
+        <uid>6</uid>
+        <pid>0</pid>
+        <title>Leitfaden mit Bestellungen</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test4@test.de</admin_email>
+        <stock>100</stock>
+        <ordered_external>20</ordered_external>
+        <record_type>0</record_type>
+        <product_bundle>7</product_bundle>
+    </tx_rkworder_domain_model_product>
+
+    <tx_rkworder_domain_model_product>
+        <uid>7</uid>
+        <pid>0</pid>
+        <title>Leitfaden mit Bestellungen</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test4@test.de</admin_email>
+        <stock>50</stock>
+        <ordered_external>22</ordered_external>
+        <record_type>\RKW\RkwOrder\Domain\Model\ProductBundle</record_type>
+        <product_bundle>0</product_bundle>
+        <allow_single_order>0</allow_single_order>
+    </tx_rkworder_domain_model_product>
+
+    <tx_rkworder_domain_model_product>
+        <uid>8</uid>
+        <pid>0</pid>
+        <title>Leitfaden mit Bestellungen</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test4@test.de</admin_email>
+        <stock>90</stock>
+        <ordered_external>33</ordered_external>
+        <record_type>0</record_type>
+        <product_bundle>9</product_bundle>
+    </tx_rkworder_domain_model_product>
+
+    <tx_rkworder_domain_model_product>
+        <uid>9</uid>
+        <pid>0</pid>
+        <title>Leitfaden mit Bestellungen</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test4@test.de</admin_email>
+        <stock>70</stock>
+        <ordered_external>23</ordered_external>
+        <record_type>\RKW\RkwOrder\Domain\Model\ProductBundle</record_type>
+        <product_bundle>0</product_bundle>
+        <allow_single_order>1</allow_single_order>
+    </tx_rkworder_domain_model_product>
 
 </dataset>

@@ -24,15 +24,49 @@
     <tx_rkworder_domain_model_orderproduct>
         <uid>4</uid>
         <pid>1</pid>
-        <amount>10</amount>
+        <amount>4</amount>
         <product>4</product>
     </tx_rkworder_domain_model_orderproduct>
 
     <tx_rkworder_domain_model_orderproduct>
         <uid>5</uid>
         <pid>1</pid>
-        <amount>5</amount>
-        <product>4</product>
+        <amount>10</amount>
+        <product>5</product>
     </tx_rkworder_domain_model_orderproduct>
 
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>6</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>5</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>7</uid>
+        <pid>1</pid>
+        <amount>11</amount>
+        <product>6</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>8</uid>
+        <pid>1</pid>
+        <amount>6</amount>
+        <product>7</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>9</uid>
+        <pid>1</pid>
+        <amount>12</amount>
+        <product>8</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>10</uid>
+        <pid>1</pid>
+        <amount>7</amount>
+        <product>9</product>
+    </tx_rkworder_domain_model_orderproduct>
 </dataset>
