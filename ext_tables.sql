@@ -56,17 +56,19 @@ CREATE TABLE tx_rkworder_domain_model_product (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 
+	record_type varchar(255) DEFAULT '0' NOT NULL,
+
 	title varchar(255) DEFAULT '' NOT NULL,
 	subtitle varchar(255) DEFAULT '' NOT NULL,
 	stock int(11) unsigned DEFAULT '0',
     ordered_external int(11) unsigned DEFAULT '0' NOT NULL,
-	bundle_only tinyint(4) unsigned DEFAULT '0' NOT NULL,
-	subscription_only tinyint(4) unsigned DEFAULT '0' NOT NULL,
+
 	backend_user varchar(255) DEFAULT '' NOT NULL,
 	admin_email varchar(255) DEFAULT '' NOT NULL,
 	page varchar(255) DEFAULT '' NOT NULL,
 	image int(11) unsigned NOT NULL default '0',
-	product_parent int(11) unsigned DEFAULT '0',
+	product_bundle int(11) unsigned DEFAULT '0',
+	allow_single_order tinyint(4) unsigned DEFAULT '1' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

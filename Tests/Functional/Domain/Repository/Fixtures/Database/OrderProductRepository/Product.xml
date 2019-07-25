@@ -6,8 +6,7 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
+        <record_type>0</record_type>
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>2</uid>
@@ -15,8 +14,7 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
+        <record_type>0</record_type>
     </tx_rkworder_domain_model_product>
 
 </dataset>

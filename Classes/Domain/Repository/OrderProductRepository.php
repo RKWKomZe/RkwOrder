@@ -103,7 +103,7 @@ class OrderProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         )->execute();
 
 
-        // 2. Check for parentProduct and its settings
+        // 2. Check for productBundle and its settings
         $uidList = [];
 
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
@@ -112,9 +112,9 @@ class OrderProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             // check for bundleOnly = true
             // --> add parentProduct instead of given product in some cases
             if (
-                ($product->getProductParent())
-                && ($product->getProductParent()->getBundleOnly())
-                && ($parentId = $product->getProductParent()->getUid())
+                ($product->getProductBundle())
+                && ($product->getProductBundle()->getBundleOnly())
+                && ($parentId = $product->getProductBundle()->getUid())
             ) {
 
                 if (! in_array($parentId, $uidList)) {
@@ -133,8 +133,8 @@ class OrderProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 // check for subscriptionOnly = true
                 // --> add parentProduct as additional product
                 if (
-                    ($product->getProductParent())
-                    && ($parentId = $product->getProductParent()->getUid())
+                    ($product->getProductBundle())
+                    && ($parentId = $product->getProductBundle()->getUid())
                     && (! in_array($parentId, $uidList))
                 ) {
 

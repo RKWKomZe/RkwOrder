@@ -3,8 +3,6 @@ if (!defined ('TYPO3_MODE')) {
     die ('Access denied.');
 }
 
-//\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rkworder_domain_model_order', 'EXT:rkw_order/Resources/Private/Language/locallang_csh_tx_rkworder_domain_model_order.xlf');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rkworder_domain_model_product');
 $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product',
@@ -15,29 +13,45 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		'dividers2tabs' => TRUE,
+		'dividers2tabs' => true,
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
-		'requestUpdate' => 'product_parent',
 		'delete' => 'deleted',
 		'enablecolumns' => [
 			'disabled' => 'hidden',
 		],
-		'searchFields' => 'itle, subtitle, stock, ordered_external, page, product_parent, bundle_only, subscription_only, backend_user, admin_email,',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rkw_order') . 'Resources/Public/Icons/tx_rkworder_domain_model_product.gif'
+		'searchFields' => 'title, subtitle, stock, ordered_external, page, product_bundle, backend_user, admin_email,',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rkw_order') . 'Resources/Public/Icons/tx_rkworder_domain_model_product.gif',
+        'type' => 'record_type',
+        'requestUpdate' => 'product_bundle',
 	],
 	'interface' => [
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, image, stock, ordered_external, page, product_parent, bundle_only, subscription_only, backend_user, admin_email',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, image, stock, ordered_external, page, product_bundle, backend_user, admin_email',
 	],
 	'types' => [
-		'1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, subtitle, image, stock, ordered_external, page, product_parent, bundle_only, subscription_only, backend_user, admin_email, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
-	],
+		'0' => ['showitem' => '--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.basics,record_type, title, subtitle, image, page, product_bundle,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.stock, stock, ordered_external,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.order, backend_user, admin_email,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.language, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.access, hidden;;1, starttime, endtime'],
+        '\RKW\RkwOrder\Domain\Model\ProductBundle' => ['showitem' => '--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.basics,record_type, title, subtitle, image, page,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.stock, stock, ordered_external,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.order, backend_user, admin_email,allow_single_order,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.language, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.access, hidden;;1, starttime, endtime'],
+        '\RKW\RkwOrder\Domain\Model\ProductSubscription' => ['showitem' => '--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.basics,record_type, title, subtitle, image, page,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.order, backend_user, admin_email,allow_single_order,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.language, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.tab.access, hidden;;1, starttime, endtime'],
+    ],
 	'palettes' => [
 		'1' => ['showitem' => ''],
 	],
 	'columns' => [
-	
+
+        'record_type' => [
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.recordType',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.recordType.default', '0'],
+                    ['LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.recordType.bundle', '\RKW\RkwOrder\Domain\Model\ProductBundle'],
+                    ['LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.recordType.subscription', '\RKW\RkwOrder\Domain\Model\ProductSubscription'],
+                ],
+                'default' => '0'
+            ],
+        ],
 		'sys_language_uid' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
@@ -109,7 +123,7 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
 		],
         'ordered_external' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.ordered_external',
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.orderedExternal',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -117,28 +131,9 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
                 'readOnly' => true
             ],
         ],
-		'bundle_only' => [
-            'displayCond' => 'FIELD:product_parent:REQ:FALSE',
-			'exclude' => 0,
-			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.bundle_only',
-			'config' => [
-				'type' => 'check',
-				'default' => 0
-			]
-		],
-		'subscription_only' => [
-            'displayCond' => 'FIELD:product_parent:REQ:FALSE',
+        'product_bundle' => [
             'exclude' => 0,
-			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.subscription_only',
-			'config' => [
-				'type' => 'check',
-				'default' => 0
-			]
-		],
-        'product_parent' => [
-            'onChange' => 'reload',
-            'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.product_parent',
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.productBundle',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -146,7 +141,7 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
                     ['', 0],
                 ],
                 'foreign_table' => 'tx_rkworder_domain_model_product',
-                'foreign_table_where' => 'AND tx_rkworder_domain_model_product.deleted = 0 AND tx_rkworder_domain_model_product.hidden = 0 AND tx_rkworder_domain_model_product.product_parent = "" AND tx_rkworder_domain_model_product.uid != ###THIS_UID###  ORDER BY tx_rkworder_domain_model_product.title ASC',
+                'foreign_table_where' => 'AND tx_rkworder_domain_model_product.deleted = 0 AND tx_rkworder_domain_model_product.hidden = 0 AND tx_rkworder_domain_model_product.record_type != "0" ORDER BY tx_rkworder_domain_model_product.title ASC',
             ]
         ],
         'page' => [
@@ -228,9 +223,9 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
             ),
         ],        
         'backend_user' => [
-            'displayCond' => 'FIELD:product_parent:REQ:FALSE',
+            'displayCond' => 'FIELD:product_bundle:REQ:FALSE',
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.backend_user',
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.backendUser',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
@@ -242,14 +237,22 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
             ]
         ],
         'admin_email' => [
-            'displayCond' => 'FIELD:product_parent:REQ:FALSE',
+            'displayCond' => 'FIELD:product_bundle:REQ:FALSE',
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.admin_email',
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.adminEmail',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim,email'
             ],
+        ],
+        'allow_single_order' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.allowSingleOrder',
+            'config' => [
+                'type' => 'check',
+                'default' => 0
+            ]
         ],
     ],
 ];

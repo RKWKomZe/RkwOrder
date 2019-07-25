@@ -1,0 +1,15 @@
+<div class="order-list__order">
+    <f:form.textfield id="txrkworder-amount-{product.uid}" property="orderProduct.{product.uid}.amount" class="feedback-field"/>
+
+    <f:if condition="{product.productBundle.recordType} == 0">
+        <f:then>
+            <f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials.order.formFields.order.input.amountSingle" />
+        </f:then>
+        <f:else>
+            <f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials.order.formFields.order.input.amountBundle" />
+        </f:else>
+    </f:if>
+
+    <!-- add hidden field with product -->
+    <f:form.hidden property="orderProduct.{product.uid}.product" value="{product}" />
+</div>

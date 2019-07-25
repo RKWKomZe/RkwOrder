@@ -4,9 +4,7 @@ namespace RKW\RkwOrder\Tests\Functional\Domain\Repository;
 
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
-use RKW\RkwOrder\Domain\Repository\OrderRepository;
 use RKW\RkwOrder\Domain\Repository\ProductRepository;
-use RKW\RkwOrder\Domain\Repository\FrontendUserRepository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -39,7 +37,6 @@ class ProductRepositoryTest extends FunctionalTestCase
     protected $testExtensionsToLoad = [
         'typo3conf/ext/rkw_basics',
         'typo3conf/ext/rkw_registration',
-        'typo3conf/ext/rkw_mailer',
         'typo3conf/ext/rkw_order',
 
     ];
@@ -77,7 +74,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->setUpFrontendRootPage(
             1,
             [
-                'EXT:rkw_mailer/Configuration/TypoScript/setup.txt',
+                'EXT:rkw_basics/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_registration/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_order/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_order/Tests/Functional/Domain/Repository/Fixtures/Frontend/Configuration/Rootpage.typoscript',
@@ -88,7 +85,6 @@ class ProductRepositoryTest extends FunctionalTestCase
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->subject = $this->objectManager->get(ProductRepository::class);
-
 
     }
 
@@ -134,8 +130,8 @@ class ProductRepositoryTest extends FunctionalTestCase
 
     /**
      * @test
-     */
-    public function findByUidListGivenProductHavingParentProductAndBundleOnlyFalseReturnsListOfProductsIncludingProductHavingParent ()
+
+    public function findByUidListGivenProductHavingProductBundleWithBundleOnlyFalseReturnsListOfProductsIncludingProductHavingBundle ()
     {
 
         $result = $this->subject->findByUidList('1,5,6');
@@ -148,8 +144,22 @@ class ProductRepositoryTest extends FunctionalTestCase
 
     /**
      * @test
-     */
-    public function findByUidListGivenProductHavingParentProductAndBundleOnlyTrueReturnsListOfProductsWithoutProductHavingParentButWithParent ()
+
+    public function findByUidListGivenProductHavingProductBundleWithBundleOnlyFalseReturnsListOfProductsIncludingProductHavingBundleAndIgnoresDuplicates ()
+    {
+
+        $result = $this->subject->findByUidList('1,5,6,1,6,5');
+        static::assertEquals(3, count($result));
+        self::assertEquals('1', $result[0]->getUid());
+        self::assertEquals('5', $result[1]->getUid());
+        self::assertEquals('6', $result[2]->getUid());
+
+    }
+
+    /**
+     * @test
+
+    public function findByUidListGivenProductHavingProductBundleWithBundleOnlyTrueReturnsListOfProductsWithoutProductHavingProductBundleButWithProductBundle ()
     {
 
         $result = $this->subject->findByUidList('1,5,8');
@@ -157,56 +167,22 @@ class ProductRepositoryTest extends FunctionalTestCase
         self::assertEquals('1', $result[0]->getUid());
         self::assertEquals('5', $result[1]->getUid());
         self::assertEquals('7', $result[2]->getUid());
-
     }
+
 
     /**
      * @test
-     */
-    public function findByUidListGivenProductHavingParentProductAndBundleOnlyTrueReturnsListOfProductsWithoutProductHavingParentButWithParentAndIgnoresDuplicates ()
+
+    public function findByUidListGivenProductHavingProductBundleWithBundleOnlyTrueReturnsListOfProductsWithoutProductHavingProductBundleButWithProductBundleAndIgnoresDuplicates ()
     {
 
-        $result = $this->subject->findByUidList('1,5,8,9,5,1');
+        $result = $this->subject->findByUidList('1,5,8,1,8,5');
         static::assertEquals(3, count($result));
         self::assertEquals('1', $result[0]->getUid());
         self::assertEquals('5', $result[1]->getUid());
         self::assertEquals('7', $result[2]->getUid());
-
     }
 
-    /**
-     * @test
-     */
-    public function findByUidListGivenProductHavingParentProductReturnsListOfProductsIncludingProductHavingParentAndParent ()
-    {
-
-        $result = $this->subject->findByUidList('1,5,11');
-        static::assertEquals(4, count($result));
-        self::assertEquals('1', $result[0]->getUid());
-        self::assertEquals('5', $result[1]->getUid());
-        self::assertEquals('10', $result[2]->getUid());
-        self::assertEquals('11', $result[3]->getUid());
-
-    }
-
-
-    /**
-     * @test
-     */
-    public function findByUidListGivenProductHavingParentProductReturnsListOfProductsIncludingProductHavingParentAndParentAndIgnoresDuplicates ()
-    {
-
-        $result = $this->subject->findByUidList('1,10,5,11,12');
-
-        static::assertEquals(5, count($result));
-        self::assertEquals('1', $result[0]->getUid());
-        self::assertEquals('10', $result[1]->getUid());
-        self::assertEquals('5', $result[2]->getUid());
-        self::assertEquals('11', $result[3]->getUid());
-        self::assertEquals('12', $result[4]->getUid());
-
-
-    }
 
     /**
      * TearDown

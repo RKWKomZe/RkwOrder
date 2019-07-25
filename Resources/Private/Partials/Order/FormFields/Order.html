@@ -21,52 +21,57 @@
 					</f:if>
 				</figure>
 
-
 				<div class="order-list__details">
 					<h4 class="order-list__title">{product.title}</h4>
 					<f:if condition="{product.subtitle}">
 						<p class="order-list__subtitle">{product.subtitle}</p>
 					</f:if>
 
-					<f:if condition="{product.subscriptionOnly}">
+
+					<!-- Check for bundle -->
+					<f:if condition="{product.productBundle.uid} > 0">
 						<f:then>
-							<span class="checkbox">
-								<label>
-									<f:form.checkbox property="orderProduct.{productIterator.index}.product" value="{product}" />
-									<span>
-										<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_product.subscription_only" />
-									</span>
-								</label>
-							</span>
 
+							<!-- is single order allowed? -->
+							<f:if condition="{product.productBundle.allowSingleOrder}">
+								<f:render partial="Order/FormFields/Order/Input" arguments="{product: product}" />
+							</f:if>
+
+
+							<div class="order-list__item order-list__item--sub">
+								<p class="order-list__belongs">Gehört zu dieser Reihe/Mappe:</p>
+								<div class="order-list__details order-list__details--sub">
+									<h4 class="order-list__title">{product.productBundle.title}</h4>
+
+
+									<!-- check which kind of bundle we have here -->
+									<f:if condition="{product.productBundle.recordType} == '\RKW\RkwOrder\Domain\Model\ProductSubscription'">
+										<f:then>
+											<f:render partial="Order/FormFields/Order/Checkbox" arguments="{product: product.productBundle}" />
+										</f:then>
+										<f:else>
+											<f:render partial="Order/FormFields/Order/Input" arguments="{product: product.productBundle}" />
+										</f:else>
+									</f:if>
+								</div>
+							</div>
 						</f:then>
+
+						<!-- without bundle -->
 						<f:else>
-
-							<f:form.textfield id="txrkworder-amount-{product.uid}" property="orderProduct.{productIterator.index}.amount" class="feedback-field"/>
-							<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_orderproduct.amount" />
-
-							<!-- add hidden field with product -->
-							<f:form.hidden property="orderProduct.{productIterator.index}.product" value="{product}" />
-
+							<f:render partial="Order/FormFields/Order/Input" arguments="{product: product}" />
 						</f:else>
-
 					</f:if>
-
-
 				</div>
-
-				<h3></h3>
-
-
 			</li>
 		</f:for>
 	</ul>
 
 </f:section>
 
+
 <!-- ==================================================================== -->
 <f:section name="termsSubmit">
-
 
 	<!-- remark -->
 	<f:comment>
@@ -87,7 +92,7 @@
 					<f:form.checkbox name="terms" value="1" />
 					<span class="text-smaller">
 						<f:link.page pageUid="{termsPid}" target="_blank">
-							<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields_order.terms" />
+							<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials.order.formFields.order.terms" />
 						</f:link.page>
 					</span>
 				</label>
@@ -103,7 +108,7 @@
 	</p>
 	<p class="v320-1">
 		<button class="button" type="submit">
-			<span><f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields_order.order_button" /></span>
+			<span><f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials.order.formFields.order.orderButton" /></span>
 		</button>
 	</p>
 </f:section>

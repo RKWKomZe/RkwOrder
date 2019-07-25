@@ -300,10 +300,51 @@
 
 
 			<!-- Partials/Order/FormFields.html -->
-			<trans-unit id="partials_order_formFields.labelOptional">
+			<trans-unit id="partials.order.formFields.labelOptional">
 				<source>(Optional)</source>
 				<target>(Optional)</target>
 			</trans-unit>
+			
+			
+            <!-- Partials/Order/FormFields/Order.html -->
+            <trans-unit id="partials.order.formFields.order.terms">
+                <source>I accept the terms and conditions.</source>
+                <target>Ich akzeptiere die Nutzungsbedingungen.</target>
+            </trans-unit>
+			<trans-unit id="partials.order.formFields.order.orderButton">
+				<source>Order now</source>
+				<target>Jetzt bestellen</target>
+			</trans-unit>
+
+
+
+            <!-- Partials/Order/FormFields/Order/Checkbox.html -->
+            <trans-unit id="partials.order.formFields.order.checkbox.subscription">
+                <source>Yes, I want to subscribe for free</source>
+                <target>Ja, kostenlos abonnieren</target>
+            </trans-unit>
+
+
+            <!-- Partials/Order/FormFields/Order/Input.html -->
+            <trans-unit id="partials.order.formFields.order.input.amountSingle">
+                <source>Piece (single order)</source>
+                <target>Stück (Einzelbestellung)</target>
+            </trans-unit>
+            <trans-unit id="partials.order.formFields.order.input.amountBundle">
+                <source>Pieces (complete series/batch)</source>
+                <target>Stück (komplette Reihe/Mappe)</target>
+            </trans-unit>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -334,23 +375,6 @@
 
 
 
-            <!-- Partials/Order/FormFields/Order.html -->
-            <trans-unit id="partials_order_formFields_order.terms">
-                <source>I accept the terms and conditions.</source>
-                <target>Ich akzeptiere die Nutzungsbedingungen.</target>
-            </trans-unit>
-            <trans-unit id="partials_order_formFields_order.sendSeries">
-                <source>Please send the whole series "%s".</source>
-                <target>Bitte senden Sie mir die gesamte Reihe "%s" zu.</target>
-            </trans-unit>
-            <trans-unit id="partials_order_formFields_order.subscribe">
-                <source>I want to subscribe to "%s".</source>
-                <target>Ich möchte die Reihe "%s" kostenlos abonnieren.</target>
-            </trans-unit>
-			<trans-unit id="partials_order_formFields_order.order_button">
-				<source>Order now</source>
-				<target>Jetzt bestellen</target>
-			</trans-unit>
 
 			<!-- ================================================================================== -->
 

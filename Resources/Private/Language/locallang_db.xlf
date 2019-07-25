@@ -9,13 +9,13 @@
 			<trans-unit id="tx_rkworder_domain_model_order.email">
 				<source>E-Mail</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.frontend_user">
+			<trans-unit id="tx_rkworder_domain_model_order.frontendUser">
 				<source>Frontend User</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.order_product">
+			<trans-unit id="tx_rkworder_domain_model_order.orderProduct">
 				<source>Ordered Products</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.shipping_address">
+			<trans-unit id="tx_rkworder_domain_model_order.shippingAddress">
 				<source>Shipping Address</source>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.pages">
@@ -24,7 +24,7 @@
 			<trans-unit id="tx_rkworder_domain_model_order.status">
 				<source>Status</source>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.status.I.sent">
+			<trans-unit id="tx_rkworder_domain_model_order.status.sent">
 				<source>Sent</source>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.remark" approved="yes">
@@ -46,41 +46,69 @@
 
 
             <trans-unit id="tx_rkworder_domain_model_product">
-				<source>RKW Order: Product</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.subtitle">
-				<source>Subtitle</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.admin_email">
-				<source>Additional Admin-E-Mail for Order- Mails</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.backend_user">
-				<source>Backend Users for Order- Mails</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.stock">
-				<source>Stock</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.ordered_external">
-				<source>External Orders</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.bundle_only">
-				<source>Bundle only</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.subscription_only">
-				<source>Subscription only</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.page">
-				<source>Page</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.image">
-				<source>Image</source>
-			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_product.product_parent">
-				<source>Parent Product</source>
-			</trans-unit>
+                <source>RKW Order: Product</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.recordType">
+                <source>Product-Type</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.recordType.default">
+                <source>Default</source>
+                <target>Standard</target>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.recordType.bundle">
+                <source>Bundle</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.recordType.subscription">
+                <source>Subscription</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.subtitle">
+                <source>Subtitle</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.adminEmail">
+                <source>Additional Admin-E-Mail for Order- Mails</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.backendUser">
+                <source>Backend Users for Order- Mails</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.stock">
+                <source>Stock</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.orderedExternal">
+                <source>Sum Of External Orders</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.page">
+                <source>Page</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.image">
+                <source>Image</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.productBundle">
+                <source>Bundle/Subscription</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.allowSingleOrder">
+                <source>Allow Single Order</source>
+            </trans-unit>
+
+
+            <!-- TCA- Tabs -->
+            <trans-unit id="tx_rkworder_domain_model_product.tab.basics">
+                <source>Basics</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.tab.stock">
+                <source>Stock</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.tab.order">
+                <source>Bestellung</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.tab.language">
+                <source>Language</source>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_product.tab.access">
+                <source>Access</source>
+            </trans-unit>
 
 
 			<!-- flexform -->

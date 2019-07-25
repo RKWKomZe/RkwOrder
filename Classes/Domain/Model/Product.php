@@ -16,9 +16,8 @@ namespace RKW\RkwOrder\Domain\Model;
  */
 
 /**
- * Class Publication
+ * Class Product
  *
- * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwOrder
@@ -26,6 +25,12 @@ namespace RKW\RkwOrder\Domain\Model;
  */
 class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
+
+    /**
+     * @var string
+     */
+    protected $recordType;
+
 
     /**
      * @var integer
@@ -49,6 +54,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var integer
      */
     protected $deleted;
+
 
     /**
      * title
@@ -82,22 +88,6 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * bundleOnly
-     *
-     * @var boolean
-     */
-    protected $bundleOnly = false;
-
-
-    /**
-     * subscriptionOnly
-     *
-     * @var boolean
-     */
-    protected $subscriptionOnly = false;
-
-
-    /**
      * page
      *
      * @var \RKW\RkwOrder\Domain\Model\Pages
@@ -114,11 +104,11 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * productParent
+     * productBundle
      *
-     * @var \RKW\RkwOrder\Domain\Model\Product
+     * @var \RKW\RkwOrder\Domain\Model\ProductBundle
      */
-    protected $productParent;
+    protected $productBundle;
 
 
     /**
@@ -135,7 +125,6 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $adminEmail;
-
 
 
     
@@ -159,6 +148,30 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected function initStorageObjects()
     {
         $this->backendUser = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
+
+    /**
+     * Returns the recordType value
+     *
+     * @return string
+     * @api
+     */
+    public function getRecordType()
+    {
+        return $this->recordType;
+    }
+
+
+    /**
+     * Sets the recordType value
+     *
+     * @param $recordType
+     * @return string
+     * @api
+     */
+    public function setRecordType($recordType)
+    {
+        return $this->recordType = $recordType;
     }
 
 
@@ -232,6 +245,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->deleted;
     }
 
+
     /**
      * Returns the title
      *
@@ -295,49 +309,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->stock = $stock;
     }
-
-    /**
-     * Returns the bundleOnly
-     *
-     * @return boolean $bundleOnly
-     */
-    public function getBundleOnly()
-    {
-        return $this->bundleOnly;
-    }
-
-    /**
-     * Sets the bundleOnly
-     *
-     * @param boolean $bundleOnly
-     * @return void
-     */
-    public function setBundleOnly($bundleOnly)
-    {
-        $this->bundleOnly = $bundleOnly;
-    }
-
-    /**
-     * Returns the subscriptionOnly
-     *
-     * @return boolean $subscriptionOnly
-     */
-    public function getSubscriptionOnly()
-    {
-        return $this->subscriptionOnly;
-    }
-
-    /**
-     * Sets the subscriptionOnly
-     *
-     * @param boolean $subscriptionOnly
-     * @return void
-     */
-    public function setSubscriptionOnly($subscriptionOnly)
-    {
-        $this->subscriptionOnly = $subscriptionOnly;
-    }
-
+    
 
     /**
      * Returns the orderedExternal
@@ -363,24 +335,24 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * Returns the productParent
+     * Returns the productBundle
      *
-     * @return \RKW\RkwOrder\Domain\Model\Product $productParent
+     * @return \RKW\RkwOrder\Domain\Model\ProductBundle $productBundle
      */
-    public function getProductParent()
+    public function getProductBundle()
     {
-        return $this->productParent;
+        return $this->productBundle;
     }
 
     /**
-     * Sets the productParent
+     * Sets the productBundle
      *
-     * @param \RKW\RkwOrder\Domain\Model\Product $productParent
+     * @param \RKW\RkwOrder\Domain\Model\ProductBundle $productBundle
      * @return void
      */
-    public function setProductParent(\RKW\RkwOrder\Domain\Model\Product $productParent)
+    public function setProductBundle(\RKW\RkwOrder\Domain\Model\ProductBundle $productBundle)
     {
-        $this->productParent = $productParent;
+        $this->productBundle = $productBundle;
     }
 
 

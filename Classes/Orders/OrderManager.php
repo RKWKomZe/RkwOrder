@@ -309,7 +309,6 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         ) {
 
             try {
-
                 $this->saveOrder($order, $frontendUser);
 
             } catch (\RKW\RkwOrder\Exception $exception) {
@@ -404,8 +403,8 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         if (! $settings['disableAdminMails']) {
 
             $productTemp = $product;
-            if ($product->getProductParent()) {
-                $productTemp  = $product->getProductParent();
+            if ($product->getProductBundle()) {
+                $productTemp  = $product->getProductBundle();
             }
 
             // go through ObjectStorage

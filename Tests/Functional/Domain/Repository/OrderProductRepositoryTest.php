@@ -38,7 +38,6 @@ class OrderProductRepositoryTest extends FunctionalTestCase
     protected $testExtensionsToLoad = [
         'typo3conf/ext/rkw_basics',
         'typo3conf/ext/rkw_registration',
-        'typo3conf/ext/rkw_mailer',
         'typo3conf/ext/rkw_order',
 
     ];
@@ -85,7 +84,7 @@ class OrderProductRepositoryTest extends FunctionalTestCase
         $this->setUpFrontendRootPage(
             1,
             [
-                'EXT:rkw_mailer/Configuration/TypoScript/setup.txt',
+                'EXT:rkw_basics/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_registration/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_order/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_order/Tests/Functional/Domain/Repository/Fixtures/Frontend/Configuration/Rootpage.typoscript',

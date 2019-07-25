@@ -8,8 +8,7 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
+        <record_type>0</record_type>
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>2</uid>
@@ -17,8 +16,7 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
+        <record_type>0</record_type>
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>3</uid>
@@ -26,9 +24,8 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
         <deleted>1</deleted>
+        <record_type>0</record_type>
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>4</uid>
@@ -36,9 +33,8 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
         <hidden>1</hidden>
+        <record_type>0</record_type>
     </tx_rkworder_domain_model_product>
 
     <!-- Test for parent product without bundleOnly-->
@@ -48,9 +44,8 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
-        <product_parent>0</product_parent>
+        <record_type>\RKW\RkwOrder\Domain\Model\ProductBundle</record_type>
+        <product_bundle>0</product_bundle>
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>6</uid>
@@ -58,9 +53,8 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
-        <product_parent>5</product_parent>
+        <record_type>0</record_type>
+        <product_bundle>5</product_bundle>
     </tx_rkworder_domain_model_product>
 
     <!-- Test for parent product with bundleOnly-->
@@ -70,9 +64,9 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <bundle_only>1</bundle_only>
-        <subscription_only>0</subscription_only>
-        <product_parent>0</product_parent>
+        <allow_single_order>0</allow_single_order>
+        <record_type>\RKW\RkwOrder\Domain\Model\ProductBundle</record_type>
+        <product_bundle>0</product_bundle>
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>8</uid>
@@ -80,51 +74,10 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
-        <product_parent>7</product_parent>
-    </tx_rkworder_domain_model_product>
-    <tx_rkworder_domain_model_product>
-        <uid>9</uid>
-        <pid>0</pid>
-        <title>Leitfaden deluxe</title>
-        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
-        <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
-        <product_parent>7</product_parent>
+        <record_type>0</record_type>
+        <product_bundle>7</product_bundle>
     </tx_rkworder_domain_model_product>
 
-    <!-- Test for parent product -->
-    <tx_rkworder_domain_model_product>
-        <uid>10</uid>
-        <pid>0</pid>
-        <title>Leitfaden deluxe</title>
-        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
-        <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
-        <product_parent>0</product_parent>
-    </tx_rkworder_domain_model_product>
-    <tx_rkworder_domain_model_product>
-        <uid>11</uid>
-        <pid>0</pid>
-        <title>Leitfaden deluxe</title>
-        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
-        <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
-        <product_parent>10</product_parent>
-    </tx_rkworder_domain_model_product>
-    <tx_rkworder_domain_model_product>
-        <uid>12</uid>
-        <pid>0</pid>
-        <title>Leitfaden deluxe</title>
-        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
-        <stock>100</stock>
-        <bundle_only>0</bundle_only>
-        <subscription_only>0</subscription_only>
-        <product_parent>10</product_parent>
-    </tx_rkworder_domain_model_product>
+
 
 </dataset>

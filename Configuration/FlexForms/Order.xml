@@ -17,7 +17,7 @@
                                 <maxitems>99</maxitems>
                                 <multiple>1</multiple>
                                 <foreign_table>tx_rkworder_domain_model_product</foreign_table>
-                                <foreign_table_where> AND tx_rkworder_domain_model_product.deleted = 0 AND tx_rkworder_domain_model_product.hidden = 0 AND (tx_rkworder_domain_model_product.product_parent = '' OR (SELECT bundle_only FROM tx_rkworder_domain_model_product as product_sub WHERE tx_rkworder_domain_model_product.product_parent = product_sub.uid AND product_sub.deleted = 0 AND product_sub.hidden = 0 ) = 0) ORDER BY tx_rkworder_domain_model_product.title</foreign_table_where>
+                                <foreign_table_where> AND tx_rkworder_domain_model_product.deleted = 0 AND tx_rkworder_domain_model_product.hidden = 0 ORDER BY tx_rkworder_domain_model_product.title</foreign_table_where>
                             </config>
                         </TCEforms>
                     </settings.products>

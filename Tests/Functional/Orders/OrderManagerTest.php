@@ -137,13 +137,12 @@ class OrderManagerTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/Fixtures/Database/Product.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/Order.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/OrderProduct.xml');
-
         $this->importDataSet(__DIR__ . '/Fixtures/Database/ShippingAddress.xml');
-
 
         $this->setUpFrontendRootPage(
             1,
             [
+                'EXT:rkw_basics/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_mailer/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_registration/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_order/Configuration/TypoScript/setup.txt',

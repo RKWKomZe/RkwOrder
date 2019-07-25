@@ -16,7 +16,7 @@
 		<div class="v320-1">
 			<label for="txrkworder-title" class="form-label">
 				<f:translate key="tx_rkworder_domain_model_shippingaddress.title" />
-				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields.labelOptional" /></span>
+				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials.order.formFields.labelOptional" /></span>
 			</label>
 			<f:form.select id="txrkworder-title" property="shippingAddress.title" options="<rkwRegistration:titleList />" optionValueField="uid" optionLabelField="name" prependOptionValue="0" prependOptionLabel="{f:translate(key:'LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.title.I.pleaseSelect')}" />
 		</div>
@@ -61,7 +61,7 @@
 		<div class="v320-1">
 			<label for="txrkworder-company" class="form-label">
 				<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:tx_rkworder_domain_model_shippingaddress.company" />
-				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials_order_formFields.labelOptional" /></span>
+				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_order/Resources/Private/Language/locallang.xlf:partials.order.formFields.labelOptional" /></span>
 			</label>
 			<f:if condition="{newOrder.shippingAddress.company}">
 				<f:then>

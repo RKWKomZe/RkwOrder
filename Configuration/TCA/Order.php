@@ -3,8 +3,6 @@ if (!defined ('TYPO3_MODE')) {
     die ('Access denied.');
 }
 
-//\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rkworder_domain_model_order', 'EXT:rkw_order/Resources/Private/Language/locallang_csh_tx_rkworder_domain_model_order.xlf');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rkworder_domain_model_order');
 $GLOBALS['TCA']['tx_rkworder_domain_model_order'] = [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order',
@@ -49,14 +47,14 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_order'] = [
 				'default' => 0,
 				'items' => [
 					'1' => [
-						'0' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.status.I.sent'
+						'0' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.status.sent'
 					]
 				]
 			],
 		],
 		'frontend_user' => [
 			'exclude' => 0,
-			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.frontend_user',
+			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.frontendUser',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
@@ -77,7 +75,7 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_order'] = [
         ],
         'order_product' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.order_product',
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.orderProduct',
             'config' => [
                 'type' => 'inline',
                 'internal_type' => 'db',
@@ -108,7 +106,7 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_order'] = [
         ],
         'shipping_address' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.shipping_address',
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_order.shippingAddress',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',

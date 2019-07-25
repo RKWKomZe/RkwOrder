@@ -109,6 +109,31 @@ config.tx_extbase.persistence {
                 }
             }
         }
+
+
+        #===============================================
+
+        RKW\RkwOrder\Domain\Model\ProductBundle {
+            mapping {
+
+                recordType = \RKW\RkwOrder\Domain\Model\ProductBundle
+                tableName = tx_rkworder_domain_model_product
+            }
+            subclasses {
+                \RKW\RkwOrder\Domain\Model\ProductSubscription = RKW\RkwOrder\Domain\Model\ProductSubscription
+            }
+        }
+
+
+        #===============================================
+
+        RKW\RkwOrder\Domain\Model\ProductSubscription {
+            mapping {
+
+                recordType = \RKW\RkwOrder\Domain\Model\ProductSubscription
+                tableName = tx_rkworder_domain_model_product
+            }
+        }
     }
 }
 

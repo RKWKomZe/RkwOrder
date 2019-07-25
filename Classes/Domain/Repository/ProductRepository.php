@@ -18,7 +18,6 @@ namespace RKW\RkwOrder\Domain\Repository;
 /**
  * Class ProductRepository
  *
- * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwOrder
@@ -51,7 +50,6 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      *
      * @param string $uidList
      * @return array
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function findByUidList($uidList)
     {
@@ -82,12 +80,14 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
         foreach ($products as $product) {
 
-            // check for bundleOnly = true
-            // --> add parentProduct instead of given product in some cases
+            /*
+            // check for getAllowSingleOrder = false
+            // --> add productBundle instead of given product in some cases
+
             if (
-                ($product->getProductParent())
-                && ($product->getProductParent()->getBundleOnly())
-                && ($parentId = $product->getProductParent()->getUid())
+                ($product->getProductBundle())
+                && (! $product->getProductBundle()->getAllowSingleOrder())
+                && ($parentId = $product->getProductBundle()->getUid())
             ) {
 
                 if (! in_array($parentId, $uidList)) {
@@ -103,21 +103,12 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
             } else if (! in_array($product->getUid(), $uidList)) {
 
-                // check for subscriptionOnly = true
-                // --> add parentProduct as additional product
-                if (
-                    ($product->getProductParent())
-                    && ($parentId = $product->getProductParent()->getUid())
-                    && (! in_array($parentId, $uidList))
-                ) {
+                $result[] = $product;
+                $uidList[] = $product->getUid();
+            }
+            */
 
-                    $query = $this->createQuery();
-                    $query->matching(
-                        $query->equals('uid', $parentId)
-                    );
-                    $result[] = $query->execute()->getFirst();
-                    $uidList[] = $parentId;
-                }
+            if (! in_array($product->getUid(), $uidList)) {
 
                 $result[] = $product;
                 $uidList[] = $product->getUid();
