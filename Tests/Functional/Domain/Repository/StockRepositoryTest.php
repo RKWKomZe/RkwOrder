@@ -4,6 +4,7 @@ namespace RKW\RkwOrder\Tests\Functional\Domain\Repository;
 
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
+use RKW\RkwOrder\Domain\Repository\StockRepository;
 use RKW\RkwOrder\Domain\Repository\ProductRepository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -22,14 +23,14 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * The TYPO3 project - inspiring people to share!
  */
 /**
- * ProductRepositoryTest
+ * StockRepositoryTest
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Rkw Kompetenzzentrum
  * @package RKW_RkwMailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class ProductRepositoryTest extends FunctionalTestCase
+class StockRepositoryTest extends FunctionalTestCase
 {
     /**
      * @var string[]
@@ -46,9 +47,14 @@ class ProductRepositoryTest extends FunctionalTestCase
     protected $coreExtensionsToLoad = [];
 
     /**
-     * @var \RKW\RkwOrder\Domain\Repository\ProductRepository
+     * @var \RKW\RkwOrder\Domain\Repository\StockRepository
      */
     private $subject = null;
+
+    /**
+     * @var \RKW\RkwOrder\Domain\Repository\ProductRepository
+     */
+    private $productRepository;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
@@ -67,8 +73,10 @@ class ProductRepositoryTest extends FunctionalTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->importDataSet(__DIR__ . '/Fixtures/Database/ProductRepository/Pages.xml');
-        $this->importDataSet(__DIR__ . '/Fixtures/Database/ProductRepository/Product.xml');
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/StockRepository/Pages.xml');
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/StockRepository/Product.xml');
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/StockRepository/Stock.xml');
+
 
 
         $this->setUpFrontendRootPage(
@@ -84,47 +92,41 @@ class ProductRepositoryTest extends FunctionalTestCase
 
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->subject = $this->objectManager->get(ProductRepository::class);
+        $this->subject = $this->objectManager->get(StockRepository::class);
+
+        $this->productRepository = $this->objectManager->get(ProductRepository::class);
 
     }
 
 
+    //=============================================
     /**
      * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function findByUidListReturnsListOfProductsAndRespectsEnableFields()
+    public function getStockSumByProductAndPreOrderReturnsStockOfGivenProductWithoutPreOrderAndWithoutDeleted()
     {
 
-        $result = $this->subject->findByUidList('1,2,3,4');
-        static::assertEquals(2, count($result));
-        self::assertEquals('1', $result[0]->getUid());
-        self::assertEquals('2', $result[1]->getUid());
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
 
-    }
-
-    /**
-     * @test
-     */
-    public function findByUidListReturnsListOfProductsAndIgnoresDuplicates()
-    {
-
-        $result = $this->subject->findByUidList('1,2,3,4,1,2');
-        static::assertEquals(2, count($result));
-        self::assertEquals('1', $result[0]->getUid());
-        self::assertEquals('2', $result[1]->getUid());
+        $result = $this->subject->getStockSumByProductAndPreOrder($product);
+        self::assertEquals($result, 70);
 
     }
 
     /**
      * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function findByUidListReturnsListOfProductsAndKeepsGivenOrder()
+    public function getStockSumByProductAndPreOrderTrueReturnsPreOrderStockOfGivenProductAndWithoutDeleted()
     {
 
-        $result = $this->subject->findByUidList('4,3,2,1');
-        static::assertEquals(2, count($result));
-        self::assertEquals('2', $result[0]->getUid());
-        self::assertEquals('1', $result[1]->getUid());
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        $result = $this->subject->getStockSumByProductAndPreOrder($product, true);
+        self::assertEquals($result, 22);
 
     }
 

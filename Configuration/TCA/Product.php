@@ -114,12 +114,19 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_product'] = [
 		'stock' => [
             'exclude' => 0,
 			'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_product.stock',
-			'config' => [
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim,int,required',
-                'default' => 100
-			],
+            'config' => [
+                'type' => 'inline',
+                'size' => 5,
+                'minitems' => 1,
+                'maxitems' => 99,
+                'foreign_table' => 'tx_rkworder_domain_model_stock',
+                'foreign_table_where' => 'AND tx_rkworder_domain_model_stock.deleted = 0 AND tx_rkworder_domain_model_stock.hidden = 0 ORDER BY tx_rkworder_domain_model_stock.crdate ASC',
+                'foreign_field' => 'product',
+                'appearance' => [
+                    'collapseAll' => 1,
+                    'expandSingle' => 1,
+                ],
+            ]
 		],
         'ordered_external' => [
             'exclude' => 0,

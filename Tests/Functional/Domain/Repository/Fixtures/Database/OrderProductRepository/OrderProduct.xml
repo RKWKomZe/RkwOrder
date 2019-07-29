@@ -15,18 +15,51 @@
         <product>1</product>
     </tx_rkworder_domain_model_orderproduct>
 
-    <!-- orders check for sums with deleted-->
+    <!-- deleted and another product -->
     <tx_rkworder_domain_model_orderproduct>
-        <uid>3</uid>
+        <uid>20</uid>
         <pid>1</pid>
         <amount>4</amount>
-        <product>2</product>
+        <product>19</product>
         <deleted>1</deleted>
     </tx_rkworder_domain_model_orderproduct>
     <tx_rkworder_domain_model_orderproduct>
-        <uid>4</uid>
+        <uid>21</uid>
         <pid>1</pid>
-        <amount>5</amount>
+        <amount>17</amount>
         <product>2</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <!-- orders check for pre-order sums -->
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>30</uid>
+        <pid>1</pid>
+        <amount>7</amount>
+        <product>1</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>31</uid>
+        <pid>1</pid>
+        <amount>11</amount>
+        <product>1</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <!-- deleted and another product -->
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>40</uid>
+        <pid>1</pid>
+        <amount>4</amount>
+        <product>1</product>
+        <deleted>1</deleted>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>41</uid>
+        <pid>1</pid>
+        <amount>9</amount>
+        <product>2</product>
+        <is_pre_order>1</is_pre_order>
     </tx_rkworder_domain_model_orderproduct>
 </dataset>

@@ -36,6 +36,7 @@ CREATE TABLE tx_rkworder_domain_model_orderproduct (
 	ext_order int(11) unsigned DEFAULT '0',
 	product int(11) unsigned DEFAULT '0',
 	amount int(11) unsigned DEFAULT '0',
+	is_pre_order tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -60,15 +61,16 @@ CREATE TABLE tx_rkworder_domain_model_product (
 
 	title varchar(255) DEFAULT '' NOT NULL,
 	subtitle varchar(255) DEFAULT '' NOT NULL,
-	stock int(11) unsigned DEFAULT '0',
-    ordered_external int(11) unsigned DEFAULT '0' NOT NULL,
-
-	backend_user varchar(255) DEFAULT '' NOT NULL,
-	admin_email varchar(255) DEFAULT '' NOT NULL,
 	page varchar(255) DEFAULT '' NOT NULL,
 	image int(11) unsigned NOT NULL default '0',
 	product_bundle int(11) unsigned DEFAULT '0',
 	allow_single_order tinyint(4) unsigned DEFAULT '1' NOT NULL,
+
+	stock varchar(255) DEFAULT '' NOT NULL,
+    ordered_external int(11) unsigned DEFAULT '0' NOT NULL,
+
+	backend_user varchar(255) DEFAULT '' NOT NULL,
+	admin_email varchar(255) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -87,3 +89,25 @@ CREATE TABLE tx_rkworder_domain_model_product (
 );
 
 
+#
+# Table structure for table 'tx_rkworder_domain_model_stock'
+#
+CREATE TABLE tx_rkworder_domain_model_stock (
+
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+
+	product int(11) DEFAULT '0' NOT NULL,
+	amount int(11) unsigned DEFAULT '500' NOT NULL,
+	delivery_start int(11) unsigned DEFAULT '0' NOT NULL,
+	comment varchar(255) DEFAULT '' NOT NULL,
+
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid)
+);

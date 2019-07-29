@@ -70,23 +70,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $subtitle;
 
-
-    /**
-     * stock
-     *
-     * @var int
-     */
-    protected $stock = 0;
-
-
-    /**
-     * orderedExternal
-     *
-     * @var int
-     */
-    protected $orderedExternal;
-
-
+    
     /**
      * page
      *
@@ -110,6 +94,20 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $productBundle;
 
+    /**
+     * stock
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\Stock>
+     */
+    protected $stock;
+
+
+    /**
+     * orderedExternal
+     *
+     * @var int
+     */
+    protected $orderedExternal;
 
     /**
      * backendUser
@@ -290,51 +288,6 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * Returns the stock
-     *
-     * @return int $stock
-     */
-    public function getStock()
-    {
-        return $this->stock;
-    }
-
-    /**
-     * Sets the stock
-     *
-     * @param int $stock
-     * @return void
-     */
-    public function setStock($stock)
-    {
-        $this->stock = $stock;
-    }
-    
-
-    /**
-     * Returns the orderedExternal
-     *
-     * @return int $orderedExternal
-     */
-    public function getOrderedExternal()
-    {
-        return $this->orderedExternal;
-    }
-
-
-    /**
-     * Sets the orderedExternal
-     *
-     * @param int $orderedExternal
-     * @return void
-     */
-    public function setOrderedExternal($orderedExternal)
-    {
-        $this->orderedExternal = $orderedExternal;
-    }
-
-
-    /**
      * Returns the productBundle
      *
      * @return \RKW\RkwOrder\Domain\Model\ProductBundle $productBundle
@@ -397,8 +350,75 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setImage(\RKW\RkwBasics\Domain\Model\FileReference $image)
     {
         $this->image = $image;
-    }    
-    
+    }
+
+
+    /**
+     * Adds a stock
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Stock $stock
+     * @return void
+     */
+    public function addStock(\RKW\RkwOrder\Domain\Model\Stock $stock)
+    {
+        $this->stock->attach($stock);
+    }
+
+    /**
+     * Removes a stock
+     *
+     * @param \RKW\RkwOrder\Domain\Model\Stock $stock
+     * @return void
+     */
+    public function removeStock(\RKW\RkwOrder\Domain\Model\Stock $stock)
+    {
+        $this->stock->detach($stock);
+    }
+
+    /**
+     * Returns the stock
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\Stock> $stock
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * Sets the stock
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwOrder\Domain\Model\Stock> $stock
+     * @return void
+     */
+    public function setStock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $stock)
+    {
+        $this->stock = $stock;
+    }
+
+
+    /**
+     * Returns the orderedExternal
+     *
+     * @return int $orderedExternal
+     */
+    public function getOrderedExternal()
+    {
+        return $this->orderedExternal;
+    }
+
+
+    /**
+     * Sets the orderedExternal
+     *
+     * @param int $orderedExternal
+     * @return void
+     */
+    public function setOrderedExternal($orderedExternal)
+    {
+        $this->orderedExternal = $orderedExternal;
+    }
+
 
     /**
      * Adds a backendUser

@@ -1,7 +1,6 @@
 <?php
 
 namespace RKW\RkwOrder\Domain\Repository;
-
 use RKW\RkwBasics\Helper\QueryTypo3;
 
 /*
@@ -18,41 +17,41 @@ use RKW\RkwBasics\Helper\QueryTypo3;
  */
 
 /**
- * Class ProductRepository
+ * Class StockRepository
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwOrder
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class OrderProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class StockRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
 
 
     /**
-     * Get ordered sum of one product
+     * Get stock sum of one product
      *
      * @param \RKW\RkwOrder\Domain\Model\Product $product
      * @param bool $preOrder
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getOrderedSumByProductAndPreOrder(\RKW\RkwOrder\Domain\Model\Product $product, $preOrder = false)
+    public function getStockSumByProductAndPreOrder(\RKW\RkwOrder\Domain\Model\Product $product, $preOrder = false)
     {
 
-        $whereAddition = ' AND tx_rkworder_domain_model_orderproduct.is_pre_order = 0';
+        $whereAddition = ' AND tx_rkworder_domain_model_stock.delivery_start <= 0';
         if ($preOrder) {
-            $whereAddition = ' AND tx_rkworder_domain_model_orderproduct.is_pre_order = 1';
+            $whereAddition = ' AND tx_rkworder_domain_model_stock.delivery_start > 0';
         }
 
         $query = $this->createQuery();
         $query->statement('
-            SELECT SUM(amount) as sum FROM tx_rkworder_domain_model_orderproduct 
-            WHERE tx_rkworder_domain_model_orderproduct.product = ' . intval($product->getUid()) .
+            SELECT SUM(amount) as sum FROM tx_rkworder_domain_model_stock 
+            WHERE tx_rkworder_domain_model_stock.product = ' . intval($product->getUid()) .
             $whereAddition .
-            QueryTypo3::getWhereClauseForVersioning('tx_rkworder_domain_model_orderproduct') .
-            QueryTypo3::getWhereClauseForEnableFields('tx_rkworder_domain_model_orderproduct') . '
+            QueryTypo3::getWhereClauseForVersioning('tx_rkworder_domain_model_stock') .
+            QueryTypo3::getWhereClauseForEnableFields('tx_rkworder_domain_model_stock') . '
         
         ');
 
@@ -60,6 +59,7 @@ class OrderProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return intval($result[0]['sum']);
         //====
     }
+
 
 
 

@@ -26,24 +26,6 @@ namespace RKW\RkwOrder\Domain\Repository;
 class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
-    /**
-     * initializeObject
-     *
-     * @return void
-     */
-    public function initializeObject()
-    {
-
-        /** @var $querySettings \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings */
-        $querySettings = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Typo3QuerySettings');
-
-        // don't add the pid constraint
-        $querySettings->setRespectStoragePage(false);
-
-        $this->setDefaultQuerySettings($querySettings);
-    }
-
-
 
     /**
      * Find all products by a list of uids

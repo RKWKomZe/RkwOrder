@@ -28,23 +28,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
-    /**
-     * initializeObject
-     *
-     * @return void
-     */
-    public function initializeObject()
-    {
-
-        /** @var $querySettings \TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings */
-        $querySettings = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Typo3QuerySettings');
-
-        // don't add the pid constraint
-        $querySettings->setRespectStoragePage(false);
-        $this->setDefaultQuerySettings($querySettings);
-    }
-
-
 
     /**
      * Find all orders of a frontendUser
@@ -68,6 +51,8 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
 
+
+    //=================================================
 
 
     /**

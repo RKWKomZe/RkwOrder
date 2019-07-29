@@ -106,13 +106,13 @@ class OrderProductRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getOrderedSumByProductGivenNormalProductReturnsSumOfOrderAmountsOfGivenProduct()
+    public function getOrderedSumByProductAndPreOrderGivenNormalProductReturnsSumOfOrderAmountsForGivenProductWithoutPreOrdersAndWithoutDeleted()
     {
 
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
         $product = $this->productRepository->findByUid(1);
 
-        $result = $this->subject->getOrderedSumByProduct($product);
+        $result = $this->subject->getOrderedSumByProductAndPreOrder($product);
         self::assertEquals(9, $result);
 
     }
@@ -121,16 +121,18 @@ class OrderProductRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getOrderedSumByProductGivenNormalProductReturnsSumOfOrderAmountsWithoutDeletedOrders()
+    public function getOrderedSumByProductAndPreOrderGivenNormalProductAndPreOrderTrueReturnsSumOfPreOrderAmountsForGivenProductWithoutDeleted()
     {
 
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(2);
+        $product = $this->productRepository->findByUid(1);
 
-        $result = $this->subject->getOrderedSumByProduct($product);
-        self::assertEquals(5, $result);
+        $result = $this->subject->getOrderedSumByProductAndPreOrder($product, true);
+        self::assertEquals(18, $result);
 
     }
+
+    //=============================================
 
 
     /**

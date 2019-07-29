@@ -28,45 +28,122 @@
         <product>4</product>
     </tx_rkworder_domain_model_orderproduct>
 
-    <tx_rkworder_domain_model_orderproduct>
-        <uid>5</uid>
-        <pid>1</pid>
-        <amount>10</amount>
-        <product>5</product>
-    </tx_rkworder_domain_model_orderproduct>
 
-    <tx_rkworder_domain_model_orderproduct>
-        <uid>6</uid>
-        <pid>1</pid>
-        <amount>5</amount>
-        <product>5</product>
-    </tx_rkworder_domain_model_orderproduct>
-
-    <tx_rkworder_domain_model_orderproduct>
-        <uid>7</uid>
-        <pid>1</pid>
-        <amount>11</amount>
-        <product>6</product>
-    </tx_rkworder_domain_model_orderproduct>
-
-    <tx_rkworder_domain_model_orderproduct>
-        <uid>8</uid>
-        <pid>1</pid>
-        <amount>6</amount>
-        <product>7</product>
-    </tx_rkworder_domain_model_orderproduct>
-
-    <tx_rkworder_domain_model_orderproduct>
-        <uid>9</uid>
-        <pid>1</pid>
-        <amount>12</amount>
-        <product>8</product>
-    </tx_rkworder_domain_model_orderproduct>
-
+    <!-- testing normal stock calculation -->
+    <!-- check 1 & 2 -->
     <tx_rkworder_domain_model_orderproduct>
         <uid>10</uid>
         <pid>1</pid>
-        <amount>7</amount>
-        <product>9</product>
+        <amount>10</amount>
+        <product>10</product>
     </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>11</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>10</product>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>16</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>10</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <!-- check 3 -->
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>12</uid>
+        <pid>1</pid>
+        <amount>11</amount>
+        <product>11</product>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>13</uid>
+        <pid>1</pid>
+        <amount>7</amount>
+        <product>12</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <!-- check 4 -->
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>14</uid>
+        <pid>1</pid>
+        <amount>12</amount>
+        <product>13</product>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>15</uid>
+        <pid>1</pid>
+        <amount>7</amount>
+        <product>14</product>
+    </tx_rkworder_domain_model_orderproduct>
+
+
+    <!-- testing pre-order stock calculation -->
+    <!-- check 1 -->
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>20</uid>
+        <pid>1</pid>
+        <amount>70</amount>
+        <product>20</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>21</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>20</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>22</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>20</product>
+        <is_pre_order>0</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <!-- check 2 -->
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>23</uid>
+        <pid>1</pid>
+        <amount>1200</amount>
+        <product>21</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <!-- check 3 -->
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>24</uid>
+        <pid>1</pid>
+        <amount>22</amount>
+        <product>22</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>25</uid>
+        <pid>1</pid>
+        <amount>33</amount>
+        <product>23</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+
+    <!-- check 4 -->
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>26</uid>
+        <pid>1</pid>
+        <amount>11</amount>
+        <product>24</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+    <tx_rkworder_domain_model_orderproduct>
+        <uid>27</uid>
+        <pid>1</pid>
+        <amount>9</amount>
+        <product>25</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkworder_domain_model_orderproduct>
+
+
 </dataset>

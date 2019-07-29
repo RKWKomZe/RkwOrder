@@ -50,6 +50,12 @@ class OrderProduct extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $amount = 1;
 
 
+    /**
+     * isPreOrder
+     *
+     * @var bool
+     */
+    protected $isPreOrder = false;
 
 
     /**
@@ -117,5 +123,26 @@ class OrderProduct extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->amount = $amount;
     }
 
+
+    /**
+     * Returns the isPreOrder
+     *
+     * @return bool $isPreOrder
+     */
+    public function getIsPreOrder()
+    {
+        return $this->isPreOrder;
+    }
+
+    /**
+     * Sets the isPreOrder
+     *
+     * @param bool $isPreOrder
+     * @return void
+     */
+    public function setIsPreOrder($isPreOrder)
+    {
+        $this->isPreOrder = $isPreOrder;
+    }
 
 }

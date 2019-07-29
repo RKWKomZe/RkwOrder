@@ -77,7 +77,6 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected $orderProductRepository;
 
-
     /**
      * productRepository
      *
@@ -85,6 +84,14 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @inject
      */
     protected $productRepository;
+
+    /**
+     * stockRepository
+     *
+     * @var \RKW\RkwOrder\Domain\Repository\StockRepository
+     * @inject
+     */
+    protected $stockRepository;
 
     /**
      * BackendUserRepository
@@ -362,6 +369,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwOrder\Domain\Model\Product $product
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function getRemainingStockOfProduct (\RKW\RkwOrder\Domain\Model\Product $product)
     {
@@ -372,24 +380,36 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             $product = $product->getProductBundle();
         }
 
-        $orderedSum = $this->orderProductRepository->getOrderedSumByProduct($product);
-        $remainingStock = intval($product->getStock()) - (intval($orderedSum) + intval($product->getOrderedExternal()));
+        $orderedSum = $this->orderProductRepository->getOrderedSumByProductAndPreOrder($product);
+        $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product);
+
+        $remainingStock = intval($stockSum) - (intval($orderedSum) + intval($product->getOrderedExternal()));
         return (($remainingStock > 0) ? $remainingStock : 0);
         //===
     }
 
-
-
     /**
-     * Get product status
+     * Get pre-order stock of product
      *
      * @param \RKW\RkwOrder\Domain\Model\Product $product
      * @return int
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function getProductStatus (\RKW\RkwOrder\Domain\Model\Product $product)
+    public function getPreOrderStockOfProduct (\RKW\RkwOrder\Domain\Model\Product $product)
     {
+        if (
+            ($product->getProductBundle())
+            && (! $product->getProductBundle()->getAllowSingleOrder())
+        ){
+            $product = $product->getProductBundle();
+        }
 
-        return 0;
+        $orderedSum = $this->orderProductRepository->getOrderedSumByProductAndPreOrder($product, true);
+        $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product, true);
+
+        $preOrderStock = intval($stockSum) - intval($orderedSum);
+        return (($preOrderStock > 0) ? $preOrderStock : 0);
         //===
     }
 

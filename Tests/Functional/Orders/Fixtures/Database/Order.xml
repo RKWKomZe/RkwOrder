@@ -31,7 +31,7 @@
         <status>0</status>
     </tx_rkworder_domain_model_order>
 
-    <!-- for testing stock calculation -->
+    <!-- for testing normal stock calculation -->
     <tx_rkworder_domain_model_order>
         <uid>4</uid>
         <pid>1</pid>
@@ -44,7 +44,7 @@
     <tx_rkworder_domain_model_order>
         <uid>5</uid>
         <pid>1</pid>
-        <order_product>5</order_product>
+        <order_product>10</order_product>
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <shipping_address>1</shipping_address>

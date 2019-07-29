@@ -4,7 +4,7 @@
     <!-- test with enable fields -->
     <tx_rkworder_domain_model_product>
         <uid>1</uid>
-        <pid>0</pid>
+        <pid>1</pid>
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
@@ -12,7 +12,7 @@
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>2</uid>
-        <pid>0</pid>
+        <pid>1</pid>
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
@@ -20,7 +20,7 @@
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>3</uid>
-        <pid>0</pid>
+        <pid>1</pid>
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
@@ -29,7 +29,7 @@
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>4</uid>
-        <pid>0</pid>
+        <pid>1</pid>
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
@@ -40,7 +40,7 @@
     <!-- Test for parent product without bundleOnly-->
     <tx_rkworder_domain_model_product>
         <uid>5</uid>
-        <pid>0</pid>
+        <pid>1</pid>
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
@@ -49,7 +49,7 @@
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>6</uid>
-        <pid>0</pid>
+        <pid>1</pid>
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
@@ -60,7 +60,7 @@
     <!-- Test for parent product with bundleOnly-->
     <tx_rkworder_domain_model_product>
         <uid>7</uid>
-        <pid>0</pid>
+        <pid>1</pid>
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
@@ -70,7 +70,7 @@
     </tx_rkworder_domain_model_product>
     <tx_rkworder_domain_model_product>
         <uid>8</uid>
-        <pid>0</pid>
+        <pid>1</pid>
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>

@@ -138,6 +138,8 @@ class OrderManagerTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/Fixtures/Database/Order.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/OrderProduct.xml');
         $this->importDataSet(__DIR__ . '/Fixtures/Database/ShippingAddress.xml');
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Stock.xml');
+
 
         $this->setUpFrontendRootPage(
             1,
@@ -646,12 +648,13 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function getRemainingStockReturnsSubstractsOrderedAndOrderedExternalFromStock ()
+    public function getRemainingStockReturnsStockAndSubstractsOrderedAndOrderedExternalFromStock ()
     {
 
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(5);
+        $product =$this->productRepository->findByUid(10);
         self::assertEquals(65, $this->subject->getRemainingStockOfProduct($product));
 
     }
@@ -659,12 +662,14 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     *
      */
     public function getRemainingStockReturnsZeroIfCalculatedValueIsBelowZero ()
     {
 
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(5);
+        $product =$this->productRepository->findByUid(10);
         $product->setOrderedExternal(200);
 
         self::assertEquals(0, $this->subject->getRemainingStockOfProduct($product));
@@ -674,26 +679,89 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function getRemainingStockGivenProductWithProductBundleWithAllowSingleOrderFalseReturnsValueOfProductBundle ()
+    public function getRemainingStockGivenProductWithProductBundleWithAllowSingleOrderFalseReturnsStockOfProductBundle ()
     {
 
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(6);
-        self::assertEquals(22, $this->subject->getRemainingStockOfProduct($product));
+        $product =$this->productRepository->findByUid(11);
+        self::assertEquals(21, $this->subject->getRemainingStockOfProduct($product));
     }
 
 
     /**
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function getRemainingStockGivenProductWithProductBundleWithAllowSingleOrderTrueReturnsValueOfProduct()
+    public function getRemainingStockGivenProductWithProductBundleWithAllowSingleOrderTrueReturnsStockOfProduct()
     {
 
         /** @var \RKW\RkwOrder\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(8);
+        $product =$this->productRepository->findByUid(13);
         self::assertEquals(45, $this->subject->getRemainingStockOfProduct($product));
+    }
+
+
+
+    //=============================================
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     */
+    public function getPreOrderStockReturnsStockAndSubstractsOrderedAndNotOrderedExternalFromStock ()
+    {
+
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product =$this->productRepository->findByUid(20);
+        self::assertEquals(245, $this->subject->getPreOrderStockOfProduct($product));
+
+    }
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     *
+     */
+    public function getPreOrderStockReturnsZeroIfCalculatedValueIsBelowZero ()
+    {
+
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product =$this->productRepository->findByUid(21);
+
+        self::assertEquals(0, $this->subject->getPreOrderStockOfProduct($product));
+
+    }
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     */
+    public function getPreOrderStockGivenProductWithProductBundleWithAllowSingleOrderFalseReturnsStockOfProductBundle ()
+    {
+
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product =$this->productRepository->findByUid(22);
+        self::assertEquals(33, $this->subject->getPreOrderStockOfProduct($product));
+    }
+
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     */
+    public function getPreOrderStockGivenProductWithProductBundleWithAllowSingleOrderTrueReturnsStockOfProduct()
+    {
+
+        /** @var \RKW\RkwOrder\Domain\Model\Product $product */
+        $product =$this->productRepository->findByUid(24);
+        self::assertEquals(79, $this->subject->getPreOrderStockOfProduct($product));
     }
 
 

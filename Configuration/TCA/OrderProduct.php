@@ -16,14 +16,14 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_orderproduct'] = [
 		'dividers2tabs' => TRUE,
         'delete' => 'deleted',
 
-        'searchFields' => 'order, product, amount,',
+        'searchFields' => 'order, product, amount, is_pre_order',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rkw_order') . 'Resources/Public/Icons/tx_rkworder_domain_model_orderproduct.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'order, product, amount',
+		'showRecordFieldList' => 'order, product, amount, is_pre_order',
 	],
 	'types' => [
-		'1' => ['showitem' => 'order, product, amount'],
+		'1' => ['showitem' => 'order, product, amount, is_pre_order'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -47,7 +47,6 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_orderproduct'] = [
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
-                'readOnly' => 0,
             ],
         ],
 
@@ -60,5 +59,14 @@ $GLOBALS['TCA']['tx_rkworder_domain_model_orderproduct'] = [
 				'eval' => 'int'
 			]
 		],
+
+        'is_pre_order' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_order/Resources/Private/Language/locallang_db.xlf:tx_rkworder_domain_model_orderproduct.isPreOrder',
+            'config' => [
+                'type' => 'check',
+                'readOnly' => 0,
+            ],
+        ],
 	],
 ];

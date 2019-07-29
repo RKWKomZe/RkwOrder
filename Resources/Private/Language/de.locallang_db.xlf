@@ -50,6 +50,10 @@
 				<source>Amount</source>
 				<target>Anzahl</target>
 			</trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_orderproduct.isPreOrder">
+                <source>Is Pre-Order</source>
+                <target>Ist Vorbestellung</target>
+            </trans-unit>
 
 
 
@@ -113,6 +117,26 @@
                 <source>Allow Single Order</source>
                 <target>Einzelbestellung erlauben</target>
             </trans-unit>
+
+
+            <!-- tx_rkworder_domain_model_stock -->
+			<trans-unit id="tx_rkworder_domain_model_stock">
+				<source>RKW Order: Stock</source>
+				<target>RKW Order: Bestand</target>
+			</trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_stock.amount">
+                <source>Amount</source>
+                <target>Menge</target>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_stock.deliveryStart">
+                <source>Delivery Start</source>
+                <target>Auslieferungsbeginn</target>
+            </trans-unit>
+            <trans-unit id="tx_rkworder_domain_model_stock.comment">
+                <source>Comment</source>
+                <target>Kommentar</target>
+            </trans-unit>
+
 
 
             <!-- TCA- Tabs -->
