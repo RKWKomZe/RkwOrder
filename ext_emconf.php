@@ -21,7 +21,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'uploadfolder' => '0',
 	'createDirs' => '',
 	'clearCacheOnLoad' => 0,
-	'version' => '7.6.11',
+	'version' => '7.6.12',
 	'constraints' => array(
 		'depends' => array(
             'extbase' => '6.2.0-7.6.99',
@@ -32,6 +32,7 @@ $EM_CONF[$_EXTKEY] = array(
             'rkw_registration' => '7.6.10-7.6.99'
 		),
 		'conflicts' => array(
+            'rkw_soap' => '7.6.5-8.7.99',
 		),
 		'suggests' => array(
 		),

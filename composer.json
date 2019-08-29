@@ -28,6 +28,9 @@
         "rkw/rkw-mailer": ">=7.6.13 <=8.7.99",
         "rkw/rkw-registration": ">=7.6.10 <=8.7.99"
     },
+    "conflict": {
+        "rkw/rkw-soap" : ">=7.6.6"
+    },
     "autoload": {
         "psr-4": {
             "RKW\\RkwOrder\\": "Classes/"
