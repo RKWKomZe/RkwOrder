@@ -32,6 +32,7 @@ $EM_CONF[$_EXTKEY] = array(
             'rkw_registration' => '8.7.0-8.7.99'
 		),
 		'conflicts' => array(
+            'rkw_soap' => '7.6.5-8.7.99'
 		),
 		'suggests' => array(
 		),
