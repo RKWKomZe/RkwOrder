@@ -1,7 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2016-05-04T11:35:59Z" product-name="rkw_order">
-		<header/>
+	<file source-language="en" datatype="plaintext" original="messages" target-language="de-DE" date="2016-05-04T11:35:59Z" product-name="rkw_order">
+		<header>
+      <phase-group>
+        <phase process-name="approval" phase-name="approval-1" contact-email="berberich@rkw.de" contact-name="Melanie" tool-id="lokalize-22.03.70" date="2022-02-18"/>
+      </phase-group>
+      <tool tool-id="lokalize-22.03.70" tool-name="Lokalize" tool-version="22.03.70"/>
+    </header>
 		<body>
 			<trans-unit id="tx_rkworder_domain_model_order">
 				<source>Order</source>
@@ -79,9 +84,9 @@
 				<source>Copies</source>
 				<target>Exemplare</target>
 			</trans-unit>
-			<trans-unit id="tx_rkworder_domain_model_order.frontend_user">
+			<trans-unit id="tx_rkworder_domain_model_order.frontend_user" approved="no">
 				<source>Frontend User</source>
-				<target>Frontendnutzer</target>
+				<target state="final" phase-name="approval-1">Frontendnutzende</target>
 			</trans-unit>
 			<trans-unit id="tx_rkworder_domain_model_order.pages">
 				<source>Pages</source>
@@ -115,9 +120,9 @@
 				<source>Please enter a valid username.</source>
 				<target>Da ist etwas schief gelaufen. Bitte geben Sie eine gültige E-Mailadresse ein.</target>
 			</trans-unit>
-			<trans-unit id="orderController.error.email_already_in_use">
+			<trans-unit id="orderController.error.email_already_in_use" approved="no">
 				<source>The given E-mail is already used by another user.</source>
-				<target>Hm, die gewünschte E-Mailadresse wird bereits von einem anderen Nutzer verwendet. Bitte geben Sie eine andere E-Mailadresse an.</target>
+				<target state="final" phase-name="approval-1">Hm, die gewünschte E-Mailadresse wird bereits von einem anderen Nutzenden verwendet. Bitte geben Sie eine andere E-Mailadresse an.</target>
 			</trans-unit>
 
 
@@ -173,9 +178,9 @@
 				<source>Please check and confirm your order below.</source>
 				<target>Bitte prüfen Sie Ihre Bestellung auf Richtigkeit und bestätigen Sie sie über den untenstehenden Link. Die Bestellung ist selbstverständlich kostenlos.</target>
 			</trans-unit>
-			<trans-unit id="templates_email_optInRequest.textOptIn">
+			<trans-unit id="templates_email_optInRequest.textOptIn" approved="no">
 				<source>Click here to confirm your order:</source>
-				<target>Bitte klicken Sie hier, um die Bestellung zu bestätigen. Um Ihnen zukünftige Bestellungen zu erleichtern, wird automatisch ein kostenloser Account erstellt, falls Sie nicht schon als Nutzer registriert sind. Das Passwort erhalten Sie in einer weiteren E-Mail.</target>
+				<target state="final" phase-name="approval-1">Bitte klicken Sie hier, um die Bestellung zu bestätigen. Um Ihnen zukünftige Bestellungen zu erleichtern, wird automatisch ein kostenloser Account erstellt, falls Sie nicht schon als Nutzer / Nutzerin registriert sind. Das Passwort erhalten Sie in einer weiteren E-Mail.</target>
 			</trans-unit>
 			<trans-unit id="templates_email_optInRequest.textOptOut">
 				<source>Click here to cancel your order:</source>
@@ -272,9 +277,9 @@
 				<source>Publication "%s"</source>
 				<target>Publikation "%s"</target>
 			</trans-unit>
-			<trans-unit id="partials_email_details.subscribe">
+			<trans-unit id="partials_email_details.subscribe" approved="no">
 				<source>Please subscribe me for free to "%s".</source>
-				<target>Ich möchte die Reihe "%s" kostenlos abonnieren. Bitte nehmen Sie mich als Abonnent auf.</target>
+				<target state="final" phase-name="approval-1">Ich möchte die Reihe "%s" kostenlos abonnieren. Bitte nehmen Sie mich für das Abonnement auf.</target>
 			</trans-unit>
 			<trans-unit id="partials_email_details.doNotSubscribe">
 				<source>No subscription selected</source>
